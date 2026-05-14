@@ -1,6 +1,9 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { Heart, Search, UserRound } from "lucide-react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -18,7 +21,7 @@ function NavLink({
   tone = "dark",
 }: {
   href: string
-  children: React.ReactNode
+  children: ReactNode
   active?: boolean
   mobile?: boolean
   tone?: "dark" | "light"
@@ -50,7 +53,7 @@ function IconButton({
   tone = "dark",
 }: {
   label: string
-  children: React.ReactNode
+  children: ReactNode
   tone?: "dark" | "light"
 }) {
   return (
@@ -76,14 +79,64 @@ export function Navbar({
   variant?: "solid" | "overlay"
   className?: string
 }) {
+  const [isScrolled, setIsScrolled] = useState(
+    () => typeof window !== "undefined" && window.scrollY > 50
+  )
+  const [isVisible, setIsVisible] = useState(true)
+  const lastScrollYRef = useRef(
+    typeof window !== "undefined" ? window.scrollY : 0
+  )
   const isOverlay = variant === "overlay"
-  const tone: "dark" | "light" = isOverlay ? "light" : "dark"
+  const isOverlayLight = isOverlay && !isScrolled
+  const tone: "dark" | "light" = isOverlayLight ? "light" : "dark"
+
+  useEffect(() => {
+    if (!isOverlay) {
+      return
+    }
+
+    const updateScrollState = () => {
+      const currentY = window.scrollY
+      const previousY = lastScrollYRef.current
+      const hasScrolledPastThreshold = currentY > 50
+
+      setIsScrolled(hasScrolledPastThreshold)
+
+      if (!hasScrolledPastThreshold) {
+        setIsVisible(true)
+        lastScrollYRef.current = currentY
+        return
+      }
+
+      if (currentY > previousY) {
+        setIsVisible(true)
+      } else if (currentY < previousY) {
+        setIsVisible(false)
+      }
+
+      lastScrollYRef.current = currentY
+    }
+
+    updateScrollState()
+    window.addEventListener("scroll", updateScrollState, { passive: true })
+
+    return () => {
+      window.removeEventListener("scroll", updateScrollState)
+    }
+  }, [isOverlay])
 
   return (
     <header
       className={cn(
         isOverlay
-          ? "absolute inset-x-0 top-0 z-20 h-[98px] bg-transparent text-white"
+          ? cn(
+              "fixed inset-x-0 top-0 z-[100] h-[98px] transform-gpu transition-[background-color,color,box-shadow,transform] duration-500 ease-out will-change-transform",
+              isVisible
+                ? isScrolled
+                  ? "translate-y-0 bg-white text-black shadow-[0_1px_0_rgba(0,0,0,0.08)]"
+                  : "translate-y-[50px] bg-transparent text-white opacity-100"
+                : "-translate-y-full bg-white text-black shadow-[0_1px_0_rgba(0,0,0,0.08)] pointer-events-none"
+            )
           : "border-b border-transparent bg-white text-black lg:h-[98px]",
         className
       )}
@@ -111,28 +164,28 @@ export function Navbar({
             aria-label="SUOS home"
             className="justify-self-center transition-opacity hover:opacity-70"
           >
-            <Image
-              src="/logo.svg"
-              alt="SUOS"
-              width={260}
+              <Image
+                src="/logo.svg"
+                alt="SUOS"
+                width={260}
               height={120}
               priority
-              className={cn(
-                "block h-auto w-[9.5rem] max-w-none",
-                isOverlay && "invert"
-              )}
-            />
-          </Link>
+                className={cn(
+                  "block h-auto w-[9.5rem] max-w-none",
+                  isOverlayLight && "invert"
+                )}
+              />
+            </Link>
 
-          <div className="flex items-center justify-self-end gap-6">
-            <div className="relative h-[34px] w-[266px]">
+          <div className="flex items-center justify-self-end gap-4 xl:gap-6">
+            <div className="relative h-[34px] w-[220px] shrink-0 xl:w-[266px]">
               <input
                 type="search"
                 aria-label="Search products"
                 placeholder="What are you looking for?"
                 className={cn(
                   "h-full w-full bg-transparent px-4 pr-10 text-[0.875rem] outline-none placeholder:transition-opacity",
-                  isOverlay
+                  isOverlayLight
                     ? "border border-white/80 text-white placeholder:text-white/80"
                     : "border border-black/80 text-black placeholder:text-black/80"
                 )}
@@ -141,7 +194,7 @@ export function Navbar({
                 aria-hidden="true"
                 className={cn(
                   "pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 stroke-[1.75]",
-                  isOverlay ? "text-white" : "text-black"
+                  tone === "light" ? "text-white" : "text-black"
                 )}
               />
             </div>
@@ -149,14 +202,14 @@ export function Navbar({
             <Link
               href="/#contact"
               className={cn(
-                "whitespace-nowrap text-[0.875rem] uppercase tracking-[0.12em] transition-opacity hover:opacity-60",
-                isOverlay ? "text-white" : "text-black"
+                "shrink-0 whitespace-nowrap text-[0.875rem] uppercase tracking-[0.12em] transition-opacity hover:opacity-60",
+                tone === "light" ? "text-white" : "text-black"
               )}
             >
               Contact Us
             </Link>
 
-            <div className="flex items-center gap-4">
+            <div className="flex shrink-0 items-center gap-4">
               <IconButton label="Wishlist" tone={tone}>
                 <Heart className="size-[18px] stroke-[1.7]" />
               </IconButton>
@@ -186,7 +239,7 @@ export function Navbar({
                 priority
                 className={cn(
                   "block h-auto w-[8.75rem] max-w-none",
-                  isOverlay && "invert"
+                  isOverlayLight && "invert"
                 )}
               />
             </Link>
@@ -205,7 +258,7 @@ export function Navbar({
             aria-label="Primary"
             className={cn(
               "flex items-center gap-6 overflow-x-auto pb-1 text-[0.75rem] uppercase tracking-[0.18em] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden",
-              isOverlay ? "text-white" : "text-black"
+              tone === "light" ? "text-white" : "text-black"
             )}
           >
             {primaryNav.map((item) => (
@@ -223,7 +276,7 @@ export function Navbar({
               href="/#contact"
               className={cn(
                 "flex-none whitespace-nowrap text-[0.75rem] uppercase tracking-[0.18em] transition-opacity hover:opacity-60",
-                isOverlay ? "text-white" : "text-black"
+                tone === "light" ? "text-white" : "text-black"
               )}
             >
               Contact Us

@@ -2,6 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { Navbar } from "@/components/Navbar"
+import { ShippingAnnouncementBar } from "@/components/home/ShippingAnnouncementBar"
 
 const heroPages = [
   { label: "1/4", active: false },
@@ -12,7 +13,8 @@ const heroPages = [
 
 export function Hero() {
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-[#d4cdc1] text-white">
+    <section className="relative min-h-[100svh] overflow-hidden bg-[#d4cdc1] text-white">
+      <ShippingAnnouncementBar />
       <Navbar variant="overlay" className="pointer-events-auto" />
 
       <div className="absolute inset-0 grid grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
@@ -40,7 +42,7 @@ export function Hero() {
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/8 via-transparent to-black/10" />
       </div>
 
-      <div className="relative z-10 flex min-h-[100svh] items-end justify-center px-5 pb-20 pt-[98px] sm:px-6 lg:pb-[7rem]">
+      <div className="relative z-10 flex min-h-[100svh] items-end justify-center px-5 pb-20 pt-[148px] sm:px-6 lg:pb-[7rem]">
         <div className="flex flex-col items-center gap-5 text-center">
           <h1 className="font-heading text-[clamp(2.5rem,5.2vw,5.4rem)] font-semibold uppercase leading-none tracking-[-0.045em] drop-shadow-[0_2px_10px_rgba(0,0,0,0.18)]">
             Refine Your Style
