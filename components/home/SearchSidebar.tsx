@@ -80,8 +80,8 @@ export function SearchSidebar({ open, onOpenChange }: SearchSidebarProps) {
       <SheetContent
         side="right"
         showCloseButton={false}
-        overlayClassName="z-[120] bg-black/50 backdrop-blur-[1px]"
-        className="z-[130] border-l border-white/10 bg-black p-0 text-white shadow-[0_0_80px_rgba(0,0,0,0.45)] ease-in-out duration-300"
+        overlayClassName="!z-[10000] bg-black/50 backdrop-blur-[1px]"
+        className="!z-[10001] border-l border-white/10 bg-black p-0 text-white shadow-[0_0_80px_rgba(0,0,0,0.45)] ease-in-out duration-300"
         style={{ width: "min(100vw, 420px)", maxWidth: "none" }}
       >
         <div className="flex h-full flex-col">
