@@ -242,12 +242,15 @@ export function Navbar({
 }) {
   const defaultNavKey: NavKey = "men"
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isHidden, setIsHidden] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [selectedNav, setSelectedNav] = useState<NavKey>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<NavKey | null>(null)
   const scrollFrameRef = useRef<number | null>(null)
   const menuCloseTimerRef = useRef<number | null>(null)
-  const SCROLL_THRESHOLD = 30
+  const announcementHeightRef = useRef(0)
+  const lastScrollYRef = useRef(0)
+  const hiddenRef = useRef(false)
   const isOverlay = variant === "overlay"
   const isOverlayLight = isOverlay && !isScrolled
   const tone: "dark" | "light" = isOverlayLight ? "light" : "dark"
@@ -293,13 +296,52 @@ export function Navbar({
       return
     }
 
+    const readAnnouncementHeight = () => {
+      const rawValue = window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue("--announcement-height")
+        .trim()
+      const parsedValue = Number.parseFloat(rawValue)
+
+      return Number.isFinite(parsedValue) ? parsedValue : 50
+    }
+
+    const syncHeaderMetrics = () => {
+      announcementHeightRef.current = readAnnouncementHeight()
+    }
+
     const updateScrollState = () => {
       scrollFrameRef.current = null
 
-      const nextIsScrolled = window.scrollY > SCROLL_THRESHOLD
+      const currentScrollY = window.scrollY
+      const previousScrollY = lastScrollYRef.current
+      const scrollDelta = currentScrollY - previousScrollY
+      const nextIsScrolled = currentScrollY > announcementHeightRef.current
+      let nextIsHidden = false
+
+      if (nextIsScrolled) {
+        if (scrollDelta < -4) {
+          nextIsHidden = true
+        } else if (scrollDelta > 4) {
+          nextIsHidden = false
+        } else {
+          nextIsHidden = hiddenRef.current
+        }
+      }
+
+      lastScrollYRef.current = currentScrollY
+
       setIsScrolled((current) =>
         current === nextIsScrolled ? current : nextIsScrolled
       )
+      hiddenRef.current = nextIsHidden
+      setIsHidden((current) => (current === nextIsHidden ? current : nextIsHidden))
+    }
+
+    const syncScrollState = () => {
+      syncHeaderMetrics()
+      lastScrollYRef.current = window.scrollY
+      updateScrollState()
     }
 
     const scheduleScrollStateUpdate = () => {
@@ -310,11 +352,12 @@ export function Navbar({
       scrollFrameRef.current = window.requestAnimationFrame(updateScrollState)
     }
 
-    updateScrollState()
+    syncScrollState()
     window.addEventListener("scroll", scheduleScrollStateUpdate, {
       passive: true,
     })
-    window.addEventListener("pageshow", updateScrollState)
+    window.addEventListener("pageshow", syncScrollState)
+    window.addEventListener("resize", syncScrollState)
 
     return () => {
       if (scrollFrameRef.current !== null) {
@@ -323,7 +366,8 @@ export function Navbar({
       }
 
       window.removeEventListener("scroll", scheduleScrollStateUpdate)
-      window.removeEventListener("pageshow", updateScrollState)
+      window.removeEventListener("pageshow", syncScrollState)
+      window.removeEventListener("resize", syncScrollState)
     }
   }, [isOverlay])
 
@@ -335,13 +379,14 @@ export function Navbar({
     }
   }, [])
 
-  return (
+  const headerContent = (
     <header
       className={cn(
         isOverlay
           ? cn(
-              "navbar-shell fixed inset-x-0 top-0 left-0 z-[9999] h-[98px] border-b border-transparent bg-transparent text-white",
-              isScrolled && "is-scrolled"
+              "main-navbar navbar-shell border-b border-transparent bg-transparent text-white h-[98px]",
+              isScrolled && "is-scrolled",
+              isScrolled && isHidden && "is-hidden"
             )
           : "border-b border-transparent bg-white text-black lg:h-[98px]",
         className
@@ -553,5 +598,11 @@ export function Navbar({
 
       <SearchSidebar open={searchOpen} onOpenChange={setSearchOpen} />
     </header>
+  )
+
+  return isOverlay ? (
+    <div className="main-navbar-slot">{headerContent}</div>
+  ) : (
+    headerContent
   )
 }
