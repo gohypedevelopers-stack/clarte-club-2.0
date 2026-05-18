@@ -20,6 +20,8 @@ const tabs = [
   { label: "MEN", active: true },
 ] as const
 
+const hoverSizes = ["28", "32", "36", "42"]
+
 const products: ProductCard[] = [
   {
     id: "product-1",
@@ -102,56 +104,42 @@ function ProductCardView({ product }: { product: ProductCard }) {
         />
 
         {product.badge ? (
-          <span className="absolute left-2 top-2 z-10 bg-black px-1.5 py-0.5 text-[0.38rem] font-medium uppercase tracking-[0.14em] text-white">
+          <span className="absolute left-3 top-3 z-10 bg-black px-2.5 py-1 text-[0.5rem] font-semibold uppercase leading-none tracking-[0.16em] text-white">
             {product.badge}
           </span>
         ) : null}
 
-        {product.featured ? (
-          <button
-            type="button"
-            aria-label="Expand product"
-            className="absolute right-2 top-2 z-10 inline-flex size-5 items-center justify-center border border-black/10 bg-white text-black"
-          >
-            <Plus className="size-3.5 stroke-[2.1]" />
-          </button>
-        ) : null}
+        <button
+          type="button"
+          aria-label="Expand product"
+          className="absolute right-2 top-2 z-10 inline-flex size-5 translate-y-1 items-center justify-center border border-black/10 bg-white text-black opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
+        >
+          <Plus className="size-3.5 stroke-[2.1]" />
+        </button>
 
         <div
           className={cn(
-            "absolute inset-x-3 bottom-3 z-10 bg-white px-3 py-2 text-black shadow-[0_8px_18px_rgba(0,0,0,0.12)]",
-            product.featured && "py-2.5"
+            "absolute inset-x-3 bottom-3 z-10 overflow-hidden bg-white px-3 py-2 text-black shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-[height,padding] duration-300 ease-out",
+            "h-[48px] group-hover:h-[118px] group-hover:py-2.5"
           )}
         >
-          {product.featured ? (
-            <div className="space-y-2">
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[0.58rem] font-medium uppercase leading-tight tracking-[0.08em]">
-                    NAME OF THE PRODUCT
-                  </p>
-                  <p className="mt-0.5 text-[0.55rem] uppercase leading-tight tracking-[0.08em]">
-                    PRICE
-                  </p>
-                </div>
-                <ColorSwatches swatches={product.swatches} />
-              </div>
-
-              <div className="flex items-center gap-1.5 text-[0.5rem] uppercase tracking-[0.18em] text-black/75">
-                {product.sizes?.map((size) => (
-                  <span key={size}>{size}</span>
-                ))}
-              </div>
-
-              <button
-                type="button"
-                className="flex h-7 w-full items-center justify-center border border-black bg-white text-[0.52rem] uppercase tracking-[0.14em] transition-colors hover:bg-black hover:text-white"
-              >
-                Add To Cart
-              </button>
+          <div
+            className="flex items-end justify-between gap-3 transition-opacity duration-200 group-hover:opacity-0"
+          >
+            <div className="min-w-0">
+              <p className="text-[0.58rem] font-medium uppercase leading-tight tracking-[0.08em]">
+                NAME OF THE PRODUCT
+              </p>
+              <p className="mt-0.5 text-[0.55rem] uppercase leading-tight tracking-[0.08em]">
+                PRICE
+              </p>
             </div>
-          ) : (
-            <div className="flex items-end justify-between gap-3">
+
+            <ColorSwatches swatches={product.swatches} />
+          </div>
+
+          <div className="pointer-events-none absolute inset-x-3 bottom-2.5 flex translate-y-2 flex-col gap-2 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
+            <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
                 <p className="text-[0.58rem] font-medium uppercase leading-tight tracking-[0.08em]">
                   NAME OF THE PRODUCT
@@ -163,7 +151,20 @@ function ProductCardView({ product }: { product: ProductCard }) {
 
               <ColorSwatches swatches={product.swatches} />
             </div>
-          )}
+
+            <div className="flex items-center gap-1.5 text-[0.5rem] uppercase tracking-[0.18em] text-black/75">
+              {hoverSizes.map((size) => (
+                <span key={size}>{size}</span>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="flex h-7 w-full items-center justify-center border border-black bg-white text-[0.52rem] uppercase tracking-[0.14em] transition-colors hover:bg-black hover:text-white"
+            >
+              Add To Cart
+            </button>
+          </div>
         </div>
       </div>
     </article>

@@ -3,40 +3,109 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Heart, Search, UserRound } from "lucide-react"
-import { useEffect, useRef, useState, type ReactNode } from "react"
+import {
+  useEffect,
+  useRef,
+  useState,
+  type FocusEventHandler,
+  type MouseEventHandler,
+  type ReactNode,
+} from "react"
 
 import { cn } from "@/lib/utils"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
 
-const primaryNav = [
-  { label: "Women", href: "/#women" },
-  { label: "Men", href: "/#men", active: true },
-  { label: "Bestsellers", href: "/#bestsellers" },
+type NavKey = "women" | "men" | "bestsellers"
+
+type PrimaryNavItem = {
+  key: NavKey
+  label: string
+  href: string
+}
+
+const primaryNav: PrimaryNavItem[] = [
+  { key: "women", label: "Women", href: "/#women" },
+  { key: "men", label: "Men", href: "/#men" },
+  { key: "bestsellers", label: "Bestsellers", href: "/#bestsellers" },
+]
+
+const megaMenuFeatured = ["New", "Bestsellers", "Sale"]
+
+const megaMenuCategories = [
+  "Bootcut Jeans",
+  "Low Waist Jeans",
+  "Straight-Leg Jeans",
+  "Wide-Leg Jeans",
+  "Baggy / Loose Fit Jeans",
+  "Mom Jeans",
+  "Dad Jeans",
+  "Flared Jeans",
+]
+
+const megaMenuCards = [
+  {
+    src: "/images/nav1.png",
+    alt: "Editorial preview for the Off Beat Edit collection",
+    eyebrow: "Spotlight",
+    titleLines: ["Off Beat", "Edit"],
+  },
+  {
+    src: "/images/nav2.png",
+    alt: "Editorial preview for the Country Edit collection",
+    eyebrow: "New Launch",
+    titleLines: ["Country", "Edit"],
+  },
 ]
 
 function NavLink({
   href,
   children,
   active = false,
+  selected = false,
   mobile = false,
   tone = "dark",
+  onMouseEnter,
+  onMouseLeave,
+  onFocus,
+  onBlur,
+  onClick,
+  ariaHaspopup,
+  ariaExpanded,
 }: {
   href: string
   children: ReactNode
   active?: boolean
+  selected?: boolean
   mobile?: boolean
   tone?: "dark" | "light"
+  onMouseEnter?: MouseEventHandler<HTMLAnchorElement>
+  onMouseLeave?: MouseEventHandler<HTMLAnchorElement>
+  onFocus?: FocusEventHandler<HTMLAnchorElement>
+  onBlur?: FocusEventHandler<HTMLAnchorElement>
+  onClick?: MouseEventHandler<HTMLAnchorElement>
+  ariaHaspopup?: "menu"
+  ariaExpanded?: boolean
 }) {
+  const isEmphasized = active
+
   return (
     <Link
       href={href}
-      aria-current={active ? "page" : undefined}
+      aria-current={selected ? "page" : undefined}
+      aria-haspopup={ariaHaspopup}
+      aria-expanded={ariaExpanded}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      onClick={onClick}
       className={cn(
-        "relative whitespace-nowrap uppercase transition-opacity hover:opacity-60",
+        "relative whitespace-nowrap uppercase transition-opacity",
         mobile
           ? "flex-none text-[0.75rem] tracking-[0.18em]"
           : "text-[0.875rem] tracking-[0.12em]",
-        active &&
+        isEmphasized ? "opacity-100" : "hover:opacity-60",
+        isEmphasized &&
           cn(
             "after:absolute after:left-0 after:top-full after:mt-1.5 after:h-px after:w-full after:content-['']",
             tone === "light" ? "after:bg-white" : "after:bg-black"
@@ -76,6 +145,95 @@ function IconButton({
   )
 }
 
+function MenuSection({
+  title,
+  items,
+  open,
+  onClose,
+}: {
+  title: string
+  items: string[]
+  open: boolean
+  onClose: () => void
+}) {
+  return (
+    <section className="min-w-0">
+      <p className="text-[1rem] font-semibold uppercase tracking-[0.08em] text-black">
+        {title}
+      </p>
+
+      <ul className="mt-7 space-y-4">
+        {items.map((item) => (
+          <li key={item}>
+            <button
+              type="button"
+              tabIndex={open ? 0 : -1}
+              onClick={onClose}
+              className="block text-left text-[0.95rem] leading-[1.55] tracking-[0.01em] transition-opacity hover:opacity-70 focus-visible:outline-none focus-visible:opacity-70"
+            >
+              {item}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+function MenuCard({
+  src,
+  alt,
+  eyebrow,
+  titleLines,
+}: {
+  src: string
+  alt: string
+  eyebrow: string
+  titleLines: string[]
+}) {
+  return (
+    <article className="relative aspect-[314/412] overflow-hidden bg-neutral-100">
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes="(max-width: 1024px) 48vw, 314px"
+        className="object-cover"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(0,0,0,0.1)_0%,rgba(0,0,0,0.12)_58%,rgba(0,0,0,0.28)_100%)]" />
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center text-white drop-shadow-[0_2px_16px_rgba(0,0,0,0.45)]">
+        <span className="text-[0.95rem] font-light uppercase tracking-[0.16em]">
+          {eyebrow}
+        </span>
+        <div className="mt-3 space-y-0.5">
+          {titleLines.map((line) => (
+            <div
+              key={line}
+              className="text-[clamp(2rem,2.7vw,3.05rem)] font-light uppercase leading-[0.9] tracking-[-0.05em]"
+            >
+              {line}
+            </div>
+          ))}
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function getNavKeyFromHash(hash: string): NavKey | null {
+  const normalized = hash.replace(/^#/, "").toLowerCase()
+
+  if (
+    normalized === "women" ||
+    normalized === "men" ||
+    normalized === "bestsellers"
+  ) {
+    return normalized
+  }
+
+  return null
+}
+
 export function Navbar({
   variant = "solid",
   className,
@@ -83,19 +241,30 @@ export function Navbar({
   variant?: "solid" | "overlay"
   className?: string
 }) {
+  const defaultNavKey: NavKey = "men"
   const [isScrolled, setIsScrolled] = useState(
     () => typeof window !== "undefined" && window.scrollY > 50
   )
   const [showHeader, setShowHeader] = useState(true)
   const [isSettlingTop, setIsSettlingTop] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
+  const [selectedNav, setSelectedNav] = useState<NavKey>(() => {
+    if (typeof window === "undefined") {
+      return defaultNavKey
+    }
+
+    return getNavKeyFromHash(window.location.hash) ?? defaultNavKey
+  })
+  const [activeMenu, setActiveMenu] = useState<NavKey | null>(null)
   const lastScrollYRef = useRef(
     typeof window !== "undefined" ? window.scrollY : 0
   )
   const topRevealTimerRef = useRef<number | null>(null)
+  const menuCloseTimerRef = useRef<number | null>(null)
   const isOverlay = variant === "overlay"
   const isOverlayLight = isOverlay && !isScrolled && !isSettlingTop
   const tone: "dark" | "light" = isOverlayLight ? "light" : "dark"
+  const visualActiveMenu = activeMenu ?? selectedNav
   const overlayTransform = isOverlay
     ? showHeader
       ? isSettlingTop
@@ -105,6 +274,41 @@ export function Navbar({
           : "translate3d(0,50px,0)"
       : "translate3d(0,-120%,0)"
     : undefined
+
+  const clearMenuCloseTimer = () => {
+    if (menuCloseTimerRef.current !== null) {
+      window.clearTimeout(menuCloseTimerRef.current)
+      menuCloseTimerRef.current = null
+    }
+  }
+
+  const openMenu = (menu: NavKey) => {
+    clearMenuCloseTimer()
+    setActiveMenu(menu)
+  }
+
+  const scheduleMenuClose = () => {
+    clearMenuCloseTimer()
+    menuCloseTimerRef.current = window.setTimeout(() => {
+      setActiveMenu(null)
+      menuCloseTimerRef.current = null
+    }, 180)
+  }
+
+  useEffect(() => {
+    const updateSelectedNav = () => {
+      setSelectedNav(getNavKeyFromHash(window.location.hash) ?? defaultNavKey)
+    }
+
+    updateSelectedNav()
+    window.addEventListener("hashchange", updateSelectedNav)
+    window.addEventListener("popstate", updateSelectedNav)
+
+    return () => {
+      window.removeEventListener("hashchange", updateSelectedNav)
+      window.removeEventListener("popstate", updateSelectedNav)
+    }
+  }, [])
 
   useEffect(() => {
     if (!isOverlay) {
@@ -133,6 +337,8 @@ export function Navbar({
         if (scrollDelta > 8) {
           setShowHeader(true)
         } else if (scrollDelta < -8) {
+          clearMenuCloseTimer()
+          setActiveMenu(null)
           setShowHeader(false)
         }
       } else {
@@ -164,6 +370,14 @@ export function Navbar({
     }
   }, [isOverlay])
 
+  useEffect(() => {
+    return () => {
+      if (menuCloseTimerRef.current !== null) {
+        window.clearTimeout(menuCloseTimerRef.current)
+      }
+    }
+  }, [])
+
   return (
     <header
       className={cn(
@@ -181,7 +395,7 @@ export function Navbar({
       )}
       style={isOverlay ? { transform: overlayTransform } : undefined}
     >
-      <div className="h-full w-full px-4 sm:px-6 lg:px-8 xl:px-10">
+      <div className="h-full w-full px-4 sm:px-6 lg:px-8">
         <div className="hidden h-full lg:grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-0">
           <nav
             aria-label="Primary"
@@ -189,10 +403,27 @@ export function Navbar({
           >
             {primaryNav.map((item) => (
               <NavLink
-                key={item.label}
+                key={item.key}
                 href={item.href}
-                active={item.active}
+                active={visualActiveMenu === item.key}
+                selected={selectedNav === item.key}
+                ariaHaspopup="menu"
+                ariaExpanded={activeMenu === item.key}
                 tone={tone}
+                onMouseEnter={() => openMenu(item.key)}
+                onMouseLeave={scheduleMenuClose}
+                onFocus={() => openMenu(item.key)}
+                onBlur={(event) => {
+                  const nextTarget = event.relatedTarget as Node | null
+
+                  if (!nextTarget || !event.currentTarget.contains(nextTarget)) {
+                    scheduleMenuClose()
+                  }
+                }}
+                onClick={() => {
+                  setSelectedNav(item.key)
+                  setActiveMenu(null)
+                }}
               >
                 {item.label}
               </NavLink>
@@ -204,18 +435,18 @@ export function Navbar({
             aria-label="SUOS home"
             className="justify-self-center transition-opacity hover:opacity-70"
           >
-              <Image
-                src="/logo.svg"
-                alt="SUOS"
-                width={260}
+            <Image
+              src="/logo.svg"
+              alt="SUOS"
+              width={260}
               height={120}
               priority
-                className={cn(
-                  "block h-auto w-[9.5rem] max-w-none",
-                  isOverlayLight && "invert"
-                )}
-              />
-            </Link>
+              className={cn(
+                "block h-auto w-[9.5rem] max-w-none",
+                isOverlayLight && "invert"
+              )}
+            />
+          </Link>
 
           <div className="flex items-center justify-self-end gap-4 xl:gap-6">
             <div className="relative h-[34px] w-[220px] shrink-0 xl:w-[266px]">
@@ -318,11 +549,13 @@ export function Navbar({
           >
             {primaryNav.map((item) => (
               <NavLink
-                key={item.label}
+                key={item.key}
                 href={item.href}
-                active={item.active}
+                active={selectedNav === item.key}
+                selected={selectedNav === item.key}
                 mobile
                 tone={tone}
+                onClick={() => setSelectedNav(item.key)}
               >
                 {item.label}
               </NavLink>
@@ -337,6 +570,46 @@ export function Navbar({
               Contact Us
             </Link>
           </nav>
+        </div>
+      </div>
+
+      <div
+        aria-hidden={!activeMenu}
+        className={cn(
+          "absolute left-0 top-full hidden w-full border-t border-black/10 bg-white text-black shadow-[0_24px_60px_rgba(0,0,0,0.08)] transition-[opacity,transform] duration-200 ease-out lg:block lg:h-[460px] lg:overflow-hidden",
+          activeMenu
+            ? "pointer-events-auto translate-y-0 opacity-100"
+            : "pointer-events-none -translate-y-2 opacity-0"
+        )}
+        onMouseEnter={clearMenuCloseTimer}
+        onMouseLeave={scheduleMenuClose}
+      >
+        <div className="grid h-full w-full gap-x-14 gap-y-8 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(10rem,12rem)_minmax(14rem,18rem)_minmax(0,1fr)] lg:px-8">
+          <MenuSection
+            title="Featured"
+            items={megaMenuFeatured}
+            open={Boolean(activeMenu)}
+            onClose={() => setActiveMenu(null)}
+          />
+
+          <MenuSection
+            title="Categories"
+            items={megaMenuCategories}
+            open={Boolean(activeMenu)}
+            onClose={() => setActiveMenu(null)}
+          />
+
+          <div className="grid w-full max-w-[652px] min-w-0 grid-cols-2 gap-6 justify-self-end">
+            {megaMenuCards.map((card) => (
+              <MenuCard
+                key={card.src}
+                src={card.src}
+                alt={card.alt}
+                eyebrow={card.eyebrow}
+                titleLines={card.titleLines}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
