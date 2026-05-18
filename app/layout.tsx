@@ -6,6 +6,9 @@ import { akzidenzGrotesk, georgia, holiday } from "@/lib/fonts";
 export const metadata: Metadata = {
   title: "SUOS",
   description: "Luxury retail navigation concept for SUOS.",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({

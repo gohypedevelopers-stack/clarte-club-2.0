@@ -5,6 +5,7 @@ import Link from "next/link"
 import { Heart, Search, UserRound } from "lucide-react"
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type FocusEventHandler,
@@ -56,6 +57,9 @@ const megaMenuCards = [
     titleLines: ["Country", "Edit"],
   },
 ]
+
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect
 
 function NavLink({
   href,
@@ -242,23 +246,13 @@ export function Navbar({
   className?: string
 }) {
   const defaultNavKey: NavKey = "men"
-  const [isScrolled, setIsScrolled] = useState(
-    () => typeof window !== "undefined" && window.scrollY > 50
-  )
+  const [isScrolled, setIsScrolled] = useState(false)
   const [showHeader, setShowHeader] = useState(true)
   const [isSettlingTop, setIsSettlingTop] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
-  const [selectedNav, setSelectedNav] = useState<NavKey>(() => {
-    if (typeof window === "undefined") {
-      return defaultNavKey
-    }
-
-    return getNavKeyFromHash(window.location.hash) ?? defaultNavKey
-  })
+  const [selectedNav, setSelectedNav] = useState<NavKey>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<NavKey | null>(null)
-  const lastScrollYRef = useRef(
-    typeof window !== "undefined" ? window.scrollY : 0
-  )
+  const lastScrollYRef = useRef(0)
   const topRevealTimerRef = useRef<number | null>(null)
   const menuCloseTimerRef = useRef<number | null>(null)
   const isOverlay = variant === "overlay"
@@ -310,7 +304,7 @@ export function Navbar({
     }
   }, [])
 
-  useEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (!isOverlay) {
       return
     }
@@ -361,12 +355,29 @@ export function Navbar({
       lastScrollYRef.current = currentY
     }
 
-    updateScrollState()
+    let rafId1 = 0
+    let rafId2 = 0
+
+    const syncScrollState = () => {
+      updateScrollState()
+
+      rafId1 = window.requestAnimationFrame(() => {
+        updateScrollState()
+        rafId2 = window.requestAnimationFrame(updateScrollState)
+      })
+    }
+
+    lastScrollYRef.current = window.scrollY
+    syncScrollState()
     window.addEventListener("scroll", updateScrollState, { passive: true })
+    window.addEventListener("pageshow", syncScrollState)
 
     return () => {
       clearTopRevealTimer()
+      window.cancelAnimationFrame(rafId1)
+      window.cancelAnimationFrame(rafId2)
       window.removeEventListener("scroll", updateScrollState)
+      window.removeEventListener("pageshow", syncScrollState)
     }
   }, [isOverlay])
 
