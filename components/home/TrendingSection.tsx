@@ -120,7 +120,7 @@ function ProductCardView({ product }: { product: ProductCard }) {
         <div
           className={cn(
             "absolute inset-x-3 bottom-3 z-10 overflow-hidden bg-white text-black shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-[height,padding] duration-300 ease-out",
-            "h-[64px] group-hover:h-[140px]"
+            "h-[56px] group-hover:h-[140px]"
           )}
         >
           <div
