@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { Heart, Search, UserRound } from "lucide-react"
 import {
   useEffect,
@@ -234,13 +235,13 @@ function getNavKeyFromHash(hash: string): NavKey | null {
 }
 
 export function Navbar({
-  variant = "solid",
   className,
 }: {
-  variant?: "solid" | "overlay"
   className?: string
 }) {
   const defaultNavKey: NavKey = "men"
+  const pathname = usePathname()
+  const isOverlay = pathname === "/"
   const [isScrolled, setIsScrolled] = useState(false)
   const [isHidden, setIsHidden] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
@@ -251,7 +252,6 @@ export function Navbar({
   const announcementHeightRef = useRef(0)
   const lastScrollYRef = useRef(0)
   const hiddenRef = useRef(false)
-  const isOverlay = variant === "overlay"
   const isOverlayLight = isOverlay && !isScrolled
   const tone: "dark" | "light" = isOverlayLight ? "light" : "dark"
   const visualActiveMenu = activeMenu ?? selectedNav
@@ -292,10 +292,6 @@ export function Navbar({
   }, [])
 
   useIsomorphicLayoutEffect(() => {
-    if (!isOverlay) {
-      return
-    }
-
     const readAnnouncementHeight = () => {
       const rawValue = window
         .getComputedStyle(document.documentElement)
@@ -320,9 +316,9 @@ export function Navbar({
       let nextIsHidden = false
 
       if (nextIsScrolled) {
-        if (scrollDelta < -4) {
+        if (scrollDelta > 4) {
           nextIsHidden = true
-        } else if (scrollDelta > 4) {
+        } else if (scrollDelta < -4) {
           nextIsHidden = false
         } else {
           nextIsHidden = hiddenRef.current
@@ -341,6 +337,7 @@ export function Navbar({
     const syncScrollState = () => {
       syncHeaderMetrics()
       lastScrollYRef.current = window.scrollY
+      hiddenRef.current = false
       updateScrollState()
     }
 
@@ -382,13 +379,12 @@ export function Navbar({
   const headerContent = (
     <header
       className={cn(
+        "main-navbar navbar-shell border-b border-transparent",
         isOverlay
-          ? cn(
-              "main-navbar navbar-shell border-b border-transparent bg-transparent text-white h-[98px]",
-              isScrolled && "is-scrolled",
-              isScrolled && isHidden && "is-hidden"
-            )
-          : "border-b border-transparent bg-white text-black lg:h-[98px]",
+          ? "bg-transparent text-white h-[98px]"
+          : "bg-white text-black lg:h-[98px]",
+        isScrolled && "is-scrolled",
+        isScrolled && isHidden && "is-hidden",
         className
       )}
     >

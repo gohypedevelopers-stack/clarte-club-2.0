@@ -59,7 +59,7 @@ function DenimSlideCard({ slide }: { slide: DenimSlide }) {
         </h3>
 
         <Link
-          href="/#collection"
+          href="/collections"
           className="mt-2 inline-flex h-7 items-center justify-center border border-black px-3 text-[0.5rem] uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
         >
           Explore Collection

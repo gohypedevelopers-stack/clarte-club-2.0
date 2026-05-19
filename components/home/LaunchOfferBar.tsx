@@ -22,7 +22,7 @@ export function LaunchOfferBar() {
           />
 
           <Link
-            href="/#collection"
+            href="/collections"
             className="inline-flex h-7 shrink-0 items-center justify-center border border-white/70 px-2 text-[0.4375rem] font-medium uppercase tracking-[0.1em] transition-colors hover:bg-white/10 sm:h-9 sm:min-w-[7rem] sm:px-4 sm:text-[0.625rem] md:h-10 md:min-w-[8.5rem] md:px-6 md:text-[0.875rem]"
           >
             Shop Now

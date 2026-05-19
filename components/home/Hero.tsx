@@ -42,7 +42,7 @@ export function Hero() {
             Refine Your Style
           </h1>
           <Link
-            href="/#collection"
+            href="/collections"
             className="inline-flex items-center justify-center border border-white/85 px-5 py-2.5 text-[0.875rem] uppercase tracking-[0.12em] transition-colors hover:bg-white/10"
           >
             Explore Collection
@@ -80,7 +80,7 @@ export function Hero() {
       <span id="contact" className="sr-only">
         Contact Us
       </span>
-      <span id="collection" className="sr-only">
+      <span id="collections" className="sr-only">
         Collection
       </span>
     </section>

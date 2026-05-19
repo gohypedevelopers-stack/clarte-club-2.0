@@ -215,11 +215,6 @@
   z-index: 1000;
 }
 
-.main-navbar {
-  background-color: transparent;
-  color: #ffffff;
-}
-
 .main-navbar.is-scrolled {
   position: fixed;
   top: 0;

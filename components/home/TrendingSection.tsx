@@ -4,7 +4,7 @@ import { Plus } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
-type ProductCard = {
+export type ProductCard = {
   id: string
   image: string
   alt: string
@@ -91,7 +91,7 @@ function ColorSwatches({ swatches }: { swatches: string[] }) {
   )
 }
 
-function ProductCardView({ product }: { product: ProductCard }) {
+export function ProductCardView({ product }: { product: ProductCard }) {
   return (
     <article className="group relative overflow-hidden bg-black shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
       <div className="relative aspect-[330/479]">
@@ -207,7 +207,7 @@ export function TrendingSection() {
 
       <div className="mt-8 flex justify-center">
         <Link
-          href="/#collection"
+          href="/collections"
           className="inline-flex h-9 items-center justify-center border border-black px-5 text-[0.6875rem] uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
         >
           View All
