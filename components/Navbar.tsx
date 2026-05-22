@@ -251,8 +251,8 @@ export function Navbar({
   const lastScrollYRef = useRef(0)
   const hiddenRef = useRef(false)
   const hasOpenMenu = Boolean(activeMenu)
-  const isLightSurface =
-    !isOverlay || isScrolled || isHovered || Boolean(activeMenu)
+  const isInteractiveSurface = isHovered || hasOpenMenu
+  const isLightSurface = !isOverlay || isScrolled || isInteractiveSurface
   const tone: "dark" | "light" = isLightSurface ? "dark" : "light"
   const visualActiveMenu = activeMenu ?? selectedNav
 
@@ -361,13 +361,13 @@ export function Navbar({
         setActiveMenu(null)
       }}
       className={cn(
-        "main-navbar navbar-shell",
+        "main-navbar navbar-shell border-b",
         isOverlay ? "h-[98px]" : "lg:h-[98px]",
-        hasOpenMenu
+        isInteractiveSurface
           ? "bg-white text-black border-transparent shadow-none"
           : isLightSurface
-            ? "bg-white text-black border-b border-black/10 shadow-[0_1px_0_rgba(0,0,0,0.08)]"
-            : "bg-transparent text-white border-transparent",
+            ? "bg-white text-black border-black/10 shadow-[0_1px_0_rgba(0,0,0,0.08)]"
+            : "bg-transparent text-white border-transparent shadow-none",
         isScrolled && "is-scrolled",
         isScrolled && isHidden && "is-hidden",
         className
@@ -544,7 +544,7 @@ export function Navbar({
         className={cn(
           "absolute left-0 top-full hidden w-full bg-white text-black shadow-[0_24px_60px_rgba(0,0,0,0.08)] transition-opacity duration-150 ease-out lg:block lg:h-[460px] lg:overflow-hidden",
           activeMenu
-            ? "pointer-events-auto -mt-px opacity-100"
+            ? "pointer-events-auto opacity-100"
             : "pointer-events-none opacity-0"
         )}
       >
