@@ -60,9 +60,6 @@ export function DenimEditorialSection() {
         />
 
         <div className="absolute left-6 top-6 z-10 sm:left-10 sm:top-9">
-          <p className="text-[0.7rem] font-medium uppercase tracking-[0.12em] text-black/90">
-            Skinny Denims
-          </p>
         </div>
       </div>
     </section>

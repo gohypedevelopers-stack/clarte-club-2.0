@@ -62,7 +62,7 @@ function FooterGroup({
 
 export function FooterSection() {
   return (
-    <footer className="w-full bg-[#dcdcdc] text-black">
+    <footer className="w-full bg-white text-black">
       <div className="px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="border-b border-black/55 pb-2">
           <h2 className="font-heading text-[1.15rem] font-semibold uppercase tracking-[-0.02em] sm:text-[1.3rem]">

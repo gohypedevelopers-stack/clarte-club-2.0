@@ -15,11 +15,11 @@ export default function Home() {
       <Hero />
       <LaunchOfferBar />
       <TrendingSection />
+      <MotionBannerSection />
       <DenimCarousel />
       <EditsCarousel />
       <DenimEditorialSection />
       <LookbookCarousel />
-      <MotionBannerSection />
     </main>
   )
 }

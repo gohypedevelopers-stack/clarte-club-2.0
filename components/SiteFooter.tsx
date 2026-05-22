@@ -1,4 +1,4 @@
-import { FooterSection } from "@/components/home/FooterSection"
+import { FooterSection } from "@/components/FooterSection"
 import { SustainabilityMarquee } from "@/components/home/SustainabilityMarquee"
 
 export function SiteFooter() {
