@@ -74,7 +74,7 @@ function EditCard({ slide }: { slide: EditSlide }) {
       />
 
       <div className="absolute inset-x-3 bottom-3 z-10">
-        <p className="inline-block bg-white/0 px-1 py-0.5 text-[0.56rem] uppercase tracking-[0.08em] text-black">
+        <p className="inline-block bg-white/0 px-1 py-0.5 text-[14px] uppercase tracking-[0.08em] text-black">
           Edit Name
         </p>
       </div>

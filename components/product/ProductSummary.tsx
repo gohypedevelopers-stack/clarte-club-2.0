@@ -65,27 +65,29 @@ export function ProductSummary({
           <p className="text-[14px] font-medium uppercase tracking-[0.22em] text-black/45">
             {product.editLabel}
           </p>
-          <h1 className="font-heading text-[40px] font-semibold uppercase leading-[0.9] tracking-[-0.06em]">
+          <h1 className="font-heading text-[40px] font-normal uppercase leading-[0.9] tracking-[-0.06em]">
             {product.title}
           </h1>
         </div>
 
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-1">
-            <div className="flex items-baseline gap-3">
-              <span className="text-[18px] text-black/45 line-through">
+            <div className="flex items-end gap-3">
+              <span className="text-[18px] leading-none text-black/45 line-through">
                 {product.originalPrice}
               </span>
-              <span className="font-heading text-[28px] font-semibold tracking-[-0.04em]">
+              <span className="font-heading text-[22px] font-medium leading-none tracking-[-0.04em]">
                 {product.price}
               </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 uppercase tracking-[0.14em] text-brand-black">
-            <span className="text-[16px] text-brand-grey">{product.sold}</span>
+          <div className="flex items-end gap-2 text-black">
+            <span className="text-[16px] font-normal leading-none text-black/45">
+              {product.sold}
+            </span>
             <span className="text-black/25">|</span>
-            <span className="inline-flex items-center gap-1 text-[22px] font-bold leading-none">
+            <span className="inline-flex items-center gap-1 text-[22px] font-medium leading-none text-black">
               <Star className="h-24px w-24px fill-[#d08b21] text-[#d08b21]" />
               {product.rating}
             </span>
@@ -93,10 +95,10 @@ export function ProductSummary({
         </div>
 
         <section className="space-y-2">
-          <p className="text-[0.82rem] font-semibold uppercase tracking-[0.08em]">
+          <p className="text-[22px] font-medium">
             Description:
           </p>
-          <p className="max-w-[36rem] font-serif text-[0.92rem] leading-[1.75] text-black/68">
+          <p className="max-w-[36rem] font-sans text-[16px] font-normal leading-[1.75] text-black/68">
             {product.description}{" "}
             <Link
               href="#details"
@@ -109,7 +111,7 @@ export function ProductSummary({
 
         <section className="space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[0.82rem] uppercase tracking-[0.08em] text-black/72">
+            <p className="text-[22px] font-medium text-black/45">
               Color:{" "}
               <span className="font-medium text-black">{selectedColor}</span>
             </p>
@@ -127,13 +129,17 @@ export function ProductSummary({
                   aria-label={`Select ${color.name}`}
                   onClick={() => setSelectedColor(color.name)}
                   className={cn(
-                    "h-6 w-10 border transition-[transform,border-color,box-shadow] duration-200 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45",
+                    "flex h-[40px] w-[75px] items-stretch justify-stretch bg-white transition-[box-shadow] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45",
                     isSelected
-                      ? "border-black shadow-[inset_0_0_0_1px_rgba(255,255,255,0.7)] ring-1 ring-black/80 ring-offset-2 ring-offset-white"
-                      : "border-black/10"
+                      ? "border-[2px] border-black p-[4px]"
+                      : "border-0 p-0"
                   )}
-                  style={{ backgroundColor: color.value }}
-                />
+                >
+                  <span
+                    className="block h-full w-full"
+                    style={{ backgroundColor: color.value }}
+                  />
+                </button>
               )
             })}
           </div>

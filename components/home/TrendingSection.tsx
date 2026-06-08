@@ -218,7 +218,7 @@ export function ProductCardView({ product }: { product: ProductCard }) {
             className="flex h-full items-center justify-between gap-2.5 p-3 transition-opacity duration-200 group-hover:opacity-0"
           >
             <div className="min-w-0">
-              <p className="text-[14px] font-medium uppercase leading-tight tracking-[0.08em]">
+              <p className="text-[14px] font-normal uppercase leading-tight tracking-[0.08em]">
                 NAME OF THE PRODUCT
               </p>
               <p className="mt-0.5 text-[14px] uppercase leading-tight tracking-[0.08em]">
@@ -232,7 +232,7 @@ export function ProductCardView({ product }: { product: ProductCard }) {
           <div className="pointer-events-none absolute inset-0 flex translate-y-2 flex-col gap-2.5 p-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0">
-                <p className="text-[14px] font-medium uppercase leading-tight tracking-[0.08em]">
+                <p className="text-[14px] font-normal uppercase leading-tight tracking-[0.08em]">
                   NAME OF THE PRODUCT
                 </p>
                 <p className="mt-0.5 text-[14px] uppercase leading-tight tracking-[0.08em]">
