@@ -40,7 +40,7 @@ export type ProductDetail = {
 }
 
 const sharedChairPose = {
-  src: "/images/products/product6.png",
+  src: "/images/products/product4.png",
   alt: "Model in a monochrome studio look seated in a chrome chair with a black bag beside the set",
 }
 

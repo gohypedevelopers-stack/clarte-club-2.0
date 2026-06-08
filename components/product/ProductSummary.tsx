@@ -12,6 +12,11 @@ import {
 import type { ButtonHTMLAttributes } from "react"
 import { useState } from "react"
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel"
 import { cn } from "@/lib/utils"
 import type { ProductDetail } from "@/components/product/productData"
 
@@ -35,7 +40,7 @@ function OptionButton({
       type="button"
       aria-pressed={active}
       className={cn(
-        "inline-flex items-center justify-center border text-[0.85rem] uppercase tracking-[0.08em] transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45",
+        "inline-flex items-center justify-center border text-[22px] font-medium leading-none transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45",
         active
           ? "border-black bg-black text-white"
           : "border-black/15 bg-white text-black hover:border-black hover:bg-black/4",
@@ -147,12 +152,12 @@ export function ProductSummary({
 
         <section className="space-y-3">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[0.82rem] uppercase tracking-[0.08em] text-black/72">
-              Size: <span className="font-medium text-black">{selectedSize}</span>
+            <p className="text-[18px] font-normal text-black/45">
+              Size: <span className="font-normal text-black">{selectedSize}</span>
             </p>
             <Link
               href="#size-guide"
-              className="text-[0.68rem] uppercase tracking-[0.16em] text-black/55 underline underline-offset-4 transition-opacity hover:opacity-70"
+              className="text-[18px] font-normal text-black/45 underline underline-offset-4 transition-opacity hover:opacity-70"
             >
               View Size Chart
             </Link>
@@ -174,14 +179,14 @@ export function ProductSummary({
 
         <button
           type="button"
-          className="flex h-12 w-full items-center justify-center border border-black bg-white text-[0.95rem] font-semibold uppercase tracking-[0.14em] transition-[background-color,color] duration-200 ease-out hover:bg-black hover:text-white"
+          className="flex h-12 w-full items-center justify-center border border-black bg-white text-[22px] font-medium uppercase tracking-[0.14em] transition-[background-color,color] duration-200 ease-out hover:bg-black hover:text-white"
         >
           Add To Cart
         </button>
 
         <section className="space-y-3">
-          <p className="text-[0.68rem] uppercase tracking-[0.18em] text-black/45">
-            Delivery ToC
+          <p className="text-[16px] font-medium text-black/45">
+            Delivery T&C
           </p>
 
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -193,14 +198,14 @@ export function ProductSummary({
                   key={perk.label}
                   title={`${perk.label} · ${perk.detail}`}
                   aria-label={`${perk.label}, ${perk.detail}`}
-                  className="flex aspect-[1.15/1] flex-col items-center justify-center gap-2 bg-[#e3e3e3] px-2 text-center"
+                  className="flex aspect-[1.15/1] flex-col items-center justify-center gap-2 border border-black bg-white px-2 text-center text-black"
                 >
-                  <Icon className="size-5 stroke-[1.7] text-black/42" />
+                  <Icon className="size-5 stroke-[1.7] text-black" />
                   <div className="space-y-0.5">
-                    <p className="text-[0.52rem] uppercase tracking-[0.12em] text-black/45">
+                    <p className="text-[0.52rem] uppercase text-black">
                       {perk.label}
                     </p>
-                    <p className="text-[0.6rem] uppercase tracking-[0.12em] text-black/34">
+                    <p className="text-[0.6rem] uppercase text-black">
                       {perk.detail}
                     </p>
                   </div>
@@ -211,55 +216,66 @@ export function ProductSummary({
         </section>
 
         <section id="details" className="border-t border-black/15 pt-4">
-          <h2 className="text-[0.9rem] font-semibold uppercase tracking-[0.08em]">
+          <h2 className="text-[22px] font-medium uppercase">
             Product Details
           </h2>
-          <p className="mt-3 max-w-[36rem] font-serif text-[0.9rem] leading-[1.72] text-black/68">
+          <p className="mt-3 max-w-[36rem] font-sans text-[16px] font-normal leading-[1.72] text-black/68">
             {product.detailsBody} See More...
           </p>
         </section>
 
-        <div className="space-y-2 border-t border-black/15 pt-3">
+        <div className="space-y-4 border-t border-black/15 pt-3">
           <button
             type="button"
-            className="block w-fit border-b border-black/55 pb-1 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-opacity hover:opacity-70"
+            className="block w-fit border-b border-black/55 pb-0.5 text-[22px] font-medium leading-none uppercase tracking-normal transition-opacity hover:opacity-70"
           >
             Details &amp; Care
           </button>
           <button
             type="button"
-            className="block w-fit border-b border-black/55 pb-1 text-[0.82rem] font-semibold uppercase tracking-[0.08em] transition-opacity hover:opacity-70"
+            className="block w-fit border-b border-black/55 pb-0.5 text-[22px] font-medium leading-none uppercase tracking-normal transition-opacity hover:opacity-70"
           >
             Shipping &amp; Payment
           </button>
         </div>
 
         <section className="space-y-4 pt-8">
-          <h2 className="text-[0.9rem] font-semibold uppercase tracking-[0.08em]">
+          <h2 className="text-[22px] font-medium uppercase tracking-[0.08em]">
             Complete The Look
           </h2>
 
-          <div className="grid grid-cols-3 gap-2">
-            {product.completeLook.map((image, index) => (
-              <figure
-                key={`${image.src}-${index}`}
-                className="relative aspect-[4/5] overflow-hidden bg-[#efefef]"
-              >
-                <Image
-                  src={image.src}
-                  alt={image.alt}
-                  fill
-                  sizes="(max-width: 640px) 34vw, (max-width: 1024px) 22vw, 11vw"
-                  style={
-                    image.objectPosition
-                      ? { objectPosition: image.objectPosition }
-                      : undefined
-                  }
-                  className="object-cover"
-                />
-              </figure>
-            ))}
-          </div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: false,
+            }}
+            className="w-full"
+            aria-label="Complete the look carousel"
+          >
+            <CarouselContent className="-ml-2">
+              {product.completeLook.map((image, index) => (
+                <CarouselItem
+                  key={`${image.src}-${index}`}
+                  className="basis-[250px] pl-2"
+                >
+                  <figure className="relative aspect-[3/4] overflow-hidden bg-[#efefef]">
+                    <Image
+                      src={image.src}
+                      alt={image.alt}
+                      fill
+                      sizes="250px"
+                      style={
+                        image.objectPosition
+                          ? { objectPosition: image.objectPosition }
+                          : undefined
+                      }
+                      className="object-cover"
+                    />
+                  </figure>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </section>
       </div>
     </aside>
