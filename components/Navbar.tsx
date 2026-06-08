@@ -19,6 +19,7 @@ import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
 
 type NavKey = "women" | "men" | "bestsellers"
+type ActiveMenu = NavKey | "wishlist"
 
 type PrimaryNavItem = {
   key: NavKey
@@ -120,16 +121,22 @@ function IconButton({
   children,
   tone = "dark",
   onClick,
+  ariaExpanded,
+  ariaHaspopup,
 }: {
   label: string
   children: ReactNode
   tone?: "dark" | "light"
   onClick?: () => void
+  ariaExpanded?: boolean
+  ariaHaspopup?: "menu" | "dialog"
 }) {
   return (
     <button
       type="button"
       aria-label={label}
+      aria-expanded={ariaExpanded}
+      aria-haspopup={ariaHaspopup}
       onClick={onClick}
       className={cn(
         "inline-flex size-9 items-center justify-center text-current transition-[color,opacity] duration-300 ease-out hover:opacity-60 focus-visible:outline-none focus-visible:ring-2",
@@ -218,6 +225,33 @@ function MenuCard({
   )
 }
 
+function WishlistPanel() {
+  return (
+    <div className="h-full w-full bg-white text-black">
+      <div className="mx-auto flex h-full w-full max-w-[1160px] flex-col px-6 py-8 lg:px-8">
+        <div className="flex items-start justify-between gap-4">
+          <h2 className="text-[0.78rem] font-medium uppercase tracking-[0.08em]">
+            My Wishlist
+          </h2>
+
+          <button
+            type="button"
+            className="inline-flex h-8 items-center bg-black px-3 text-[0.75rem] font-medium text-white transition-opacity hover:opacity-80"
+          >
+            Share Wishlist
+          </button>
+        </div>
+
+        <div className="flex flex-1 items-start justify-center pt-12">
+          <div className="w-full bg-black px-4 py-2 text-center text-[0.78rem] text-white">
+            There are no items in your Wishlist
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function getNavKeyFromHash(hash: string): NavKey | null {
   const normalized = hash.replace(/^#/, "").toLowerCase()
 
@@ -244,7 +278,7 @@ export function Navbar({
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [selectedNav, setSelectedNav] = useState<NavKey>(defaultNavKey)
-  const [activeMenu, setActiveMenu] = useState<NavKey | null>(null)
+  const [activeMenu, setActiveMenu] = useState<ActiveMenu | null>(null)
   const [isHovered, setIsHovered] = useState(false)
   const scrollFrameRef = useRef<number | null>(null)
   const headerRef = useRef<HTMLElement | null>(null)
@@ -253,10 +287,16 @@ export function Navbar({
   const isInteractiveSurface = isHovered || hasOpenMenu
   const isLightSurface = !isOverlay || isScrolled || isInteractiveSurface
   const tone: "dark" | "light" = isLightSurface ? "dark" : "light"
-  const visualActiveMenu = activeMenu ?? selectedNav
+  const visualActiveMenu =
+    activeMenu && activeMenu !== "wishlist" ? activeMenu : selectedNav
+  const isWishlistOpen = activeMenu === "wishlist"
 
   const openMenu = (menu: NavKey) => {
     setActiveMenu(menu)
+  }
+
+  const toggleWishlist = () => {
+    setActiveMenu((current) => (current === "wishlist" ? null : "wishlist"))
   }
 
   useEffect(() => {
@@ -439,7 +479,13 @@ export function Navbar({
             </IconButton>
 
             <div className="flex shrink-0 items-center gap-4">
-              <IconButton label="Wishlist" tone={tone}>
+              <IconButton
+                label="Wishlist"
+                tone={tone}
+                onClick={toggleWishlist}
+                ariaHaspopup="menu"
+                ariaExpanded={isWishlistOpen}
+              >
                 <Heart className="size-[18px] stroke-[1.7]" />
               </IconButton>
               <IconButton label="Account" tone={tone}>
@@ -478,7 +524,13 @@ export function Navbar({
             </Link>
 
             <div className="flex items-center gap-2">
-              <IconButton label="Wishlist" tone={tone}>
+              <IconButton
+                label="Wishlist"
+                tone={tone}
+                onClick={toggleWishlist}
+                ariaHaspopup="menu"
+                ariaExpanded={isWishlistOpen}
+              >
                 <Heart className="size-[18px] stroke-[1.7]" />
               </IconButton>
               <IconButton
@@ -520,38 +572,42 @@ export function Navbar({
         aria-hidden={!activeMenu}
         className={cn(
           "absolute left-0 top-full hidden w-full bg-white text-black shadow-[0_24px_60px_rgba(0,0,0,0.08)] transition-opacity duration-150 ease-out lg:block lg:h-[460px] lg:overflow-hidden",
-          activeMenu
-            ? "pointer-events-auto opacity-100"
-            : "pointer-events-none opacity-0"
-        )}
-      >
-        <div className="grid h-full w-full gap-x-14 gap-y-8 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(10rem,12rem)_minmax(14rem,18rem)_minmax(0,1fr)] lg:px-8">
-          <MenuSection
-            title="Featured"
-            items={megaMenuFeatured}
-            open={Boolean(activeMenu)}
-            onClose={() => setActiveMenu(null)}
-          />
+        activeMenu
+          ? "pointer-events-auto opacity-100"
+          : "pointer-events-none opacity-0"
+      )}
+    >
+        {activeMenu === "wishlist" ? (
+          <WishlistPanel />
+        ) : (
+          <div className="grid h-full w-full gap-x-14 gap-y-8 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(10rem,12rem)_minmax(14rem,18rem)_minmax(0,1fr)] lg:px-8">
+            <MenuSection
+              title="Featured"
+              items={megaMenuFeatured}
+              open={Boolean(activeMenu)}
+              onClose={() => setActiveMenu(null)}
+            />
 
-          <MenuSection
-            title="Categories"
-            items={megaMenuCategories}
-            open={Boolean(activeMenu)}
-            onClose={() => setActiveMenu(null)}
-          />
+            <MenuSection
+              title="Categories"
+              items={megaMenuCategories}
+              open={Boolean(activeMenu)}
+              onClose={() => setActiveMenu(null)}
+            />
 
-          <div className="grid w-full max-w-[652px] min-w-0 grid-cols-2 gap-6 justify-self-end">
-            {megaMenuCards.map((card) => (
-              <MenuCard
-                key={card.src}
-                src={card.src}
-                alt={card.alt}
-                eyebrow={card.eyebrow}
-                titleLines={card.titleLines}
-              />
-            ))}
+            <div className="grid w-full max-w-[652px] min-w-0 grid-cols-2 gap-6 justify-self-end">
+              {megaMenuCards.map((card) => (
+                <MenuCard
+                  key={card.src}
+                  src={card.src}
+                  alt={card.alt}
+                  eyebrow={card.eyebrow}
+                  titleLines={card.titleLines}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <SearchSidebar open={searchOpen} onOpenChange={setSearchOpen} />
