@@ -1,4 +1,4 @@
-import type { ProductCard } from "@/components/home/TrendingSection"
+import type { ProductCard } from "@/components/product/productData"
 
 const baseProducts: ProductCard[] = [
   {
