@@ -13,12 +13,6 @@ import {
   type ProductCard,
 } from "@/components/product/productData"
 
-const tabs = [
-  { label: "ALL", active: false },
-  { label: "WOMEN", active: false },
-  { label: "MEN", active: true },
-] as const
-
 const hoverSizes = ["28", "32", "36", "42"]
 
 function ColorSwatches({ swatches }: { swatches: string[] }) {
@@ -230,26 +224,6 @@ export function TrendingSection() {
         <h2 className="font-heading text-[clamp(1.7rem,2.2vw,2.6rem)] font-semibold uppercase leading-none tracking-[-0.04em]">
           Trending
         </h2>
-
-        <div className="flex items-center gap-6 sm:gap-8">
-          {tabs.map((tab) => (
-            <button
-              key={tab.label}
-              type="button"
-              aria-pressed={tab.active}
-              className={cn(
-                "group inline-flex flex-col items-start pb-0.5 text-[0.75rem] font-medium uppercase leading-none tracking-[0.12em] transition-opacity hover:opacity-70 sm:text-[0.875rem]"
-              )}
-            >
-              <span>{tab.label}</span>
-              <span
-                aria-hidden="true"
-                className="mt-[2px] h-px w-full origin-left scale-x-0 bg-black transition-transform duration-200 group-hover:scale-x-100"
-              />
-            </button>
-          ))}
-        </div>
-
       </div>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
