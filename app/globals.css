@@ -6,10 +6,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --font-sans: var(--font-akzidenz-grotesk);
-  --font-serif: var(--font-georgia);
-  --font-heading: var(--font-akzidenz-grotesk);
-  --font-display: var(--font-holiday);
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 
   --color-sidebar-ring: var(--sidebar-ring);
@@ -46,11 +46,16 @@
   --color-card: var(--card);
 
   /* Separate brand colors */
+  --color-brand-cream: var(--brand-cream);
   --color-brand-black: var(--brand-black);
-  --color-brand-white: var(--brand-white);
-  --color-brand-gray: var(--brand-gray);
-  --color-brand-brown: var(--brand-brown);
-  --color-brand-blue: var(--brand-blue);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-taupe: var(--brand-taupe);
+
+  /* Overrides to map existing white/black classes to brand cream/black */
+  --color-white: var(--brand-cream);
+  --color-black: var(--brand-black);
+  --color-pure-white: #ffffff;
+  --color-pure-black: #000000;
 
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -63,11 +68,10 @@
 
 :root {
   /* Brand colors */
-  --brand-black: #000000;
-  --brand-white: #ffffff;
-  --brand-gray: #eaeaea;
-  --brand-brown: #964727;
-  --brand-blue: #0c5a85;
+  --brand-cream: #F6F2EA;
+  --brand-black: #0F0F10;
+  --brand-gold: #C9B07A;
+  --brand-taupe: #8A8072;
 
   /* Header stack */
   --announcement-height: 50px;
@@ -75,64 +79,64 @@
   --header-stack-height: calc(var(--announcement-height) + var(--main-navbar-height));
 
   /* Base */
-  --background: #ffffff;
-  --foreground: #000000;
+  --background: #F6F2EA;
+  --foreground: #0F0F10;
 
   /* Surfaces */
-  --card: #ffffff;
-  --card-foreground: #000000;
-  --popover: #ffffff;
-  --popover-foreground: #000000;
+  --card: #F6F2EA;
+  --card-foreground: #0F0F10;
+  --popover: #F6F2EA;
+  --popover-foreground: #0F0F10;
 
   /* Primary */
-  --primary: #000000;
-  --primary-foreground: #ffffff;
+  --primary: #0F0F10;
+  --primary-foreground: #F6F2EA;
 
   /* Secondary */
-  --secondary: #eaeaea;
-  --secondary-foreground: #000000;
+  --secondary: #8A8072;
+  --secondary-foreground: #F6F2EA;
 
   /* Muted */
-  --muted: #eaeaea;
-  --muted-foreground: #737373;
+  --muted: #8A8072;
+  --muted-foreground: #8A8072;
 
   /* Accent */
-  --accent: #eaeaea;
-  --accent-foreground: #000000;
+  --accent: #C9B07A;
+  --accent-foreground: #0F0F10;
 
   /* Destructive */
   --destructive: #dc2626;
 
   /* Borders and inputs */
-  --border: #eaeaea;
-  --input: #eaeaea;
-  --ring: #000000;
+  --border: rgba(15, 15, 16, 0.15);
+  --input: rgba(15, 15, 16, 0.15);
+  --ring: #0F0F10;
 
   /* Charts */
-  --chart-1: #000000;
-  --chart-2: #0c5a85;
-  --chart-3: #964727;
-  --chart-4: #eaeaea;
-  --chart-5: #ffffff;
+  --chart-1: #0F0F10;
+  --chart-2: #C9B07A;
+  --chart-3: #8A8072;
+  --chart-4: rgba(15, 15, 16, 0.1);
+  --chart-5: #F6F2EA;
 
   --radius: 0.625rem;
 
   /* Sidebar */
-  --sidebar: #ffffff;
-  --sidebar-foreground: #000000;
-  --sidebar-primary: #000000;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #eaeaea;
-  --sidebar-accent-foreground: #000000;
-  --sidebar-border: #eaeaea;
-  --sidebar-ring: #000000;
+  --sidebar: #F6F2EA;
+  --sidebar-foreground: #0F0F10;
+  --sidebar-primary: #0F0F10;
+  --sidebar-primary-foreground: #F6F2EA;
+  --sidebar-accent: rgba(15, 15, 16, 0.05);
+  --sidebar-accent-foreground: #0F0F10;
+  --sidebar-border: rgba(15, 15, 16, 0.1);
+  --sidebar-ring: #0F0F10;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
     scrollbar-width: thin;
-    scrollbar-color: var(--brand-black) var(--brand-white);
+    scrollbar-color: var(--brand-black) var(--brand-cream);
   }
 
   body {
@@ -156,12 +160,12 @@
   }
 
   *::-webkit-scrollbar-track {
-    background: var(--brand-white);
+    background: var(--brand-cream);
   }
 
   *::-webkit-scrollbar-thumb {
     border-radius: 999px;
-    border: 2px solid var(--brand-white);
+    border: 2px solid var(--brand-cream);
     background: var(--brand-black);
   }
 
@@ -251,8 +255,8 @@
 }
 
 .navbar-shell.is-scrolled {
-  background-color: #ffffff;
-  color: #000000;
-  border-color: rgba(0, 0, 0, 0.08);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+  background-color: var(--brand-cream);
+  color: var(--brand-black);
+  border-color: rgba(15, 15, 16, 0.08);
+  box-shadow: 0 1px 0 rgba(15, 15, 16, 0.08);
 }
