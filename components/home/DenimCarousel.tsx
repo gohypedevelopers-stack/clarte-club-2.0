@@ -49,18 +49,18 @@ function DenimSlideCard({ slide }: { slide: DenimSlide }) {
         alt={slide.alt}
         fill
         sizes="(max-width: 640px) 92vw, (max-width: 1024px) 64vw, 627px"
-        className="object-contain object-center"
+        className="object-cover object-center"
         priority={false}
       />
 
-      <div className="absolute inset-x-5 bottom-5 z-10 max-w-[11rem] text-black">
+      <div className="absolute inset-x-5 bottom-5 z-10 max-w-[11rem] text-white">
         <h3 className="text-[0.875rem] font-semibold uppercase leading-none tracking-[-0.02em]">
           {slide.title}
         </h3>
 
         <Link
           href="/collections"
-          className="mt-2 inline-flex h-7 items-center justify-center border border-black px-3 text-[0.5rem] uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
+          className="mt-2 inline-flex h-7 items-center justify-center border border-white px-3 text-[0.5rem] uppercase tracking-[0.12em] transition-colors hover:bg-white hover:text-black"
         >
           Explore Collection
         </Link>
@@ -84,7 +84,7 @@ export function DenimCarousel() {
           {denimSlides.map((slide) => (
             <CarouselItem
               key={slide.title}
-              className="basis-[92%] sm:basis-[72%] md:basis-[58%] lg:basis-[calc(627px+1rem)]"
+              className="basis-[92%] sm:basis-[72%] md:basis-[48%] lg:basis-1/3"
             >
               <DenimSlideCard slide={slide} />
             </CarouselItem>
