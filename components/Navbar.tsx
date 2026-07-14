@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
 
-type NavKey = "women" | "men" | "bestsellers"
+type NavKey = "shop" | "bestsellers"
 type ActiveMenu = NavKey | "wishlist"
 
 type PrimaryNavItem = {
@@ -28,8 +28,7 @@ type PrimaryNavItem = {
 }
 
 const primaryNav: PrimaryNavItem[] = [
-  { key: "women", label: "Women", href: "/#women" },
-  { key: "men", label: "Men", href: "/#men" },
+  { key: "shop", label: "Shop", href: "/#shop" },
   { key: "bestsellers", label: "Bestsellers", href: "/#bestsellers" },
 ]
 
@@ -268,8 +267,7 @@ function getNavKeyFromHash(hash: string): NavKey | null {
   const normalized = hash.replace(/^#/, "").toLowerCase()
 
   if (
-    normalized === "women" ||
-    normalized === "men" ||
+    normalized === "shop" ||
     normalized === "bestsellers"
   ) {
     return normalized
@@ -283,7 +281,7 @@ export function Navbar({
 }: {
   className?: string
 }) {
-  const defaultNavKey: NavKey = "men"
+  const defaultNavKey: NavKey = "shop"
   const pathname = usePathname()
   const isOverlay = pathname === "/"
   const [isScrolled, setIsScrolled] = useState(false)
@@ -451,10 +449,14 @@ export function Navbar({
                 href={item.href}
                 active={activeMenu === item.key}
                 selected={selectedNav === item.key}
-                ariaHaspopup="menu"
-                ariaExpanded={activeMenu === item.key}
-                onMouseEnter={() => openMenu(item.key)}
-                onFocus={() => openMenu(item.key)}
+                ariaHaspopup={item.key === "shop" ? "menu" : undefined}
+                ariaExpanded={item.key === "shop" ? activeMenu === item.key : undefined}
+                onMouseEnter={() => {
+                  if (item.key === "shop") openMenu(item.key)
+                }}
+                onFocus={() => {
+                  if (item.key === "shop") openMenu(item.key)
+                }}
                 onBlur={(event) => {
                   const nextTarget = event.relatedTarget as Node | null
 
@@ -482,13 +484,13 @@ export function Navbar({
           >
             <Image
               src="/logo.svg"
-              alt="Clarte Club 2.0"
+              alt="Clarte Club"
               width={260}
               height={120}
               priority
               className={cn(
                 "block h-auto w-[9.5rem] max-w-none transition-[filter] duration-300 ease-out",
-                isOverlay && !isLightSurface && "invert"
+                !isLightSurface && "invert"
               )}
             />
           </Link>
@@ -565,7 +567,7 @@ export function Navbar({
                 priority
                 className={cn(
                   "block h-auto w-[8.75rem] max-w-none transition-[filter] duration-300 ease-out",
-                  isOverlay && !isLightSurface && "invert"
+                  !isLightSurface && "invert"
                 )}
               />
             </Link>
@@ -627,7 +629,7 @@ export function Navbar({
         >
           {activeMenu === "wishlist" ? (
             <WishlistPanel />
-          ) : (
+          ) : activeMenu === "shop" ? (
             <div className="grid h-full w-full gap-x-14 gap-y-8 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(10rem,12rem)_minmax(14rem,18rem)_minmax(0,1fr)] lg:px-8">
               <MenuSection
                 title="Featured"
@@ -655,7 +657,7 @@ export function Navbar({
                 ))}
               </div>
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 
