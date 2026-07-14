@@ -13,12 +13,6 @@ type EditSlide = {
   alt: string
 }
 
-const editTabs = [
-  { label: "ALL", active: false },
-  { label: "WOMEN", active: false },
-  { label: "MEN", active: true },
-] as const
-
 const editSlides: EditSlide[] = [
   {
     id: "edit-1",
@@ -82,30 +76,6 @@ function EditCard({ slide }: { slide: EditSlide }) {
   )
 }
 
-function TabLabel({
-  label,
-  active,
-}: {
-  label: string
-  active: boolean
-}) {
-  return (
-    <button
-      type="button"
-      aria-pressed={active}
-      className={cn(
-        "group inline-flex flex-col items-start pb-0.5 text-[0.75rem] font-medium uppercase leading-none tracking-[0.12em] transition-opacity hover:opacity-70 sm:text-[0.875rem]"
-      )}
-    >
-      <span>{label}</span>
-      <span
-        aria-hidden="true"
-        className="mt-[2px] h-px w-full origin-left scale-x-0 bg-black transition-transform duration-200 group-hover:scale-x-100"
-      />
-    </button>
-  )
-}
-
 export function EditsCarousel() {
   return (
     <section className="w-full bg-white px-4 py-14 text-black sm:px-6 lg:px-8 md:py-16">
@@ -113,12 +83,6 @@ export function EditsCarousel() {
         <h2 className="font-heading text-[clamp(1.7rem,2.2vw,2.6rem)] font-semibold uppercase leading-none tracking-[-0.04em]">
           Edits
         </h2>
-
-        <div className="flex items-center gap-6 sm:gap-8">
-          {editTabs.map((tab) => (
-            <TabLabel key={tab.label} label={tab.label} active={tab.active} />
-          ))}
-        </div>
       </div>
 
       <Carousel
