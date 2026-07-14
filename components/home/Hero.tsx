@@ -122,11 +122,8 @@ export function Hero() {
         </span>
       </div>
 
-      <span id="women" className="sr-only">
-        Women
-      </span>
-      <span id="men" className="sr-only">
-        Men
+      <span id="shop" className="sr-only">
+        Shop
       </span>
       <span id="bestsellers" className="sr-only">
         Bestsellers
