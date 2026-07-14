@@ -66,7 +66,7 @@ export function FooterSection() {
       <div className="px-4 pb-6 pt-4 sm:px-6 lg:px-8">
         <div className="border-b border-black/55 pb-2">
           <h2 className="font-heading text-[1.15rem] font-semibold uppercase tracking-[-0.02em] sm:text-[1.3rem]">
-            More About SUOS
+            More About Clarte Club 2.0
           </h2>
         </div>
 
@@ -100,7 +100,7 @@ export function FooterSection() {
               <div className="space-y-0.5">
                 <p className="font-medium">For customer care</p>
                 <p className="normal-case tracking-[-0.01em]">
-                  customercare@suos.in
+                  customercare@clarteclub.in
                 </p>
               </div>
 

@@ -477,12 +477,12 @@ export function Navbar({
 
           <Link
             href="/"
-            aria-label="SUOS home"
+            aria-label="Clarte Club 2.0 home"
             className="justify-self-center transition-opacity hover:opacity-70"
           >
             <Image
               src="/logo.svg"
-              alt="SUOS"
+              alt="Clarte Club 2.0"
               width={260}
               height={120}
               priority
@@ -554,12 +554,12 @@ export function Navbar({
 
             <Link
               href="/"
-              aria-label="SUOS home"
+              aria-label="Clarte Club 2.0 home"
               className="transition-opacity hover:opacity-70"
             >
               <Image
                 src="/logo.svg"
-                alt="SUOS"
+                alt="Clarte Club 2.0"
                 width={220}
                 height={102}
                 priority

@@ -6,8 +6,8 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
 
 export const metadata: Metadata = {
-  title: "SUOS",
-  description: "Luxury retail navigation concept for SUOS.",
+  title: "Clarte Club 2.0",
+  description: "Luxury retail navigation concept for Clarte Club 2.0.",
   icons: {
     icon: "/logo.svg",
   },
