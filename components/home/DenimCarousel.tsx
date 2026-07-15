@@ -20,29 +20,29 @@ type DenimSlide = {
 
 const denimSlides: DenimSlide[] = [
   {
-    title: "SKINNY DENIMS",
+    title: "AVIATOR SHADES",
     image: "/images/products/product5-white.png",
-    alt: "Model wearing skinny denim",
+    alt: "Model wearing aviator sunglasses",
   },
   {
-    title: "BOOTCUT DENIMS",
+    title: "OVAL FRAMES",
     image: "/images/products/product5-white.png",
-    alt: "Model wearing bootcut denim",
+    alt: "Model wearing oval frames",
   },
   {
-    title: "LOW-RISE DENIMS",
+    title: "CATEYE SUNGLASSES",
     image: "/images/products/product5-white.png",
-    alt: "Model wearing low-rise denim",
+    alt: "Model wearing cateye sunglasses",
   },
   {
-    title: "STRAIGHT DENIMS",
+    title: "SQUARE GLASSES",
     image: "/images/products/product5-white.png",
-    alt: "Model wearing straight denim",
+    alt: "Model wearing square glasses",
   },
   {
-    title: "RELAXED DENIMS",
+    title: "OPTICAL FRAMES",
     image: "/images/products/product5-white.png",
-    alt: "Model wearing relaxed denim",
+    alt: "Model wearing clear optical frames",
   },
 ]
 
@@ -124,7 +124,7 @@ export function DenimCarousel() {
             loop: true,
           }}
           className="w-full"
-          aria-label="Denim collection carousel"
+          aria-label="Eyewear collection carousel"
         >
           <CarouselContent className="-ml-1.5">
             {denimSlides.map((slide) => (
