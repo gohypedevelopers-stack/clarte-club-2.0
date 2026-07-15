@@ -56,7 +56,7 @@ function YoutubeIcon(props: React.ComponentProps<"svg">) {
 }
 
 const companyLinks = [
-  { label: "About Us", href: "/#about" },
+  { label: "About Us", href: "/about" },
   { label: "Help", href: "/#help" },
   { label: "Chat With Us", href: "/#chat" },
   { label: "Privacy Policy", href: "/#privacy" },
@@ -65,6 +65,7 @@ const companyLinks = [
 ] as const
 
 const quickLinks = [
+  { label: "Eyewear Collection", href: "/collections" },
   { label: "My Account", href: "/#account" },
   { label: "Returns/ Exchange", href: "/#returns" },
   { label: "Order Tracking", href: "/#tracking" },
