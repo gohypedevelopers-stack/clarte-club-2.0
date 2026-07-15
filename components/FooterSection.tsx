@@ -136,7 +136,7 @@ export function FooterSection() {
         </div>
 
         {/* Links Grid */}
-        <div className="grid gap-10 pt-8 pb-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
+        <div className="grid grid-cols-2 gap-x-8 gap-y-6 pt-8 pb-2 lg:grid-cols-4 lg:gap-12 lg:pb-4">
           
           <FooterGroup title="Company">
             {companyLinks.map((link) => (
@@ -154,11 +154,11 @@ export function FooterSection() {
             ))}
           </FooterGroup>
 
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
               Contact
             </h3>
-            <div className="mt-5 space-y-4 text-[11px] uppercase tracking-[0.08em] text-[#0F0F10]/90">
+            <div className="mt-2.5 lg:mt-5 space-y-3 lg:space-y-4 text-[11px] uppercase tracking-[0.08em] text-[#0F0F10]/90">
               <div className="space-y-1">
                 <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">For Customer Care</p>
                 <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10] hover:text-[#C9B07A] transition-colors duration-200">
@@ -182,15 +182,15 @@ export function FooterSection() {
             </div>
           </div>
 
-          <div>
+          <div className="col-span-2 lg:col-span-1">
             <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
               Newsletter
             </h3>
-            <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.12em] text-[#0F0F10]/70 leading-relaxed">
+            <p className="mt-2.5 lg:mt-4 text-[11px] font-medium uppercase tracking-[0.12em] text-[#0F0F10]/70 leading-relaxed">
               Subscribe for exclusive launches & offers
             </p>
 
-            <form className="mt-6 flex flex-col gap-2">
+            <form className="mt-4 lg:mt-6 flex flex-col gap-2">
               <div className="relative flex items-center border-b border-[#0F0F10]/20 pb-2.5 transition-colors duration-300 focus-within:border-[#C9B07A]">
                 <input
                   type="email"
@@ -219,10 +219,10 @@ export function FooterSection() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-[#0F0F10]/8 mt-8 pt-8 pb-10 px-1">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="border-t border-[#0F0F10]/8 mt-4 pt-4 pb-6 lg:mt-8 lg:pt-8 lg:pb-10 px-1">
+          <div className="flex flex-row items-center justify-between gap-4 w-full">
             {/* Copyright */}
-            <div className="text-[9px] uppercase tracking-[0.14em] text-[#0F0F10]/65 font-medium z-10">
+            <div className="text-[7.5px] sm:text-[9px] uppercase tracking-[0.14em] text-[#0F0F10]/65 font-medium z-10 whitespace-nowrap">
               &copy; {new Date().getFullYear()} CLARTÉ CLUB. ALL RIGHTS RESERVED.
             </div>
 
