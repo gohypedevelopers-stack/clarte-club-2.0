@@ -260,3 +260,46 @@
   border-color: rgba(15, 15, 16, 0.08);
   box-shadow: 0 1px 0 rgba(15, 15, 16, 0.08);
 }
+
+/* Product card hover panel — peek strip visible, full details slide up on hover */
+[data-hover-panel] {
+  transform: translateY(calc(100% - 52px));
+  transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover [data-hover-panel],
+[data-hover-panel][data-expanded="true"] {
+  transform: translateY(0);
+}
+
+/* ── Infinite marquee (LookbookCarousel) ── */
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.marquee-track--left {
+  animation: marquee-left 38s linear infinite;
+}
+.marquee-track--right {
+  animation: marquee-right 42s linear infinite;
+}
+.marquee-track:hover,
+.marquee-track:focus-within {
+  animation-play-state: paused;
+}
+
+@keyframes hero-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
