@@ -7,8 +7,8 @@ import { CartRecommendationsCarousel } from "@/components/cart/CartRecommendatio
 import { trendingProducts } from "@/components/product/productData"
 
 export const metadata = {
-  title: "Cart | Clarte Club 2.0",
-  description: "Your shopping cart on Clarte Club 2.0.",
+  title: "Cart | Clarte Club",
+  description: "Your shopping cart on Clarte Club.",
 }
 
 type CartItem = {
