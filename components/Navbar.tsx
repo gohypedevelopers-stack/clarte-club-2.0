@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils"
 import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
 
-type NavKey = "shop" | "bestsellers"
+type NavKey = "shop" | "bestsellers" | "collections" | "about"
 type ActiveMenu = NavKey | "wishlist"
 
 type PrimaryNavItem = {
@@ -30,19 +30,21 @@ type PrimaryNavItem = {
 const primaryNav: PrimaryNavItem[] = [
   { key: "shop", label: "Shop", href: "/#shop" },
   { key: "bestsellers", label: "Bestsellers", href: "/#bestsellers" },
+  { key: "collections", label: "Collections", href: "/collections" },
+  { key: "about", label: "About", href: "/about" },
 ]
 
 const megaMenuFeatured = ["New", "Bestsellers", "Sale"]
 
 const megaMenuCategories = [
-  "Bootcut Jeans",
-  "Low Waist Jeans",
-  "Straight-Leg Jeans",
-  "Wide-Leg Jeans",
-  "Baggy / Loose Fit Jeans",
-  "Mom Jeans",
-  "Dad Jeans",
-  "Flared Jeans",
+  "Aviator Sunglasses",
+  "Round Sunglasses",
+  "Square Sunglasses",
+  "Oval Sunglasses",
+  "Cateye Sunglasses",
+  "Hexagonal Sunglasses",
+  "D-Frame Sunglasses",
+  "Optical Glasses",
 ]
 
 const megaMenuCards = [
