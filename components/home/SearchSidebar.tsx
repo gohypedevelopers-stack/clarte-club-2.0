@@ -18,29 +18,29 @@ type SearchSidebarProps = {
 }
 
 const trendingSearches = [
-  "MEN'S BOOTCUT DENIMS",
-  "BOYFRIEND JEANS",
-  "MEN'S DENIM JACKET",
-  "SKINNY DENIMS",
+  "HERITAGE OVAL SUNGLASSES",
+  "SIGNATURE AVIATORS",
+  "NOYER SQUARE OPTICALS",
+  "CATEYE TRANSPARENT FRAMES",
 ]
 
 const featuredProducts = [
   {
     id: "featured-1",
     image: "/images/products/product1.png",
-    alt: "Model in blue denim standing against a dark gradient background",
+    alt: "Model wearing Heritage Oval sunglasses in glossy black frame",
     imageClassName: "object-[center_16%]",
   },
   {
     id: "featured-2",
     image: "/images/products/product2.png",
-    alt: "Model in a denim jacket in a monochrome setting",
+    alt: "Model wearing Heritage Aviator sunglasses with dark metal frame",
     imageClassName: "object-[center_14%]",
   },
   {
     id: "featured-3",
     image: "/images/products/product7.png",
-    alt: "Model in denim seated beside greenery",
+    alt: "Model wearing Atelier Hexagon premium metal sunglasses",
     imageClassName: "object-[center_32%]",
   },
 ]
