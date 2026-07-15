@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Heart, Search, ShoppingBag, UserRound } from "lucide-react"
+import { Heart, Search, ShoppingBag, UserRound, Menu, X } from "lucide-react"
 import {
   useEffect,
   useLayoutEffect,
@@ -17,6 +17,12 @@ import {
 import { cn } from "@/lib/utils"
 import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTitle,
+} from "@/components/ui/sheet"
 
 type NavKey = "shop" | "bestsellers" | "collections" | "about"
 type ActiveMenu = NavKey | "wishlist"
@@ -289,6 +295,7 @@ export function Navbar({
   const [isScrolled, setIsScrolled] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedNav, setSelectedNav] = useState<NavKey>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu | null>(null)
   const [isHovered, setIsHovered] = useState(false)
@@ -427,7 +434,7 @@ export function Navbar({
       className={cn(
         "main-navbar navbar-shell border-b",
         isScrolled ? "translate-y-0" : "translate-y-[var(--announcement-height)]",
-        isOverlay ? "h-[98px]" : "lg:h-[98px]",
+        "h-[64px] lg:h-[98px]",
         isInteractiveSurface
           ? "bg-white text-black border-transparent shadow-none"
           : isLightSurface
@@ -546,8 +553,35 @@ export function Navbar({
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 py-4 lg:hidden">
-          <div className="flex items-center justify-between gap-4">
+        {/* Mobile Header Row */}
+        <div className="flex items-center justify-between h-full lg:hidden">
+          <IconButton
+            label="Open Menu"
+            tone={tone}
+            onClick={() => setMobileMenuOpen(true)}
+          >
+            <Menu className="size-[20px] stroke-[1.7]" />
+          </IconButton>
+
+          <Link
+            href="/"
+            aria-label="Clarte Club home"
+            className="transition-opacity hover:opacity-70"
+          >
+            <Image
+              src="/logo.svg"
+              alt="Clarte Club"
+              width={200}
+              height={92}
+              priority
+              className={cn(
+                "block h-auto w-[7.5rem] max-w-none transition-[filter] duration-300 ease-out",
+                !isLightSurface && "invert"
+              )}
+            />
+          </Link>
+
+          <div className="flex items-center gap-1.5">
             <IconButton
               label="Search"
               tone={tone}
@@ -555,67 +589,14 @@ export function Navbar({
             >
               <Search className="size-[18px] stroke-[1.7]" />
             </IconButton>
-
-            <Link
-              href="/"
-              aria-label="Clarte Club home"
-              className="transition-opacity hover:opacity-70"
+            <IconButton
+              label="Cart"
+              tone={tone}
+              onClick={() => setCartOpen(true)}
             >
-              <Image
-                src="/logo.svg"
-                alt="Clarte Club"
-                width={220}
-                height={102}
-                priority
-                className={cn(
-                  "block h-auto w-[8.75rem] max-w-none transition-[filter] duration-300 ease-out",
-                  !isLightSurface && "invert"
-                )}
-              />
-            </Link>
-
-            <div className="flex items-center gap-2">
-              <IconButton
-                label="Wishlist"
-                tone={tone}
-                onClick={toggleWishlist}
-                ariaHaspopup="menu"
-                ariaExpanded={isWishlistOpen}
-              >
-                <Heart className="size-[18px] stroke-[1.7]" />
-              </IconButton>
-              <IconButton
-                label="Cart"
-                tone={tone}
-                onClick={() => setCartOpen(true)}
-              >
-                <ShoppingBag className="size-[18px] stroke-[1.7]" />
-              </IconButton>
-              <IconButton label="Account" tone={tone}>
-                <UserRound className="size-[18px] stroke-[1.7]" />
-              </IconButton>
-            </div>
+              <ShoppingBag className="size-[18px] stroke-[1.7]" />
+            </IconButton>
           </div>
-
-          <nav
-            aria-label="Primary"
-            className={cn(
-              "flex items-center gap-6 overflow-x-auto pb-1 text-[0.75rem] uppercase tracking-[0.18em] text-current transition-[color,opacity] duration-300 ease-out [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            )}
-          >
-            {primaryNav.map((item) => (
-              <NavLink
-                key={item.key}
-                href={item.href}
-                active={selectedNav === item.key}
-                selected={selectedNav === item.key}
-                mobile
-                onClick={() => setSelectedNav(item.key)}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </nav>
         </div>
 
         <div
@@ -665,6 +646,91 @@ export function Navbar({
 
       <SearchSidebar open={searchOpen} onOpenChange={setSearchOpen} />
       <CartSidebar open={cartOpen} onOpenChange={setCartOpen} />
+      <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+        <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 bg-[#F6F2EA] text-black border-r border-black/10 flex flex-col h-full z-[99999]">
+          <div className="flex items-center justify-between px-6 py-5 border-b border-black/5">
+            <SheetTitle className="text-[12px] font-semibold uppercase tracking-[0.2em] text-black/50">
+              Menu
+            </SheetTitle>
+            <SheetClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none cursor-pointer">
+              <X className="h-5 w-5 stroke-[1.5]" />
+              <span className="sr-only">Close</span>
+            </SheetClose>
+          </div>
+
+          <div className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
+            {/* Primary Nav Links */}
+            <nav aria-label="Mobile Primary Navigation" className="flex flex-col gap-6">
+              {primaryNav.map((item) => (
+                <Link
+                  key={item.key}
+                  href={item.href}
+                  onClick={() => {
+                    setSelectedNav(item.key)
+                    setMobileMenuOpen(false)
+                  }}
+                  className={cn(
+                    "text-[18px] font-normal uppercase tracking-[0.12em] text-black hover:opacity-60 transition-opacity",
+                    selectedNav === item.key && "font-semibold"
+                  )}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="h-px bg-black/5" />
+
+            {/* Eyewear Categories in Menu */}
+            <div className="space-y-4">
+              <h3 className="text-[11px] font-semibold uppercase tracking-[0.15em] text-black/40">
+                Shop By Style
+              </h3>
+              <div className="flex flex-col gap-3.5">
+                {megaMenuCategories.map((cat) => (
+                  <Link
+                    key={cat}
+                    href="/collections"
+                    onClick={() => {
+                      setMobileMenuOpen(false)
+                    }}
+                    className="text-[13px] uppercase tracking-[0.08em] text-black/80 hover:text-black transition-colors"
+                  >
+                    {cat}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Mobile Menu Footer */}
+          <div className="p-6 border-t border-black/5 bg-[#ebe8e1] space-y-4">
+            <div className="flex items-center justify-between">
+              <Link
+                href="/account"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-black/70 hover:text-black transition-colors"
+              >
+                <UserRound className="size-4 stroke-[1.5]" />
+                Account
+              </Link>
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  toggleWishlist()
+                }}
+                className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-black/70 hover:text-black transition-colors cursor-pointer"
+              >
+                <Heart className="size-4 stroke-[1.5]" />
+                Wishlist
+              </button>
+            </div>
+            <p className="text-[9px] uppercase tracking-widest text-black/30 text-center pt-2">
+              &copy; {new Date().getFullYear()} Clarte Club
+            </p>
+          </div>
+        </SheetContent>
+      </Sheet>
     </header>
   )
 
