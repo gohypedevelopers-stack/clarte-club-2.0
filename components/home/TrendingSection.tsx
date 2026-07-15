@@ -235,7 +235,7 @@ export function TrendingSection() {
         </h2>
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         {trendingProducts.map((product) => (
           <ProductCardView key={product.id} product={product} />
         ))}
