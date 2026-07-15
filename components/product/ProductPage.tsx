@@ -5,6 +5,8 @@ import { LookbookCarousel } from "@/components/home/LookbookCarousel"
 import { ProductGallery } from "@/components/product/ProductGallery"
 import { ProductSummary } from "@/components/product/ProductSummary"
 import { YouMayAlsoLikeSection } from "@/components/product/YouMayAlsoLikeSection"
+import { ProductReviews } from "@/components/product/ProductReviews"
+import { ProductHighlights } from "@/components/product/ProductHighlights"
 import type { ProductDetail } from "@/components/product/productData"
 
 export function ProductPage({
@@ -14,7 +16,7 @@ export function ProductPage({
 }) {
   return (
     <main className="flex-1 bg-white text-black">
-      <section className="relative w-full overflow-hidden px-4 pb-16 pt-5 sm:px-6 lg:px-8 lg:pt-6">
+      <section className="relative w-full px-4 pb-16 pt-5 sm:px-6 lg:px-8 lg:pt-6">
         <div className="w-full">
           <nav aria-label="Breadcrumb" className="text-[0.7rem] text-black/45">
             <ol className="flex flex-wrap items-center gap-1.5 uppercase tracking-[0.14em]">
@@ -51,6 +53,8 @@ export function ProductPage({
           </div>
         </div>
       </section>
+      <ProductHighlights />
+      <ProductReviews productSlug={product.slug} />
       <YouMayAlsoLikeSection />
       <LookbookCarousel />
     </main>
