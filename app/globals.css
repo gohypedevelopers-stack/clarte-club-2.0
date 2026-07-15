@@ -75,8 +75,17 @@
 
   /* Header stack */
   --announcement-height: 50px;
-  --main-navbar-height: 98px;
+  --main-navbar-height: 64px;
   --header-stack-height: calc(var(--announcement-height) + var(--main-navbar-height));
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --main-navbar-height: 98px;
+  }
+}
+
+:root {
 
   /* Base */
   --background: #F6F2EA;
