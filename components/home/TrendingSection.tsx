@@ -55,14 +55,16 @@ export function ProductCardView({
   return (
     <article className="group relative overflow-hidden" style={{ background: "#0F0F10" }}>
       <div className="relative aspect-[330/479]">
-        <Image
-          key={`${product.id}-${activeImageIndex}`}
-          src={activeImage}
-          alt={product.alt}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover object-top transition-opacity duration-400"
-        />
+        <Link href="/products" className="absolute inset-0 cursor-pointer z-0">
+          <Image
+            key={`${product.id}-${activeImageIndex}`}
+            src={activeImage}
+            alt={product.alt}
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            className="object-cover object-top transition-opacity duration-400"
+          />
+        </Link>
 
         {/* Badge */}
         {product.badge ? (
@@ -114,12 +116,14 @@ export function ProductCardView({
           data-expanded={expanded ? "true" : "false"}
         >
           {/* Always-visible peek strip (name + price) */}
-          <div
-            className="flex items-center justify-between gap-3 px-4"
+          <Link
+            href="/products"
+            className="flex items-center justify-between gap-3 px-4 cursor-pointer hover:opacity-90 transition-opacity"
             style={{
               height: "52px",
               background: "rgba(10,10,11,0.94)",
               borderTop: "1px solid rgba(201,176,122,0.22)",
+              display: "flex",
             }}
           >
             <div className="min-w-0">
@@ -127,16 +131,16 @@ export function ProductCardView({
                 className="text-[11px] font-medium uppercase leading-tight truncate"
                 style={{ letterSpacing: "0.1em", color: "#F6F2EA" }}
               >
-                Signature Frame
+                {product.name ?? "Signature Frame"}
               </p>
               <p
                 className="mt-0.5 text-[10px] font-light uppercase leading-tight"
                 style={{ letterSpacing: "0.06em", color: "#C9B07A" }}
               >
-                ₹ 4,500
+                {product.price ?? "₹ 4,500"}
               </p>
             </div>
-          </div>
+          </Link>
 
           {/* Extended details — hidden until hover slides panel up */}
           <div
