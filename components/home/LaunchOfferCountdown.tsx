@@ -9,27 +9,58 @@ type CountdownParts = {
   seconds: number
 }
 
-function getCountdownParts(targetTimestamp: number, currentTimestamp: number) {
-  const totalSeconds = Math.max(
-    0,
-    Math.floor((targetTimestamp - currentTimestamp) / 1000)
-  )
-
-  const days = Math.floor(totalSeconds / 86400)
-  const hours = Math.floor((totalSeconds % 86400) / 3600)
-  const minutes = Math.floor((totalSeconds % 3600) / 60)
-  const seconds = totalSeconds % 60
-
+function getCountdownParts(target: number, now: number): CountdownParts {
+  const total = Math.max(0, Math.floor((target - now) / 1000))
   return {
-    days,
-    hours,
-    minutes,
-    seconds,
-  } satisfies CountdownParts
+    days: Math.floor(total / 86400),
+    hours: Math.floor((total % 86400) / 3600),
+    minutes: Math.floor((total % 3600) / 60),
+    seconds: total % 60,
+  }
 }
 
-function formatValue(value: number) {
-  return String(value).padStart(2, "0")
+function pad(n: number) {
+  return String(n).padStart(2, "0")
+}
+
+function CountdownDigit({ value, label }: { value: number; label: string }) {
+  const [displayed, setDisplayed] = useState(value)
+  const [flip, setFlip] = useState(false)
+
+  useEffect(() => {
+    if (value !== displayed) {
+      setFlip(true)
+      const t = setTimeout(() => {
+        setDisplayed(value)
+        setFlip(false)
+      }, 180)
+      return () => clearTimeout(t)
+    }
+  }, [value, displayed])
+
+  return (
+    <div className="flex flex-col items-center" style={{ minWidth: "2.4rem" }}>
+      <span
+        className="block text-center font-semibold tabular-nums leading-none"
+        style={{
+          fontSize: "clamp(1.35rem, 2.6vw, 2.1rem)",
+          letterSpacing: "-0.04em",
+          color: "#F6F2EA",
+          opacity: flip ? 0 : 1,
+          transform: flip ? "translateY(-6px)" : "translateY(0)",
+          transition: "opacity 180ms ease, transform 180ms ease",
+        }}
+      >
+        {pad(displayed)}
+      </span>
+      <span
+        className="mt-0.5 uppercase tracking-widest"
+        style={{ fontSize: "0.38rem", color: "#8A8072", letterSpacing: "0.2em" }}
+      >
+        {label}
+      </span>
+    </div>
+  )
 }
 
 export function LaunchOfferCountdown({
@@ -39,52 +70,51 @@ export function LaunchOfferCountdown({
   targetTimestamp: number
   initialNow: number
 }) {
-  const [countdown, setCountdown] = useState(() =>
+  const [c, setC] = useState(() =>
     getCountdownParts(targetTimestamp, initialNow)
   )
 
   useEffect(() => {
-    const updateCountdown = () => {
-      setCountdown(getCountdownParts(targetTimestamp, Date.now()))
-    }
-
-    updateCountdown()
-    const intervalId = window.setInterval(updateCountdown, 1000)
-
-    return () => window.clearInterval(intervalId)
+    const tick = () => setC(getCountdownParts(targetTimestamp, Date.now()))
+    tick()
+    const id = window.setInterval(tick, 1000)
+    return () => window.clearInterval(id)
   }, [targetTimestamp])
 
-  const countdownLabel = `${countdown.days} days ${countdown.hours} hours ${countdown.minutes} minutes ${countdown.seconds} seconds remaining`
+  const parts = [
+    { label: "Days", value: c.days },
+    { label: "Hrs", value: c.hours },
+    { label: "Min", value: c.minutes },
+    { label: "Sec", value: c.seconds },
+  ]
 
   return (
     <div
-      aria-label={countdownLabel}
+      className="flex items-start"
+      style={{ gap: "clamp(0.25rem, 0.8vw, 0.75rem)" }}
+      aria-label={`${c.days} days ${c.hours} hours ${c.minutes} minutes ${c.seconds} seconds remaining`}
       aria-live="off"
-      className="flex shrink-0 items-center gap-1 sm:gap-2 md:gap-3"
     >
-      {[
-        { label: "Days", value: countdown.days },
-        { label: "Hours", value: countdown.hours },
-        { label: "Mins", value: countdown.minutes },
-        { label: "Secs", value: countdown.seconds },
-      ].map((item, index) => (
-        <div key={item.label} className="flex items-center">
-          {index > 0 ? (
+      {parts.map((p, i) => (
+        <div key={p.label} className="flex items-start">
+          {i > 0 && (
             <span
-              aria-hidden="true"
-              className="mr-1 text-[0.625rem] leading-none text-white/70 sm:mr-2 sm:text-[0.8125rem] md:mr-3 md:text-[1rem]"
+              aria-hidden
+              className="font-light"
+              style={{
+                fontSize: "clamp(1rem, 1.8vw, 1.6rem)",
+                color: "#C9B07A",
+                lineHeight: 1,
+                opacity: 0.65,
+                alignSelf: "flex-start",
+                marginTop: "0.1em",
+                marginInline: "clamp(0.1rem, 0.3vw, 0.3rem)",
+              }}
             >
               :
             </span>
-          ) : null}
-          <div className="flex min-w-[2.25rem] flex-col items-center text-center sm:min-w-[2.75rem] md:min-w-[3.5rem]">
-            <span className="text-[0.5625rem] font-medium leading-none sm:text-[0.6875rem] md:text-[0.875rem]">
-              {formatValue(item.value)}
-            </span>
-            <span className="mt-0.5 text-[0.375rem] uppercase tracking-[0.12em] text-white/70 sm:text-[0.5rem] md:text-[0.625rem]">
-              {item.label}
-            </span>
-          </div>
+          )}
+          <CountdownDigit value={p.value} label={p.label} />
         </div>
       ))}
     </div>

@@ -5,7 +5,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { ProductQuickViewModal } from "@/components/product/ProductQuickViewModal"
 import {
   featuredProduct,
@@ -13,29 +12,9 @@ import {
   type ProductCard,
 } from "@/components/product/productData"
 
-const hoverSizes = ["28", "32", "36", "42"]
+const eyewearFits = ["Narrow", "Medium", "Wide"]
+const eyewearDetails = { shape: "Round", lens: "UV400" }
 
-function ColorSwatches({ swatches }: { swatches: string[] }) {
-  return (
-    <div className="flex items-start gap-1">
-      {swatches.map((swatch) => (
-        <span
-          key={swatch}
-          className="group/swatch relative inline-flex flex-col items-center pb-0.5"
-        >
-          <span
-            className="size-[15px] border border-black/10"
-            style={{ backgroundColor: swatch }}
-          />
-          <span
-            aria-hidden="true"
-            className="mt-[1px] h-px w-full origin-left scale-x-0 bg-black/55 transition-transform duration-200 group-hover/swatch:scale-x-100"
-          />
-        </span>
-      ))}
-    </div>
-  )
-}
 
 function SizeMarker({ size }: { size: string }) {
   return (
@@ -74,7 +53,7 @@ export function ProductCardView({
   }
 
   return (
-    <article className="group relative overflow-hidden bg-black shadow-[0_1px_3px_rgba(0,0,0,0.08)]">
+    <article className="group relative overflow-hidden" style={{ background: "#0F0F10" }}>
       <div className="relative aspect-[330/479]">
         <Image
           key={`${product.id}-${activeImageIndex}`}
@@ -82,125 +61,151 @@ export function ProductCardView({
           alt={product.alt}
           fill
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]"
+          className="object-cover object-top transition-opacity duration-400"
         />
 
+        {/* Badge */}
         {product.badge ? (
-          <span className="absolute left-3 top-3 z-10 bg-black px-2.5 py-1 text-[12px] font-light uppercase leading-none tracking-[0.16em] text-white">
+          <span
+            className="absolute left-3 top-3 z-10 px-2.5 py-1 text-[10px] font-semibold uppercase leading-none tracking-[0.18em]"
+            style={{ background: "#C9B07A", color: "#0F0F10" }}
+          >
             {product.badge}
           </span>
         ) : null}
 
+        {/* Plus icon top-right */}
         <div
-          aria-hidden="true"
-          className={cn(
-            "absolute right-3 top-3 z-10 inline-flex size-5 items-center justify-center border border-black/10 bg-white text-black opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100",
-            expanded && "translate-y-0 opacity-100"
-          )}
+          aria-hidden
+          className="absolute right-3 top-3 z-10 inline-flex size-7 items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100"
+          style={{ border: "1px solid rgba(201,176,122,0.5)", background: "rgba(15,15,16,0.6)" }}
         >
-          <Plus className="size-3.5 stroke-[2.1]" />
+          <Plus className="size-3.5" style={{ color: "#C9B07A", strokeWidth: 2.2 }} />
         </div>
 
+        {/* Gallery arrows */}
         {hasGalleryControls ? (
           <div className="pointer-events-none absolute inset-x-3 top-1/2 z-20 flex -translate-y-1/2 items-center justify-between opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-within:opacity-100">
-              <button
-                type="button"
-                aria-label="Previous product image"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  handlePreviousImage()
-                }}
-                className="pointer-events-auto inline-flex size-9 items-center justify-center rounded-none text-white/90 transition-colors duration-200 hover:bg-white/15 hover:text-white"
-              >
-                <ChevronLeft className="size-5" strokeWidth={2.25} />
-              </button>
-
-              <button
-                type="button"
-                aria-label="Next product image"
-                onClick={(event) => {
-                  event.stopPropagation()
-                  handleNextImage()
-                }}
-                className="pointer-events-auto inline-flex size-9 items-center justify-center rounded-none text-white/90 transition-colors duration-200 hover:bg-white/15 hover:text-white"
-              >
-                <ChevronRight className="size-5" strokeWidth={2.25} />
-              </button>
+            <button
+              type="button"
+              aria-label="Previous product image"
+              onClick={(e) => { e.stopPropagation(); handlePreviousImage() }}
+              className="pointer-events-auto inline-flex size-9 items-center justify-center transition-colors duration-200"
+              style={{ background: "rgba(15,15,16,0.55)", color: "#F6F2EA" }}
+            >
+              <ChevronLeft className="size-5" strokeWidth={2} />
+            </button>
+            <button
+              type="button"
+              aria-label="Next product image"
+              onClick={(e) => { e.stopPropagation(); handleNextImage() }}
+              className="pointer-events-auto inline-flex size-9 items-center justify-center transition-colors duration-200"
+              style={{ background: "rgba(15,15,16,0.55)", color: "#F6F2EA" }}
+            >
+              <ChevronRight className="size-5" strokeWidth={2} />
+            </button>
           </div>
         ) : null}
 
+        {/* ── Hover panel: peek strip + full details ── */}
         <div
-          className={cn(
-            "absolute inset-x-3 bottom-3 z-10 overflow-hidden bg-white text-black shadow-[0_8px_18px_rgba(0,0,0,0.12)] transition-[height,padding] duration-300 ease-out",
-            expanded ? "h-[140px]" : "h-[56px] group-hover:h-[140px]"
-          )}
+          className="absolute inset-x-0 bottom-0 z-10"
+          data-hover-panel
+          data-expanded={expanded ? "true" : "false"}
         >
-          {!expanded ? (
-            <div className="flex h-full items-start justify-between gap-2.5 p-3 transition-opacity duration-200 group-hover:opacity-0">
-              <div className="min-w-0">
-                <p className="text-[14px] font-normal uppercase leading-tight tracking-[0.08em]">
-                  NAME OF THE PRODUCT
-                </p>
-                <p className="mt-0.5 text-[14px] uppercase leading-tight tracking-[0.08em]">
-                  PRICE
-                </p>
-              </div>
-
-              <ColorSwatches swatches={product.swatches} />
-            </div>
-          ) : null}
-
+          {/* Always-visible peek strip (name + price) */}
           <div
-            className={cn(
-              "pointer-events-none absolute inset-0 flex flex-col gap-2.5 p-3 opacity-0 transition-all duration-300 ease-out",
-              expanded
-                ? "pointer-events-auto translate-y-0 opacity-100"
-                : "group-hover:pointer-events-auto group-hover:translate-y-0 group-hover:opacity-100"
-            )}
+            className="flex items-center justify-between gap-3 px-4"
+            style={{
+              height: "52px",
+              background: "rgba(10,10,11,0.94)",
+              borderTop: "1px solid rgba(201,176,122,0.22)",
+            }}
           >
-            <div className="flex items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="text-[14px] font-normal uppercase leading-tight tracking-[0.08em]">
-                  NAME OF THE PRODUCT
-                </p>
-                <p className="mt-0.5 text-[14px] uppercase leading-tight tracking-[0.08em]">
-                  PRICE
-                </p>
-              </div>
+            <div className="min-w-0">
+              <p
+                className="text-[11px] font-medium uppercase leading-tight truncate"
+                style={{ letterSpacing: "0.1em", color: "#F6F2EA" }}
+              >
+                Signature Frame
+              </p>
+              <p
+                className="mt-0.5 text-[10px] font-light uppercase leading-tight"
+                style={{ letterSpacing: "0.06em", color: "#C9B07A" }}
+              >
+                ₹ 4,500
+              </p>
+            </div>
+          </div>
 
-              <ColorSwatches swatches={product.swatches} />
+          {/* Extended details — hidden until hover slides panel up */}
+          <div
+            className="flex flex-col gap-3 px-4 pb-4 pt-3"
+            style={{ background: "rgba(10,10,11,0.97)" }}
+          >
+            {/* Frame details row */}
+            <div className="flex items-center gap-3">
+              <span
+                className="text-[9px] uppercase"
+                style={{ letterSpacing: "0.16em", color: "rgba(201,176,122,0.7)" }}
+              >
+                {eyewearDetails.shape}
+              </span>
+              <span
+                aria-hidden
+                style={{ width: "1px", height: "10px", background: "rgba(201,176,122,0.3)", display: "inline-block" }}
+              />
+              <span
+                className="text-[9px] uppercase"
+                style={{ letterSpacing: "0.16em", color: "rgba(201,176,122,0.7)" }}
+              >
+                {eyewearDetails.lens} Lens
+              </span>
             </div>
 
-            <div className="flex flex-col gap-2.5">
-              <div className="flex items-center justify-between gap-3">
-                <div className="flex flex-wrap items-start gap-1.5 text-[14px] font-normal uppercase leading-tight tracking-[0.08em] text-black/75">
-                  {hoverSizes.map((size) => (
-                    <SizeMarker key={size} size={size} />
-                  ))}
-                </div>
-
-                <button
-                  type="button"
-                  aria-label={`Quick view ${product.alt}`}
-                  onClick={(event) => {
-                    event.stopPropagation()
-                    setQuickViewOpen(true)
-                  }}
-                  className="group/quickview shrink-0 whitespace-nowrap text-[14px] font-normal uppercase leading-tight tracking-[0.08em] text-black"
-                >
-                  <span className="inline-block bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-200 group-hover/quickview:bg-[length:100%_1px]">
-                    Quick View
-                  </span>
-                </button>
+            {/* Fit sizes + Quick View */}
+            <div className="flex items-center justify-between gap-3">
+              <div
+                className="flex flex-wrap items-center gap-1.5 text-[10px] font-normal uppercase"
+                style={{ letterSpacing: "0.12em", color: "rgba(246,242,234,0.45)" }}
+              >
+                {eyewearFits.map((fit) => (
+                  <SizeMarker key={fit} size={fit} />
+                ))}
               </div>
 
               <button
                 type="button"
-                className="flex h-10 w-full items-center justify-center border border-black bg-white text-[14px] uppercase tracking-[0.14em] transition-colors hover:bg-black hover:text-white"
+                aria-label={`Quick view ${product.alt}`}
+                onClick={(e) => { e.stopPropagation(); setQuickViewOpen(true) }}
+                className="group/qv shrink-0 text-[10px] font-medium uppercase"
+                style={{ letterSpacing: "0.14em", color: "#C9B07A" }}
               >
-                Add To Cart
+                <span className="inline-block bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-200 group-hover/qv:bg-[length:100%_1px]">
+                  Quick View
+                </span>
               </button>
             </div>
+
+            {/* Add to Cart */}
+            <button
+              type="button"
+              className="group/cart relative overflow-hidden text-[10px] font-semibold uppercase"
+              style={{
+                height: "2.4rem",
+                width: "100%",
+                border: "1px solid rgba(201,176,122,0.45)",
+                letterSpacing: "0.18em",
+                color: "#F6F2EA",
+              }}
+            >
+              <span
+                aria-hidden
+                className="absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover/cart:translate-x-0"
+                style={{ background: "rgba(201,176,122,0.15)" }}
+              />
+              <span className="relative">Add To Cart</span>
+            </button>
           </div>
         </div>
       </div>
@@ -226,7 +231,7 @@ export function TrendingSection() {
         </h2>
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         {trendingProducts.map((product) => (
           <ProductCardView key={product.id} product={product} />
         ))}

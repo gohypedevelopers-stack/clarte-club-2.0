@@ -31,7 +31,7 @@ const heroSlides: HeroSlide[] = [
 ]
 
 export function Hero() {
-  const [activeSlide, setActiveSlide] = useState(1)
+  const [activeSlide, setActiveSlide] = useState(0)
 
   useEffect(() => {
     const interval = window.setInterval(() => {
@@ -41,7 +41,7 @@ export function Hero() {
     return () => {
       window.clearInterval(interval)
     }
-  }, [])
+  }, [activeSlide])
 
   return (
     <section className="relative -mt-[var(--header-stack-height)] min-h-[100svh] overflow-hidden bg-[#d4cdc1] pt-[var(--header-stack-height)] text-white">
@@ -65,7 +65,7 @@ export function Hero() {
                   fill
                   priority={isActive}
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center"
+                  className="object-cover object-top"
                 />
               </div>
               <div className="relative min-h-[50svh] lg:min-h-0">
@@ -75,7 +75,7 @@ export function Hero() {
                   fill
                   priority={isActive}
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-center grayscale"
+                  className="object-cover object-top grayscale"
                 />
               </div>
             </div>

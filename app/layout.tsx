@@ -35,7 +35,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
-        <div className="relative flex flex-1 flex-col overflow-x-hidden">
+        <div className="relative flex flex-1 flex-col overflow-x-clip">
           <SiteHeader />
           <div className="flex flex-1 flex-col pt-[var(--header-stack-height)]">
             {children}

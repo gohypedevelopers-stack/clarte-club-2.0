@@ -9,25 +9,111 @@ export function LaunchOfferBar() {
   const initialNow = getServerTimestamp()
 
   return (
-    <section className="h-[96px] overflow-hidden bg-black text-white">
-      <div className="mx-auto flex h-full w-full max-w-[1268px] items-center justify-center px-4 sm:px-6">
-        <div className="flex w-full min-w-0 items-center justify-center gap-3 whitespace-nowrap sm:gap-6 md:gap-10">
-          <p className="shrink-0 text-[0.5rem] font-medium uppercase tracking-[0.06em] sm:text-[0.625rem] md:text-[0.875rem] md:tracking-[0.12em]">
-            Launch Offer Live Now
-          </p>
+    <section
+      className="relative w-full overflow-hidden"
+      style={{
+        background: "linear-gradient(90deg, #0a0a0b 0%, #141415 50%, #0a0a0b 100%)",
+        borderTop: "1px solid rgba(201,176,122,0.25)",
+        borderBottom: "1px solid rgba(201,176,122,0.10)",
+      }}
+    >
+      {/* Subtle gold noise texture overlay */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage:
+            "radial-gradient(ellipse 60% 100% at 50% 50%, rgba(201,176,122,0.04) 0%, transparent 70%)",
+        }}
+      />
+
+      <div className="relative mx-auto flex h-[88px] w-full max-w-[1268px] items-center justify-between gap-4 px-5 sm:px-8 md:h-[96px]">
+
+        {/* Left: Headline */}
+        <div className="flex shrink-0 flex-col" style={{ minWidth: 0 }}>
+          <span
+            className="uppercase"
+            style={{
+              fontSize: "clamp(0.42rem, 0.8vw, 0.65rem)",
+              letterSpacing: "0.25em",
+              color: "#8A8072",
+              lineHeight: 1,
+            }}
+          >
+            Limited time
+          </span>
+          <span
+            className="mt-1 block font-semibold uppercase leading-none"
+            style={{
+              fontSize: "clamp(0.75rem, 1.5vw, 1.1rem)",
+              letterSpacing: "0.08em",
+              color: "#F6F2EA",
+            }}
+          >
+            Launch Offer{" "}
+            <span
+              style={{
+                color: "#C9B07A",
+                borderBottom: "1.5px solid rgba(201,176,122,0.55)",
+                paddingBottom: "1px",
+              }}
+            >
+              Live Now
+            </span>
+          </span>
+        </div>
+
+        {/* Center: Countdown */}
+        <div className="flex flex-1 items-center justify-center">
+          {/* Thin vertical rule left */}
+          <div
+            aria-hidden
+            className="mr-4 hidden shrink-0 sm:block"
+            style={{ width: "1px", height: "36px", background: "rgba(201,176,122,0.2)" }}
+          />
 
           <LaunchOfferCountdown
             targetTimestamp={launchDeadline}
             initialNow={initialNow}
           />
 
-          <Link
-            href="/collections"
-            className="inline-flex h-7 shrink-0 items-center justify-center border border-white/70 px-2 text-[0.4375rem] font-medium uppercase tracking-[0.1em] transition-colors hover:bg-white/10 sm:h-9 sm:min-w-[7rem] sm:px-4 sm:text-[0.625rem] md:h-10 md:min-w-[8.5rem] md:px-6 md:text-[0.875rem]"
-          >
-            Shop Now
-          </Link>
+          {/* Thin vertical rule right */}
+          <div
+            aria-hidden
+            className="ml-4 hidden shrink-0 sm:block"
+            style={{ width: "1px", height: "36px", background: "rgba(201,176,122,0.2)" }}
+          />
         </div>
+
+        {/* Right: CTA */}
+        <Link
+          href="/collections"
+          className="group relative shrink-0 overflow-hidden"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "clamp(2rem, 4vw, 2.6rem)",
+            paddingInline: "clamp(0.9rem, 2vw, 1.75rem)",
+            border: "1px solid rgba(201,176,122,0.55)",
+            fontSize: "clamp(0.5rem, 0.9vw, 0.7rem)",
+            fontWeight: 600,
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: "#C9B07A",
+            textDecoration: "none",
+            transition: "color 280ms ease",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {/* Hover fill */}
+          <span
+            aria-hidden
+            className="absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0"
+            style={{ background: "rgba(201,176,122,0.12)" }}
+          />
+          <span className="relative">Shop Now</span>
+        </Link>
       </div>
     </section>
   )

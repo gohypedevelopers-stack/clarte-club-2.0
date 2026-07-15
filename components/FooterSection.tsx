@@ -86,9 +86,10 @@ function FooterLink({
   return (
     <Link
       href={href}
-      className="inline-block w-fit text-[10px] uppercase tracking-[0.14em] text-[#F6F2EA]/70 transition-all duration-300 hover:text-[#C9B07A] hover:translate-x-0.5"
+      className="group relative inline-flex items-center text-[11px] uppercase tracking-[0.13em] text-[#0F0F10]/90 transition-colors duration-300 hover:text-[#C9B07A] py-0.5 w-fit font-medium"
     >
-      {children}
+      <span>{children}</span>
+      <span className="absolute bottom-0 left-0 h-[1px] w-0 bg-[#C9B07A] transition-all duration-300 group-hover:w-full" />
     </Link>
   )
 }
@@ -102,10 +103,10 @@ function FooterGroup({
 }) {
   return (
     <div className="flex flex-col">
-      <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9B07A]">
+      <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
         {title}
       </h3>
-      <div className="mt-5 flex flex-col gap-3.5">
+      <div className="mt-5 flex flex-col gap-3">
         {children}
       </div>
     </div>
@@ -114,27 +115,27 @@ function FooterGroup({
 
 export function FooterSection() {
   return (
-    <footer className="w-full border-t border-[#C9B07A]/25" style={{ background: "#0F0F10" }}>
-      <div className="mx-auto max-w-[1268px] px-5 py-14 sm:px-8 md:py-16">
+    <footer className="w-full border-t border-[#C9B07A]/20" style={{ background: "#F6F2EA" }}>
+      <div className="mx-auto max-w-[1268px] px-5 pt-8 pb-0 sm:px-8 md:pt-10 md:pb-0">
         
         {/* Top Header Block with Logo */}
-        <div className="flex flex-col gap-6 border-b border-[#F6F2EA]/10 pb-8 sm:flex-row sm:items-center sm:justify-between">
-          <Link href="/" aria-label="Clarte Club Home" className="transition-opacity hover:opacity-85">
+        <div className="flex flex-col gap-6 border-b border-[#0F0F10]/8 pb-6 sm:flex-row sm:items-center sm:justify-between">
+          <Link href="/" aria-label="Clarte Club Home" className="transition-all duration-300 hover:opacity-75 hover:scale-[1.01]">
             <Image
               src="/logo.svg"
               alt="Clarte Club"
               width={200}
               height={90}
-              className="h-auto w-[8.5rem] object-contain invert brightness-95"
+              className="h-auto w-[8.5rem] object-contain"
             />
           </Link>
-          <p className="text-[9.5px] uppercase tracking-[0.26em] text-[#8A8072]">
+          <p className="text-[10px] uppercase tracking-[0.25em] text-[#0F0F10]/70 font-semibold">
             Signature Eyewear &bull; Crafted for Style
           </p>
         </div>
 
         {/* Links Grid */}
-        <div className="grid gap-10 py-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
+        <div className="grid gap-10 pt-8 pb-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-12">
           
           <FooterGroup title="Company">
             {companyLinks.map((link) => (
@@ -153,27 +154,27 @@ export function FooterSection() {
           </FooterGroup>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9B07A]">
+            <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
               Contact
             </h3>
-            <div className="mt-5 space-y-4.5 text-[10px] uppercase tracking-[0.1em] text-[#F6F2EA]/85">
+            <div className="mt-5 space-y-4 text-[11px] uppercase tracking-[0.08em] text-[#0F0F10]/90">
               <div className="space-y-1">
-                <p className="font-semibold text-[#8A8072] text-[9px] tracking-[0.16em]">For Customer Care</p>
-                <p className="normal-case tracking-[0.02em] font-medium text-[#F6F2EA] hover:text-[#C9B07A] transition-colors duration-200">
+                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">For Customer Care</p>
+                <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10] hover:text-[#C9B07A] transition-colors duration-200">
                   <a href="mailto:customercare@clarteclub.in">customercare@clarteclub.in</a>
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="font-semibold text-[#8A8072] text-[9px] tracking-[0.16em]">For Online Orders</p>
-                <p className="normal-case tracking-[0.02em] font-medium text-[#F6F2EA] hover:text-[#C9B07A] transition-colors duration-200">
-                  <a href="tel:+91000000000">+91 000000000</a>
+                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">For Online Orders</p>
+                <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10] hover:text-[#C9B07A] transition-colors duration-200">
+                  <a href="tel:+91000000000">+91 00000 00000</a>
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="font-semibold text-[#8A8072] text-[9px] tracking-[0.16em]">Timings</p>
-                <p className="normal-case tracking-[0.02em] font-medium text-[#F6F2EA]">
+                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">Timings</p>
+                <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10]">
                   Mon-Sat : 9AM - 8PM
                 </p>
               </div>
@@ -181,112 +182,76 @@ export function FooterSection() {
           </div>
 
           <div>
-            <h3 className="text-[11px] font-semibold uppercase tracking-[0.2em] text-[#C9B07A]">
+            <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
               Newsletter
             </h3>
-            <p className="mt-2.5 text-[9px] uppercase tracking-[0.16em] text-[#8A8072] leading-relaxed">
+            <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.12em] text-[#0F0F10]/70 leading-relaxed">
               Subscribe for exclusive launches & offers
             </p>
 
-            <div className="mt-5">
-              <div className="flex items-center gap-3 border-b border-[#F6F2EA]/20 pb-2 transition-colors duration-300 focus-within:border-[#C9B07A]">
+            <form className="mt-6 flex flex-col gap-2">
+              <div className="relative flex items-center border-b border-[#0F0F10]/20 pb-2.5 transition-colors duration-300 focus-within:border-[#C9B07A]">
                 <input
                   type="email"
+                  required
                   aria-label="Email address"
-                  placeholder="Enter your email address"
+                  placeholder="ENTER YOUR EMAIL"
                   className={cn(
-                    "min-w-0 flex-1 bg-transparent text-[11px] text-[#F6F2EA] outline-none placeholder:text-[#F6F2EA]/30",
-                    "selection:bg-[#C9B07A] selection:text-black"
+                    "min-w-0 flex-1 bg-transparent text-[11px] uppercase tracking-[0.08em] text-[#0F0F10] outline-none placeholder:text-[#0F0F10]/50 pr-14",
+                    "selection:bg-[#C9B07A]/30"
                   )}
                 />
                 <button
-                  type="button"
-                  aria-label="Submit newsletter email"
-                  className="inline-flex size-6 items-center justify-center text-[#F6F2EA]/70 transition-colors hover:text-[#C9B07A]"
+                  type="submit"
+                  aria-label="Subscribe to newsletter"
+                  className="absolute right-0 text-[11px] font-bold uppercase tracking-[0.12em] text-[#0F0F10] hover:text-[#C9B07A] transition-colors duration-300 cursor-pointer py-1"
                 >
-                  <ArrowRight className="size-4 stroke-[1.8]" />
+                  JOIN
                 </button>
               </div>
-
-              <button
-                type="button"
-                className="group relative mt-5 flex h-11 w-full items-center justify-center overflow-hidden border border-[#C9B07A] bg-transparent text-[10px] font-semibold uppercase tracking-[0.18em] text-[#C9B07A] transition-colors duration-300 hover:text-black"
-              >
-                {/* Gold fill slide-in */}
-                <span
-                  className="absolute inset-0 -translate-x-full bg-[#C9B07A] transition-transform duration-300 ease-out group-hover:translate-x-0"
-                  aria-hidden
-                />
-                <span className="relative z-10">Subscribe</span>
-              </button>
-            </div>
+              <p className="text-[9px] uppercase tracking-[0.06em] text-[#0F0F10]/60 mt-1.5 leading-normal">
+                By subscribing, you agree to our Terms & Privacy Policy.
+              </p>
+            </form>
           </div>
 
         </div>
 
         {/* Bottom Bar */}
-        <div className="relative border-t border-[#F6F2EA]/10 pt-8 mt-12">
-          
-          {/* Main Footer links row */}
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 mb-8 relative z-10">
-            {bottomLinks.map((link) => (
-              <FooterLink key={link.label} href={link.href}>
-                {link.label}
-              </FooterLink>
-            ))}
-          </div>
-
-          {/* Social / Copyright / Watermark Row */}
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between relative z-10">
+        <div className="border-t border-[#0F0F10]/8 mt-8 pt-8 pb-10 px-1">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             {/* Copyright */}
-            <div className="text-[9px] uppercase tracking-[0.18em] text-[#8A8072]">
+            <div className="text-[9px] uppercase tracking-[0.14em] text-[#0F0F10]/65 font-medium z-10">
               &copy; {new Date().getFullYear()} CLARTÉ CLUB. ALL RIGHTS RESERVED.
             </div>
 
             {/* Social Icons */}
-            <div className="flex items-center gap-5 text-[#F6F2EA]/60">
+            <div className="flex items-center gap-3 z-10">
               <a
                 href="#facebook"
                 aria-label="Facebook"
-                className="hover:text-[#C9B07A] transition-colors duration-200"
+                className="group flex size-7 items-center justify-center rounded-full border border-[#0F0F10]/10 hover:border-[#C9B07A] hover:bg-[#C9B07A]/5 transition-all duration-300"
               >
-                <FacebookIcon className="size-[15px] stroke-[1.5]" />
+                <FacebookIcon className="size-[12px] text-[#0F0F10]/60 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
               </a>
               <a
                 href="#instagram"
                 aria-label="Instagram"
-                className="hover:text-[#C9B07A] transition-colors duration-200"
+                className="group flex size-7 items-center justify-center rounded-full border border-[#0F0F10]/10 hover:border-[#C9B07A] hover:bg-[#C9B07A]/5 transition-all duration-300"
               >
-                <InstagramIcon className="size-[15px] stroke-[1.5]" />
+                <InstagramIcon className="size-[12px] text-[#0F0F10]/60 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
               </a>
               <a
                 href="#youtube"
                 aria-label="YouTube"
-                className="hover:text-[#C9B07A] transition-colors duration-200"
+                className="group flex size-7 items-center justify-center rounded-full border border-[#0F0F10]/10 hover:border-[#C9B07A] hover:bg-[#C9B07A]/5 transition-all duration-300"
               >
-                <YoutubeIcon className="size-[15px] stroke-[1.5]" />
+                <YoutubeIcon className="size-[12px] text-[#0F0F10]/60 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
               </a>
             </div>
-          </div>
-
-          {/* Giant Faded Background watermark */}
-          <div
-            className="absolute left-1/2 bottom-3 -translate-x-1/2 pointer-events-none select-none z-0"
-            style={{
-              fontSize: "clamp(2rem, 9.8vw, 7.8rem)",
-              fontWeight: 800,
-              letterSpacing: "0.22em",
-              color: "rgba(246, 242, 234, 0.038)",
-              textTransform: "uppercase",
-              lineHeight: 1,
-              whiteSpace: "nowrap",
-            }}
-          >
-            CLARTÉ CLUB
-          </div>
         </div>
-
       </div>
-    </footer>
+    </div>
+  </footer>
   )
 }
