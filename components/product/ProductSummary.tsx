@@ -148,78 +148,78 @@ export function ProductSummary({
   }
 
   return (
-    <aside className="self-start">
+    <aside className="self-start w-full">
       <div className="space-y-5 text-black xl:w-[573px] xl:max-w-[573px] xl:justify-self-end">
-        <div className="space-y-1">
-          <p className="text-[14px] font-medium uppercase tracking-[0.22em] text-black/45">
-            {product.editLabel}
-          </p>
-          <h1 className="font-heading text-[40px] font-normal uppercase leading-[0.9] tracking-[-0.06em]">
-            {product.title}
-          </h1>
-        </div>
-
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div className="space-y-1">
-            <div className="flex items-end gap-3">
-              <span className="text-[18px] leading-none text-black/45 line-through">
-                {product.originalPrice}
-              </span>
-              <span className="font-heading text-[22px] font-medium leading-none tracking-[-0.04em]">
-                {product.price}
-              </span>
+        {/* RATINGS & REVIEWS AT THE TOP */}
+        <div className="space-y-2">
+          <button
+            onClick={() => {
+              document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth" })
+            }}
+            className="inline-flex items-center gap-1.5 text-black hover:opacity-70 transition-opacity cursor-pointer focus:outline-none"
+          >
+            <div className="flex items-center gap-0.5">
+              {[1, 2, 3, 4, 5].map((star) => {
+                const isFilled = averageRating >= star
+                const isHalf = !isFilled && averageRating >= star - 0.5
+                return (
+                  <StarIcon key={star} filled={isFilled} half={isHalf} />
+                )
+              })}
             </div>
-          </div>
-
-          <div className="flex items-end gap-2 text-black">
-            <span className="text-[16px] font-normal leading-none text-black/45">
-              {product.sold}
+            <span className="text-[11px] sm:text-[13px] font-semibold tracking-[0.06em] text-black/50 uppercase">
+              {averageRating} ({reviewsCount} REVIEWS)
             </span>
-            <span className="text-black/25">|</span>
-            <button
-              onClick={() => {
-                document.getElementById("reviews")?.scrollIntoView({ behavior: "smooth" })
-              }}
-              className="inline-flex items-center gap-1.5 text-black hover:opacity-70 transition-opacity cursor-pointer focus:outline-none"
-            >
-              <div className="flex items-center gap-0.5">
-                {[1, 2, 3, 4, 5].map((star) => {
-                  const isFilled = averageRating >= star
-                  const isHalf = !isFilled && averageRating >= star - 0.5
-                  return (
-                    <StarIcon key={star} filled={isFilled} half={isHalf} />
-                  )
-                })}
-              </div>
-              <span className="text-[13px] font-semibold tracking-[0.06em] text-black/60 uppercase">
-                {averageRating} ({reviewsCount} REVIEWS)
-              </span>
-            </button>
+          </button>
+
+          <div className="space-y-1">
+            <p className="text-[11px] sm:text-[13px] font-semibold uppercase tracking-[0.22em] text-[#C9B07A]">
+              {product.editLabel}
+            </p>
+            <h1 className="font-heading text-[28px] sm:text-[34px] md:text-[40px] font-normal uppercase leading-[0.9] tracking-[-0.06em]">
+              {product.title}
+            </h1>
           </div>
         </div>
 
+        {/* PRICE BLOCK WITH SOLD BADGE AND TAXES */}
+        <div className="space-y-1.5 border-b border-black/10 pb-4">
+          <div className="flex items-center gap-3 flex-wrap">
+            <span className="text-[15px] sm:text-[18px] leading-none text-black/45 line-through">
+              {product.originalPrice}
+            </span>
+            <span className="font-heading text-[20px] sm:text-[24px] font-medium leading-none tracking-[-0.04em] text-black">
+              {product.price}
+            </span>
+            <span className="inline-flex items-center justify-center bg-black text-[#F6F2EA] px-2.5 py-1 text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-wider leading-none">
+              1,238 Sold Today
+            </span>
+          </div>
+          <p className="text-[8px] sm:text-[9px] text-black/40 uppercase tracking-wider font-light">
+            INCL. OF ALL TAXES
+          </p>
+        </div>
+
+        {/* DESCRIPTION BLOCK */}
         <section className="space-y-2">
-          <p className="text-[22px] font-medium">
+          <p className="text-[14px] sm:text-[16px] md:text-[18px] font-bold uppercase tracking-wider text-black">
             Description:
           </p>
-          <p className="max-w-[36rem] font-sans text-[16px] font-normal leading-[1.75] text-black/68">
+          <p className="max-w-[36rem] font-sans text-[13px] sm:text-[15px] font-normal leading-[1.7] text-black/68">
             {product.description}{" "}
             <Link
               href="#details"
-              className="font-medium text-black underline underline-offset-4 transition-opacity hover:opacity-70"
+              className="font-semibold text-black underline underline-offset-4 transition-opacity hover:opacity-70"
             >
               See More...
             </Link>
           </p>
         </section>
 
-        <section className="space-y-3">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-[22px] font-medium text-black/45">
-              Color:{" "}
-              <span className="font-medium text-black">{selectedColor}</span>
-            </p>
-          </div>
+        <section className="space-y-3 pt-2">
+          <p className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
+            Color: <span className="font-normal text-black/60 normal-case">{selectedColor}</span>
+          </p>
 
           <div className="flex flex-wrap items-center gap-2.5">
             {product.colors.map((color) => {
@@ -249,11 +249,11 @@ export function ProductSummary({
           </div>
         </section>
 
-        <section className="space-y-3">
+        <section className="space-y-3 pt-2">
           <div className="flex items-center justify-between gap-3">
-            <p className="text-[18px] font-normal text-black/45">
-              Size: <span className="font-normal text-black">{selectedSize}</span>
-            </p>
+            <h3 className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
+              Choose Size
+            </h3>
             <button
               onClick={() => {
                 const detailsSec = document.getElementById("details")
@@ -262,9 +262,9 @@ export function ProductSummary({
                   setActiveAccordion("care")
                 }
               }}
-              className="text-[18px] font-normal text-black/45 underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer"
+              className="text-[11px] font-bold text-black/45 uppercase tracking-wider underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer"
             >
-              View Size Chart
+              Size Guide
             </button>
           </div>
 
@@ -274,12 +274,16 @@ export function ProductSummary({
                 key={size}
                 active={selectedSize === size}
                 onClick={() => setSelectedSize(size)}
-                className="h-10 min-w-0 px-3"
+                className="h-10 min-w-0 px-3 text-[12px] font-bold tracking-wider uppercase"
               >
                 {size}
               </OptionButton>
             ))}
           </div>
+          
+          <p className="text-[10px] text-black/55 flex items-center gap-1.5 mt-2 uppercase tracking-wide leading-tight">
+            <span className="text-[#5b8c38] font-bold text-xs">✓</span> 80% of customers kept their usual size. Prefer a cleaner fit? Size down.
+          </p>
         </section>
 
         {/* AVAILABLE COUPONS */}
@@ -293,7 +297,7 @@ export function ProductSummary({
             </button>
           </div>
 
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none w-full min-w-0">
             {/* Coupon 1 */}
             <div 
               onClick={() => handleApplyCoupon("CLARTE300")}
@@ -349,7 +353,7 @@ export function ProductSummary({
             </button>
           </div>
 
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none">
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none w-full min-w-0">
             {/* Fit Item 1 */}
             <div 
               onClick={() => toggleFitItem("case")}
@@ -437,7 +441,7 @@ export function ProductSummary({
             onClick={handleAddToCart}
             disabled={cartState !== "idle"}
             className={cn(
-              "flex h-12 w-full items-center justify-center border border-black text-[22px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
+              "flex h-12 w-full items-center justify-center border border-black text-[16px] sm:text-[18px] md:text-[22px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
               cartState === "idle" && "bg-white text-black hover:bg-black hover:text-white",
               cartState === "adding" && "bg-black/10 text-black/40 border-black/10 cursor-not-allowed",
               cartState === "added" && "bg-[#5b8c38] text-white border-[#5b8c38]"
@@ -473,7 +477,7 @@ export function ProductSummary({
 
         {/* PRODUCT DETAILS ACCORDIONS */}
         <section id="details" className="border-t border-black/15 pt-4">
-          <h2 className="text-[22px] font-medium uppercase">
+          <h2 className="text-[16px] sm:text-[18px] md:text-[22px] font-medium uppercase">
             Product Details
           </h2>
           <p className="mt-3 max-w-[36rem] font-sans text-[16px] font-normal leading-[1.72] text-black/68">
@@ -486,10 +490,10 @@ export function ProductSummary({
             <button
               type="button"
               onClick={() => setActiveAccordion(activeAccordion === "care" ? null : "care")}
-              className="flex w-full items-center justify-between text-[22px] font-medium uppercase tracking-normal transition-opacity hover:opacity-70 cursor-pointer"
+              className="flex w-full items-center justify-between text-[16px] sm:text-[18px] md:text-[22px] font-medium uppercase tracking-normal transition-opacity hover:opacity-70 cursor-pointer"
             >
               <span>Details &amp; Care</span>
-              <span className="text-[20px] font-light">{activeAccordion === "care" ? "−" : "+"}</span>
+              <span className="text-[16px] sm:text-[20px] font-light">{activeAccordion === "care" ? "−" : "+"}</span>
             </button>
             <div
               className={cn(
@@ -509,10 +513,10 @@ export function ProductSummary({
             <button
               type="button"
               onClick={() => setActiveAccordion(activeAccordion === "shipping" ? null : "shipping")}
-              className="flex w-full items-center justify-between text-[22px] font-medium uppercase tracking-normal transition-opacity hover:opacity-70 cursor-pointer"
+              className="flex w-full items-center justify-between text-[16px] sm:text-[18px] md:text-[22px] font-medium uppercase tracking-normal transition-opacity hover:opacity-70 cursor-pointer"
             >
               <span>Shipping &amp; Payment</span>
-              <span className="text-[20px] font-light">{activeAccordion === "shipping" ? "−" : "+"}</span>
+              <span className="text-[16px] sm:text-[20px] font-light">{activeAccordion === "shipping" ? "−" : "+"}</span>
             </button>
             <div
               className={cn(
@@ -530,8 +534,8 @@ export function ProductSummary({
         </div>
 
         {/* TRUST BADGES */}
-        <section className="pt-4 border-t border-black/15">
-          <div className="flex divide-x divide-black/10">
+        <section className="pt-6 border-t border-black/15 pb-2">
+          <div className="grid grid-cols-3 divide-x divide-black/10">
             {[
               { icon: Truck,        label: 'Free Shipping', sub: 'On orders above ₹999'  },
               { icon: RefreshCcw,   label: 'Easy Returns',  sub: '14-day return policy'  },
@@ -541,14 +545,17 @@ export function ProductSummary({
               return (
                 <div
                   key={badge.label}
-                  className="flex flex-1 items-center justify-center gap-1.5 px-2 py-3 text-center"
+                  className="flex flex-col items-center justify-center gap-1.5 px-1 py-1 text-center"
                 >
-                  <Icon className="size-4 shrink-0 text-black/50" strokeWidth={1.5} />
-                  <span className="text-[9px] uppercase tracking-[0.06em] text-black leading-tight text-left">
-                    <span className="font-semibold">{badge.label}</span>
-                    <span className="mx-1 text-black/20 font-light">&middot;</span>
-                    <span className="text-[8px] text-black/40 font-light">{badge.sub}</span>
-                  </span>
+                  <Icon className="size-4 shrink-0 text-black/60" strokeWidth={1.5} />
+                  <div className="space-y-0.5">
+                    <p className="text-[8.5px] font-bold uppercase tracking-[0.06em] text-black leading-tight">
+                      {badge.label}
+                    </p>
+                    <p className="text-[7.5px] uppercase tracking-wide text-black/40 font-light leading-tight">
+                      {badge.sub}
+                    </p>
+                  </div>
                 </div>
               )
             })}
