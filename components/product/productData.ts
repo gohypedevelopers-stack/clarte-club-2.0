@@ -24,6 +24,10 @@ export type ProductCard = {
   sizes?: string[]
   swatches: string[]
   gallery?: string[]
+  name?: string
+  price?: string
+  category?: "Heritage" | "Noyer" | "Crystal" | "Atelier"
+  type?: "Sunglasses" | "Optical"
 }
 
 export type ProductDetail = {
@@ -54,9 +58,9 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-1",
     image: "/images/products/product1.png",
-    alt: "Model wearing a blue denim outfit",
+    alt: "Model wearing Heritage Oval sunglasses in glossy black frame",
     badge: "NEW ARRIVAL",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    swatches: ["#000000", "#6f5639", "#ebe8e1"],
     gallery: [
       "/images/products/product1.png",
       "/images/products/product5.png",
@@ -67,8 +71,8 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-2",
     image: "/images/products/product2.png",
-    alt: "Model wearing a denim jacket in monochrome",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    alt: "Model wearing Heritage Aviator sunglasses with dark metal frame",
+    swatches: ["#5b82ab", "#111722"],
     gallery: [
       "/images/products/product2.png",
       "/images/products/product6.png",
@@ -79,9 +83,9 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-3",
     image: "/images/products/product3.png",
-    alt: "Model seated in a black tailored look",
+    alt: "Model wearing Noyer Square clear acetate optical frames",
     badge: "BESTSELLER",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    swatches: ["#ebe8e1", "#6f5639"],
     gallery: [
       "/images/products/product3.png",
       "/images/products/product7.png",
@@ -92,8 +96,8 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-4",
     image: "/images/products/product4.png",
-    alt: "Model wearing an all-black outfit",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    alt: "Model wearing Noyer D-Frame acetate sunglasses in tortoiseshell",
+    swatches: ["#6f5639", "#000000"],
     gallery: [
       "/images/products/product4.png",
       "/images/products/product8.png",
@@ -104,10 +108,10 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-5-featured",
     image: "/images/products/product4.png",
-    alt: "Model wearing an all-black outfit",
+    alt: "Model wearing Noyer D-Frame acetate sunglasses in tortoiseshell",
     featured: true,
-    sizes: ["28", "32", "36", "42"],
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    sizes: ["Narrow", "Medium", "Wide"],
+    swatches: ["#6f5639", "#000000"],
     gallery: [
       "/images/products/product4.png",
       "/images/products/product8.png",
@@ -118,8 +122,8 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-6",
     image: "/images/products/product3.png",
-    alt: "Model seated in a black tailored look",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    alt: "Model wearing Noyer Square clear acetate optical frames",
+    swatches: ["#ebe8e1", "#6f5639"],
     gallery: [
       "/images/products/product3.png",
       "/images/products/product7.png",
@@ -130,8 +134,8 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-7",
     image: "/images/products/product1.png",
-    alt: "Model wearing a blue denim outfit",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    alt: "Model wearing Heritage Oval sunglasses in glossy black frame",
+    swatches: ["#000000", "#6f5639", "#ebe8e1"],
     gallery: [
       "/images/products/product1.png",
       "/images/products/product5.png",
@@ -142,8 +146,8 @@ export const trendingProducts: ProductCard[] = [
   {
     id: "product-8",
     image: "/images/products/product2.png",
-    alt: "Model wearing a denim jacket in monochrome",
-    swatches: ["#0a1a2b", "#15436b", "#d1d9e2"],
+    alt: "Model wearing Heritage Aviator sunglasses with dark metal frame",
+    swatches: ["#5b82ab", "#111722"],
     gallery: [
       "/images/products/product2.png",
       "/images/products/product6.png",
@@ -155,54 +159,53 @@ export const trendingProducts: ProductCard[] = [
 
 const sharedChairPose = {
   src: "/images/products/product4.png",
-  alt: "Model in a monochrome studio look seated in a chrome chair with a black bag beside the set",
+  alt: "Premium tortoiseshell D-frame sunglasses styled next to protective leather case",
 }
 
 export const featuredProduct: ProductDetail = {
-  slug: "bootcut-denim",
-  editLabel: "EDIT NAME",
-  title: "BOOTCUT DENIM",
+  slug: "heritage-oval",
+  editLabel: "HERITAGE COLLECTIVE",
+  title: "HERITAGE OVAL",
   breadcrumb: [
     { label: "Homepage", href: "/" },
     { label: "Collections", href: "/collections" },
-    { label: "Bootcut Denim" },
-    { label: "Royal Brown, 8" },
+    { label: "Heritage Oval" },
+    { label: "Glossy Black, Medium" },
   ],
-  originalPrice: "₹3,000",
-  price: "₹2,800",
+  originalPrice: "₹10,500",
+  price: "₹8,999",
   sold: "1,238 Sold",
-  rating: "4.5",
+  rating: "4.8",
   description:
-    "A structured bootcut denim in a deep matte wash, cut to hold the leg cleanly before widening at the hem. The silhouette stays tailored through the seat and thigh, then opens into a longer editorial line.",
+    "An architectural oval frame sculpted from premium hand-polished acetate, featuring custom hardware and signature wire cores. Engineered to balance sharp contours with smooth, beveled edges for an elevated, timeless profile.",
   detailsBody:
-    "Dense denim with a soft, polished finish and a clean waistband shape. Designed to stay sharp in motion, the fit keeps the profile lean before easing out below the knee.",
+    "Handmade bio-acetate with 100% UV400 protective lenses. Designed with a robust 5-barrel hinge construction and signature metal temple accents to ensure lasting durability and comfort.",
   careNotes: [
-    "Machine wash cold, inside out.",
-    "Do not bleach or tumble dry.",
-    "Hang dry to preserve the drape.",
-    "Steam lightly to refresh the finish.",
+    "Wipe lenses with the microfiber cleaning cloth.",
+    "Store in the provided leather protective case.",
+    "Avoid leaving in high heat (like a car dashboard).",
+    "Rinse with lukewarm water and mild soap if needed.",
   ],
   shippingNotes: [
     "Standard delivery in 2-4 business days.",
     "Free exchange within 14 days.",
     "Cash on delivery available on select pin codes.",
   ],
-  colorName: "Royal Brown",
+  colorName: "Glossy Black",
   colors: [
-    { name: "Royal Brown", value: "#6f5639" },
+    { name: "Glossy Black", value: "#000000" },
+    { name: "Royal Tortoise", value: "#6f5639" },
     { name: "Ivory Mist", value: "#ebe8e1" },
-    { name: "Slate Blue", value: "#5b82ab" },
-    { name: "Midnight", value: "#111722" },
+    { name: "Midnight Blue", value: "#111722" },
   ],
-  sizes: ["6", "8", "10", "14", "18", "20"],
+  sizes: ["Narrow", "Medium", "Wide"],
   gallery: [
-    { ...sharedChairPose, objectPosition: "center 36%" },
-    { ...sharedChairPose, objectPosition: "center 36%" },
-    { ...sharedChairPose, objectPosition: "center 36%" },
-    { ...sharedChairPose, objectPosition: "center 36%" },
-    { ...sharedChairPose, objectPosition: "center 36%" },
-    { ...sharedChairPose, objectPosition: "center 36%" },
-    { ...sharedChairPose, objectPosition: "center 36%" },
+    { src: "/images/products/product1.png", alt: "Model wearing Classic Heritage Oval sunglasses in glossy black frame", objectPosition: "center 36%" },
+    { src: "/images/products/product5.png", alt: "Detail view of the premium acetate frame and custom wire core", objectPosition: "center 44%" },
+    { src: "/images/products/product9.png", alt: "Model posing in Heritage Oval sunglasses with matching blazer", objectPosition: "center 28%" },
+    { src: "/images/products/product13.png", alt: "Studio portrait highlighting front profile of Heritage Oval", objectPosition: "center 32%" },
+    { src: "/images/products/product1.png", alt: "Model posing in sunglasses and matching look", objectPosition: "center 30%" },
+    { src: "/images/products/product5.png", alt: "Premium acetate frame hinge and bevel details", objectPosition: "center 34%" },
   ],
   deliveryPerks: [
     {
