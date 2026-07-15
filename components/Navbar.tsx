@@ -113,7 +113,7 @@ function NavLink({
         "group/link inline-flex flex-col items-start whitespace-nowrap uppercase pb-0.5 text-current transition-[color,opacity] duration-300 ease-out",
         mobile
           ? "flex-none text-[0.75rem] tracking-[0.18em]"
-          : "text-[0.875rem] tracking-[0.12em]",
+          : "text-[0.72rem] tracking-[0.2em]",
         active ? "opacity-100" : "hover:opacity-60"
       )}
     >
@@ -434,7 +434,7 @@ export function Navbar({
       className={cn(
         "main-navbar navbar-shell border-b",
         isScrolled ? "translate-y-0" : "translate-y-[var(--announcement-height)]",
-        "h-[64px] lg:h-[98px]",
+        "h-[64px] lg:h-[80px]",
         isInteractiveSurface
           ? "bg-white text-black border-transparent shadow-none"
           : isLightSurface
@@ -494,11 +494,11 @@ export function Navbar({
             <Image
               src="/logo.svg"
               alt="Clarte Club"
-              width={260}
-              height={120}
+              width={140}
+              height={84}
               priority
               className={cn(
-                "block h-auto w-[9.5rem] max-w-none transition-[filter] duration-300 ease-out",
+                "block h-auto w-[4.6rem] max-w-none transition-[filter] duration-300 ease-out",
                 !isLightSurface && "invert"
               )}
             />
@@ -571,11 +571,11 @@ export function Navbar({
             <Image
               src="/logo.svg"
               alt="Clarte Club"
-              width={200}
-              height={92}
+              width={100}
+              height={60}
               priority
               className={cn(
-                "block h-auto w-[7.5rem] max-w-none transition-[filter] duration-300 ease-out",
+                "block h-auto w-[3.3rem] max-w-none transition-[filter] duration-300 ease-out",
                 !isLightSurface && "invert"
               )}
             />

@@ -165,7 +165,7 @@ export function LookbookCarousel() {
         baseVelocity={20}
         slowdownOnHover
         slowDownFactor={0}
-        useScrollVelocity
+        useScrollVelocity={false}
         scrollAwareDirection={false}
         scrollSpringConfig={{ damping: 40, stiffness: 200 }}
         repeat={4}
@@ -184,7 +184,7 @@ export function LookbookCarousel() {
         baseVelocity={16}
         slowdownOnHover
         slowDownFactor={0}
-        useScrollVelocity
+        useScrollVelocity={false}
         scrollAwareDirection={false}
         scrollSpringConfig={{ damping: 40, stiffness: 200 }}
         repeat={4}

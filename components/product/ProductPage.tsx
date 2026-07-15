@@ -15,8 +15,8 @@ export function ProductPage({
   product: ProductDetail
 }) {
   return (
-    <main className="flex-1 bg-white text-black min-w-0 w-full overflow-hidden">
-      <section className="relative w-full px-4 pb-16 pt-5 sm:px-6 lg:px-8 lg:pt-6 min-w-0">
+    <main className="flex-1 bg-white text-black min-w-0 w-full overflow-x-clip">
+      <section className="relative w-full px-4 pb-16 pt-1 sm:pt-4 sm:px-6 lg:px-8 lg:pt-10 min-w-0">
         <div className="w-full min-w-0">
           <nav aria-label="Breadcrumb" className="text-[0.7rem] text-black/45">
             <ol className="flex flex-wrap items-center gap-1.5 uppercase tracking-[0.14em]">
@@ -48,7 +48,9 @@ export function ProductPage({
           </nav>
 
           <div className="mt-5 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_573px] xl:items-start xl:gap-12 min-w-0 w-full">
-            <ProductGallery images={product.gallery} />
+            <div className="xl:sticky xl:top-[104px] w-full min-w-0">
+              <ProductGallery images={product.gallery} />
+            </div>
             <ProductSummary product={product} />
           </div>
         </div>

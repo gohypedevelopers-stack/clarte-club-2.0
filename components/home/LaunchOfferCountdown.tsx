@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, Fragment } from "react"
 
 type CountdownParts = {
   days: number
@@ -54,8 +54,8 @@ function CountdownDigit({ value, label }: { value: number; label: string }) {
         {pad(displayed)}
       </span>
       <span
-        className="mt-0.5 uppercase tracking-widest"
-        style={{ fontSize: "0.38rem", color: "#8A8072", letterSpacing: "0.2em" }}
+        className="mt-0.5 uppercase tracking-widest text-center block w-full"
+        style={{ fontSize: "0.38rem", color: "#8A8072", letterSpacing: "0.2em", marginRight: "-0.2em" }}
       >
         {label}
       </span>
@@ -90,17 +90,17 @@ export function LaunchOfferCountdown({
 
   return (
     <div
-      className="flex items-start"
-      style={{ gap: "clamp(0.25rem, 0.8vw, 0.75rem)" }}
+      className="flex items-start justify-center"
+      style={{ gap: "clamp(0.15rem, 0.5vw, 0.4rem)" }}
       aria-label={`${c.days} days ${c.hours} hours ${c.minutes} minutes ${c.seconds} seconds remaining`}
       aria-live="off"
     >
       {parts.map((p, i) => (
-        <div key={p.label} className="flex items-start">
+        <Fragment key={p.label}>
           {i > 0 && (
             <span
               aria-hidden
-              className="font-light"
+              className="font-light select-none"
               style={{
                 fontSize: "clamp(1rem, 1.8vw, 1.6rem)",
                 color: "#C9B07A",
@@ -108,14 +108,14 @@ export function LaunchOfferCountdown({
                 opacity: 0.65,
                 alignSelf: "flex-start",
                 marginTop: "0.1em",
-                marginInline: "clamp(0.1rem, 0.3vw, 0.3rem)",
+                marginInline: "clamp(0.05rem, 0.1vw, 0.15rem)",
               }}
             >
               :
             </span>
           )}
           <CountdownDigit value={p.value} label={p.label} />
-        </div>
+        </Fragment>
       ))}
     </div>
   )

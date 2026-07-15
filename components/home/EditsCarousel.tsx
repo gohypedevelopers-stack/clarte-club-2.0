@@ -126,7 +126,7 @@ export function EditsCarousel() {
             style={{
               fontSize: "0.52rem",
               letterSpacing: "0.28em",
-              color: "#8A8072",
+              color: "#F6F2EA",
             }}
           >
             Curated selections

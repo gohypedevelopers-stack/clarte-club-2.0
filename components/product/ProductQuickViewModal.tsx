@@ -46,10 +46,10 @@ function QuickViewColorSwatches({
             aria-label={`Select ${color.name}`}
             onClick={() => onSelectColor(color.name)}
             className={cn(
-              "flex h-[40px] w-[75px] items-stretch justify-stretch bg-white transition-[box-shadow] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45",
+              "flex h-[32px] w-[64px] items-stretch justify-stretch bg-white transition-[box-shadow] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45 cursor-pointer",
               isSelected
-                ? "border-[2px] border-black p-[4px]"
-                : "border-0 p-0"
+                ? "border-[2px] border-black p-[3px]"
+                : "border border-black/10 p-0 hover:border-black/30"
             )}
           >
             <span
@@ -66,6 +66,7 @@ function QuickViewColorSwatches({
 function QuickViewSizeButton({
   active,
   children,
+  className,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   active?: boolean
@@ -75,11 +76,12 @@ function QuickViewSizeButton({
       type="button"
       aria-pressed={active}
       className={cn(
-        "inline-flex h-10 items-center justify-center border text-[22px] font-medium leading-none transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45",
+        "flex h-10 items-center justify-center border text-[12px] font-bold tracking-wider uppercase transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45 cursor-pointer",
         active
           ? "border-black bg-black text-white"
-          : "border-black/10 bg-white text-black hover:border-black hover:bg-black/[0.04]",
-        "min-w-0 px-3"
+          : "border-black/15 bg-white text-black hover:border-black hover:bg-black/[0.04]",
+        "min-w-0 px-3",
+        className
       )}
       {...props}
     >
@@ -217,50 +219,51 @@ export function ProductQuickViewModal({
               </button>
             </DialogClose>
 
-            <div className="space-y-2.5 pr-3">
-              <p className="text-[14px] font-normal uppercase tracking-[0.22em] text-black/45">
-                {product.editLabel}
-              </p>
-              <h2 className="font-heading text-[40px] font-normal uppercase leading-[0.95] tracking-[-0.06em]">
-                {product.title}
-              </h2>
+            <div className="space-y-4 pr-3">
+              <div className="space-y-1">
+                <p className="text-[11px] sm:text-[13px] font-semibold uppercase tracking-[0.22em] text-[#C9B07A]">
+                  {product.editLabel}
+                </p>
+                <h2 className="font-heading text-[24px] sm:text-[32px] md:text-[38px] font-normal uppercase leading-[0.95] tracking-[-0.06em]">
+                  {product.title}
+                </h2>
+              </div>
 
-              <div className="flex flex-wrap items-end justify-between gap-3">
-                <div className="flex items-end gap-3">
-                  <span className="text-[18px] font-normal leading-none text-black/45 line-through">
+              {/* PRICE BLOCK */}
+              <div className="space-y-1.5 border-b border-black/10 pb-4">
+                <div className="flex items-center gap-3 flex-wrap">
+                  <span className="text-[14px] sm:text-[16px] leading-none text-black/45 line-through">
                     {product.originalPrice}
                   </span>
-                  <span className="font-heading text-[22px] font-medium leading-none tracking-[-0.04em]">
+                  <span className="font-heading text-[18px] sm:text-[22px] font-medium leading-none tracking-[-0.04em] text-black">
                     {product.price}
                   </span>
-                </div>
-
-                <div className="flex items-end gap-2 text-black">
-                  <span className="text-[16px] font-normal leading-none text-black/45">
-                    {product.sold}
+                  <span className="inline-flex items-center justify-center bg-black text-[#F6F2EA] px-2.5 py-1 text-[8.5px] sm:text-[9.5px] font-bold uppercase tracking-wider leading-none">
+                    1,238 Sold Today
                   </span>
-                  <span className="text-black/25">•</span>
-                  <span className="inline-flex items-center gap-1 text-[22px] font-medium leading-none text-black">
-                    <Star className="size-5 fill-[#f2a33c] text-[#f2a33c]" />
+                  <span className="inline-flex items-center gap-1 text-[11px] sm:text-[13px] font-semibold uppercase tracking-[0.06em] text-black/60 ml-auto">
+                    <Star className="size-3.5 fill-[#f2a33c] text-[#f2a33c]" />
                     {product.rating}
                   </span>
                 </div>
+                <p className="text-[8px] sm:text-[9px] text-black/40 uppercase tracking-wider font-light">
+                  INCL. OF ALL TAXES
+                </p>
               </div>
 
-              <p className="max-w-[36rem] font-sans text-[16px] font-normal leading-[1.5] text-black/65">
+              <p className="max-w-[36rem] font-sans text-[13px] sm:text-[15px] font-normal leading-[1.6] text-black/65">
                 {product.description}{" "}
                 <Link
                   href="/products#details"
-                  className="font-medium text-black"
+                  className="font-semibold text-black underline underline-offset-4"
                 >
                   See More....
                 </Link>
               </p>
 
-              <section className="space-y-3">
-                <p className="text-[22px] font-medium text-black/45">
-                  Color:{" "}
-                  <span className="font-medium text-black">{selectedColor}</span>
+              <section className="space-y-2">
+                <p className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
+                  Color: <span className="font-normal text-black/60 normal-case">{selectedColor}</span>
                 </p>
 
                 <QuickViewColorSwatches
@@ -272,24 +275,24 @@ export function ProductQuickViewModal({
 
               <section className="space-y-3">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="text-[18px] font-normal text-black/45">
-                    Size:{" "}
-                    <span className="font-normal text-black">{selectedSize}</span>
-                  </p>
+                  <h3 className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
+                    Choose Size
+                  </h3>
                   <Link
                     href="/products#size-guide"
-                    className="text-[18px] font-normal text-black/45 underline underline-offset-4 transition-opacity hover:opacity-70"
+                    className="text-[11px] font-bold text-black/45 uppercase tracking-wider underline underline-offset-4 transition-opacity hover:opacity-70"
                   >
-                    View Size Chart
+                    Size Guide
                   </Link>
                 </div>
 
-                <div className="grid grid-cols-3 gap-2 sm:grid-cols-6">
+                <div className="flex gap-2.5">
                   {product.sizes.map((size) => (
                     <QuickViewSizeButton
                       key={size}
                       active={selectedSize === size}
                       onClick={() => setSelectedSize(size)}
+                      className="flex-1"
                     >
                       {size}
                     </QuickViewSizeButton>
@@ -299,15 +302,15 @@ export function ProductQuickViewModal({
 
               <button
                 type="button"
-                className="flex h-12 w-full items-center justify-center bg-black text-[22px] font-medium uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90"
+                className="flex h-12 w-full items-center justify-center bg-black text-[15px] sm:text-[18px] font-medium uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90 cursor-pointer"
               >
                 Add To Cart
               </button>
 
-              <div className="pt-0 text-center">
+              <div className="pt-1 text-center">
                 <Link
                   href="/products"
-                  className="text-[16px] font-normal uppercase tracking-[0.08em] text-black/55 underline underline-offset-4 transition-opacity hover:opacity-70"
+                  className="text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.12em] text-black/55 underline underline-offset-4 transition-opacity hover:opacity-70"
                 >
                   View Full Details
                 </Link>

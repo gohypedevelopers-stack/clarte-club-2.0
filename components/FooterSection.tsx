@@ -125,9 +125,9 @@ export function FooterSection() {
             <Image
               src="/logo.svg"
               alt="Clarte Club"
-              width={200}
-              height={90}
-              className="h-auto w-[8.5rem] object-contain"
+              width={120}
+              height={72}
+              className="h-auto w-[6rem] object-contain"
             />
           </Link>
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#0F0F10]/70 font-semibold">

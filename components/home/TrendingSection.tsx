@@ -151,17 +151,17 @@ export function ProductCardView({
             <div className="flex items-center gap-3">
               <span
                 className="text-[9px] uppercase"
-                style={{ letterSpacing: "0.16em", color: "rgba(201,176,122,0.7)" }}
+                style={{ letterSpacing: "0.16em", color: "#FFFFFF" }}
               >
                 {eyewearDetails.shape}
               </span>
               <span
                 aria-hidden
-                style={{ width: "1px", height: "10px", background: "rgba(201,176,122,0.3)", display: "inline-block" }}
+                style={{ width: "1px", height: "10px", background: "rgba(255,255,255,0.3)", display: "inline-block" }}
               />
               <span
                 className="text-[9px] uppercase"
-                style={{ letterSpacing: "0.16em", color: "rgba(201,176,122,0.7)" }}
+                style={{ letterSpacing: "0.16em", color: "#FFFFFF" }}
               >
                 {eyewearDetails.lens} Lens
               </span>
@@ -171,7 +171,7 @@ export function ProductCardView({
             <div className="flex items-center justify-between gap-3">
               <div
                 className="flex flex-wrap items-center gap-1.5 text-[10px] font-normal uppercase"
-                style={{ letterSpacing: "0.12em", color: "rgba(246,242,234,0.45)" }}
+                style={{ letterSpacing: "0.12em", color: "#FFFFFF" }}
               >
                 {eyewearFits.map((fit) => (
                   <SizeMarker key={fit} size={fit} />

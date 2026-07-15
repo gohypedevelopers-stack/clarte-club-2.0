@@ -36,7 +36,7 @@ export function LaunchOfferBar() {
             style={{
               fontSize: "clamp(0.42rem, 0.8vw, 0.65rem)",
               letterSpacing: "0.25em",
-              color: "#8A8072",
+              color: "#F6F2EA",
               lineHeight: 1,
             }}
           >
