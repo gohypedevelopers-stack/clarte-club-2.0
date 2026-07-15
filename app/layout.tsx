@@ -12,8 +12,8 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Clarte Club 2.0",
-  description: "Luxury retail navigation concept for Clarte Club 2.0.",
+  title: "Clarte Club",
+  description: "Luxury retail navigation concept for Clarte Club.",
   icons: {
     icon: "/logo.svg",
   },
