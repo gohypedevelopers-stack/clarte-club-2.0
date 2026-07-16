@@ -1,4 +1,4 @@
-import { Hero } from "@/components/home/Hero"
+import { FrameSequenceHero } from "@/components/home/FrameSequenceHero"
 import { DenimCarousel } from "@/components/home/DenimCarousel"
 import { DenimEditorialSection } from "@/components/home/DenimEditorialSection"
 import { MotionBannerSection } from "@/components/home/MotionBannerSection"
@@ -13,8 +13,8 @@ export const dynamic = "force-dynamic"
 
 export default function Home() {
   return (
-    <main className="flex-1 bg-black">
-      <Hero />
+    <main className="flex-1 -mt-[var(--header-stack-height)] bg-black">
+      <FrameSequenceHero />
       <LaunchOfferBar />
       <TrendingSection />
       {/* <BrandPhilosophy /> */}

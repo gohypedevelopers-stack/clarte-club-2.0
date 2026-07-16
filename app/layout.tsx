@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils";
 import { Montserrat } from "next/font/google";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SiteFooter } from "@/components/SiteFooter";
+import SmoothScroll from "@/components/SmoothScroll";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
       )}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <SmoothScroll />
         <div className="relative flex flex-1 flex-col overflow-x-clip">
           <SiteHeader />
           <div className="flex flex-1 flex-col pt-[var(--header-stack-height)]">

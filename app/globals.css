@@ -270,6 +270,19 @@
   box-shadow: 0 1px 0 rgba(15, 15, 16, 0.08);
 }
 
+/* Force header transparent during hero pinning unless hovered or menu is open */
+body.hero-pin-active .main-navbar:not(:hover):not(:focus-within) {
+  background-color: transparent !important;
+  color: #ffffff !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Invert the logo color to white when the header is transparent over the dark hero */
+body.hero-pin-active .main-navbar:not(:hover):not(:focus-within) img {
+  filter: invert(1) !important;
+}
+
 /* Product card hover panel — peek strip visible, full details slide up on hover */
 [data-hover-panel] {
   transform: translateY(calc(100% - 52px));
@@ -312,3 +325,24 @@
   to { width: 100%; }
 }
 
+/* Lenis smooth scroll styling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

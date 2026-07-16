@@ -1,7 +1,8 @@
 "use client"
 
 import Image from "next/image"
-import { Heart, MessageCircle, Bookmark, Play } from "lucide-react"
+import { Play } from "lucide-react"
+
 
 import SimpleMarquee from "@/components/fancy/blocks/simple-marquee"
 
@@ -33,97 +34,27 @@ const track2: LookbookSlide[] = [
   { id: "t2-6", image: "/images/products/product12.png",      alt: "Style with Clarté frames", username: "street_style", caption: "Loving my new shades from @clarteclub", time: "18 hours ago", imagePos: "center 22%" },
 ]
 
-function Avatar() {
-  return (
-    <div
-      className="size-7 shrink-0 overflow-hidden rounded-full"
-      style={{ background: "linear-gradient(135deg, #C9B07A 0%, #8A8072 100%)" }}
-    >
-      <div className="flex size-full items-center justify-center">
-        <span className="text-[9px] font-bold text-white">CC</span>
-      </div>
-    </div>
-  )
-}
+
 
 function SocialCard({ slide }: { slide: LookbookSlide }) {
   return (
     <article
-      className="mx-2 flex shrink-0 flex-col overflow-hidden"
-      style={{
-        width: "210px",
-        background: "#ffffff",
-        border: "1px solid rgba(15,15,16,0.08)",
-        boxShadow: "0 2px 14px rgba(0,0,0,0.09)",
-      }}
+      className="group relative mx-2 h-[370px] w-[210px] shrink-0 overflow-hidden rounded-xl bg-zinc-950"
     >
-      {/* Header */}
-      <div className="flex items-center gap-2 px-3 py-2.5">
-        <Avatar />
-        <span
-          className="text-[11px] font-semibold"
-          style={{ color: "#0F0F10", letterSpacing: "0.01em" }}
-        >
-          {slide.username}
-        </span>
-      </div>
+      <Image
+        src={slide.image}
+        alt={slide.alt}
+        fill
+        sizes="210px"
+        className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+        style={{ objectPosition: slide.imagePos ?? "center" }}
+      />
 
-      {/* Image */}
-      <div className="group relative aspect-[4/5] w-full overflow-hidden bg-[#e8e4db]">
-        <Image
-          src={slide.image}
-          alt={slide.alt}
-          fill
-          sizes="210px"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-          style={{ objectPosition: slide.imagePos ?? "center" }}
-        />
-        {/* Play badge */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div
-            className="grid size-10 place-items-center rounded-full"
-            style={{
-              background: "rgba(255,255,255,0.82)",
-              backdropFilter: "blur(3px)",
-              boxShadow: "0 4px 16px rgba(0,0,0,0.18)",
-            }}
-          >
-            <Play
-              className="ml-0.5 size-4 fill-current"
-              style={{ color: "rgba(15,15,16,0.72)" }}
-            />
-          </div>
+      {/* Play icon — centered */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-10">
+        <div className="grid size-11 place-items-center rounded-full bg-white/80 shadow-lg backdrop-blur-[2px] transition-all duration-300 group-hover:scale-110 group-hover:bg-white">
+          <Play className="ml-0.5 size-4 fill-zinc-900 text-zinc-900" />
         </div>
-      </div>
-
-      {/* Footer */}
-      <div className="flex flex-col gap-1.5 px-3 pb-3 pt-2.5">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Heart
-              className="size-[15px] cursor-pointer transition-colors hover:text-rose-500"
-              style={{ color: "#0F0F10", strokeWidth: 1.5 }}
-            />
-            <MessageCircle
-              className="size-[15px] cursor-pointer"
-              style={{ color: "#0F0F10", strokeWidth: 1.5 }}
-            />
-          </div>
-          <Bookmark
-            className="size-[15px] cursor-pointer"
-            style={{ color: "#0F0F10", strokeWidth: 1.5 }}
-          />
-        </div>
-        <p className="line-clamp-2 text-[10.5px] leading-snug" style={{ color: "#0F0F10" }}>
-          <span className="font-semibold">{slide.username} </span>
-          {slide.caption}
-        </p>
-        <p
-          className="text-[9px] uppercase"
-          style={{ letterSpacing: "0.12em", color: "#8A8072" }}
-        >
-          {slide.time}
-        </p>
       </div>
     </article>
   )

@@ -1,0 +1,7 @@
+{
+  "frameCount": 120,
+  "fps": 12,
+  "width": 1280,
+  "height": 720,
+  "pattern": "frame_%04d.webp"
+}
