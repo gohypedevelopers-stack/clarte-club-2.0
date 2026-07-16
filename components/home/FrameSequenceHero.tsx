@@ -7,6 +7,44 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const FRAME_COUNT = 120;
 
+const SLIDES = [
+  {
+    tag: "New Eyewear Collection",
+    title: "Refine Your Style",
+    description: "Scroll to explore the collection.",
+    ctaText: "Explore Collection",
+    ctaLink: "/collections"
+  },
+  {
+    tag: "Handcrafted Designs",
+    title: "Uncompromised Quality",
+    description: "Meticulously designed frames made to last.",
+    ctaText: "View Bestsellers",
+    ctaLink: "/#bestsellers"
+  },
+  {
+    tag: "The Craftsmanship",
+    title: "Sculpted Frames",
+    description: "Indulge in silhouettes that frame your perspective.",
+    ctaText: "Shop Acetate",
+    ctaLink: "/collections"
+  },
+  {
+    tag: "Exclusive Colorways",
+    title: "Earthy Palettes",
+    description: "Inspired by natural tones and modern design.",
+    ctaText: "Discover More",
+    ctaLink: "/about"
+  },
+  {
+    tag: "Elevate Your Look",
+    title: "See Beyond The Ordinary",
+    description: "Experience the next iteration of eyewear design.",
+    ctaText: "Shop the Collection",
+    ctaLink: "/collections"
+  }
+];
+
 function getFramePath(index: number) {
   const frameNumber = String(index + 1).padStart(4, "0");
   return `/video/eyewear-hero-frames/eyewear-hero-frames/frame_${frameNumber}-clean.png`;
@@ -187,6 +225,68 @@ export function FrameSequenceHero() {
         { scale: 1.02, yPercent: 2, duration: 1, ease: "none" },
         0
       );
+
+      // Select all slide content items
+      const slides = section.querySelectorAll(".slide-content");
+
+      // Initialize slide states in GSAP
+      gsap.set(slides, { yPercent: 15, opacity: 0, pointerEvents: "none" });
+      gsap.set(slides[0], { yPercent: 0, opacity: 1, pointerEvents: "auto" });
+
+      // Slide 0 exits
+      timeline.to(slides[0], {
+        opacity: 0,
+        yPercent: -15,
+        pointerEvents: "none",
+        duration: 0.05,
+      }, 0.15);
+
+      // Slide 1 enters & exits
+      timeline.fromTo(slides[1],
+        { opacity: 0, yPercent: 15 },
+        { opacity: 1, yPercent: 0, pointerEvents: "auto", duration: 0.05 },
+        0.20
+      );
+      timeline.to(slides[1], {
+        opacity: 0,
+        yPercent: -15,
+        pointerEvents: "none",
+        duration: 0.05,
+      }, 0.35);
+
+      // Slide 2 enters & exits
+      timeline.fromTo(slides[2],
+        { opacity: 0, yPercent: 15 },
+        { opacity: 1, yPercent: 0, pointerEvents: "auto", duration: 0.05 },
+        0.40
+      );
+      timeline.to(slides[2], {
+        opacity: 0,
+        yPercent: -15,
+        pointerEvents: "none",
+        duration: 0.05,
+      }, 0.55);
+
+      // Slide 3 enters & exits
+      timeline.fromTo(slides[3],
+        { opacity: 0, yPercent: 15 },
+        { opacity: 1, yPercent: 0, pointerEvents: "auto", duration: 0.05 },
+        0.60
+      );
+      timeline.to(slides[3], {
+        opacity: 0,
+        yPercent: -15,
+        pointerEvents: "none",
+        duration: 0.05,
+      }, 0.75);
+
+      // Slide 4 enters & remains
+      timeline.fromTo(slides[4],
+        { opacity: 0, yPercent: 15 },
+        { opacity: 1, yPercent: 0, pointerEvents: "auto", duration: 0.05 },
+        0.80
+      );
+
       if (timeline.scrollTrigger && timeline.scrollTrigger.isActive) {
         document.body.classList.add("hero-pin-active");
       }
@@ -230,30 +330,42 @@ export function FrameSequenceHero() {
       {/* Bottom vignette */}
       <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/60 via-transparent to-black/15" />
 
-      {/* Hero content */}
+      {/* Hero content slides container */}
       <div
         ref={contentRef}
         className="absolute inset-0 z-10 flex items-end px-6 pb-12 md:px-12 md:pb-16 lg:px-20 lg:pb-20"
       >
-        <div className="max-w-4xl">
-          <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white/60">
-            New Eyewear Collection
-          </p>
+        <div className="relative w-full max-w-4xl h-[280px] md:h-[240px] lg:h-[280px]">
+          {SLIDES.map((slide, index) => (
+            <div
+              key={index}
+              className="slide-content absolute bottom-0 left-0 w-full flex flex-col items-start origin-bottom"
+              style={{
+                opacity: index === 0 ? 1 : 0,
+                transform: index === 0 ? "translateY(0%)" : "translateY(15%)",
+                pointerEvents: index === 0 ? "auto" : "none",
+              }}
+            >
+              <p className="mb-4 text-xs uppercase tracking-[0.4em] text-white/60 font-medium">
+                {slide.tag}
+              </p>
 
-          <h1 className="font-heading text-3xl font-semibold uppercase leading-none tracking-[-0.045em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.18)] sm:text-4xl md:text-5xl lg:text-6xl whitespace-nowrap">
-            Refine Your Style
-          </h1>
+              <h1 className="font-heading text-2xl font-semibold uppercase leading-none tracking-[-0.045em] text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.18)] sm:text-3xl md:text-4xl lg:text-[2.85rem] xl:text-[3.25rem] whitespace-nowrap">
+                {slide.title}
+              </h1>
 
-          <p className="mt-5 max-w-sm text-sm leading-6 text-white/60 md:text-base">
-            Scroll to explore the collection.
-          </p>
+              <p className="mt-5 max-w-sm text-sm leading-6 text-white/60 md:text-base">
+                {slide.description}
+              </p>
 
-          <Link
-            href="/collections"
-            className="mt-8 inline-flex items-center justify-center border border-white/85 px-5 py-2.5 text-[0.875rem] uppercase tracking-[0.12em] text-white transition-colors hover:bg-white/10"
-          >
-            Explore Collection
-          </Link>
+              <Link
+                href={slide.ctaLink}
+                className="mt-8 inline-flex items-center justify-center border border-white/85 px-5 py-2.5 text-[0.875rem] uppercase tracking-[0.12em] text-white transition-colors hover:bg-white/10"
+              >
+                {slide.ctaText}
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
 
