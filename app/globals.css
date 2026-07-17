@@ -154,13 +154,7 @@
 
   html {
     @apply font-sans;
-    overflow-y: scroll;
     scrollbar-gutter: stable;
-  }
-
-  body[data-scroll-locked] {
-    padding-right: 0 !important;
-    margin-right: 0 !important;
   }
 
   *::-webkit-scrollbar {
