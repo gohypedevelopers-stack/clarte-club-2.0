@@ -13,8 +13,8 @@ export default function AboutPage() {
     {
       num: "01",
       title: "Who We Are",
-      desc: "Clarté Club is an independent, design-led eyewear studio. We curate the range, select materials, and refine the details we care about.",
-      bg: "bg-neutral-900 border border-white/10",
+      desc: "Clarté Club is an independent, design-led eyewear studio. We curated the range, selected materials, and refined the details we care about.",
+      bg: "bg-neutral-900 text-white border border-white/10",
       image: "/images/products/product1.png"
     },
     {
@@ -35,7 +35,7 @@ export default function AboutPage() {
       num: "03",
       title: "Small-Batch Scarcity",
       desc: "To reduce waste and ensure exclusivity, we run batches of only 150–300 frames. Once they sell out, they're gone.",
-      bg: "bg-neutral-900 border border-white/10",
+      bg: "bg-neutral-900 text-white border border-white/10",
       svg: (
         <svg viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-20 h-20 text-white/20">
           <rect x="25" y="15" width="50" height="30" rx="2" />
