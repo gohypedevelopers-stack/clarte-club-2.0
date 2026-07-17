@@ -41,7 +41,7 @@ function OptionButton({
       type="button"
       aria-pressed={active}
       className={cn(
-        "flex items-center justify-center border text-[14px] font-medium leading-none transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45 cursor-pointer",
+        "flex items-center justify-center border text-[14px] font-medium leading-normal transition-[background-color,border-color,color,transform] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45 cursor-pointer",
         active
           ? "border-black bg-black text-white"
           : "border-black/15 bg-white text-black hover:border-black hover:bg-black/4",
@@ -268,13 +268,13 @@ export function ProductSummary({
             </button>
           </div>
 
-          <div className="flex gap-2.5">
+          <div className="flex flex-wrap gap-2.5">
             {product.sizes.map((size) => (
               <OptionButton
                 key={size}
                 active={selectedSize === size}
                 onClick={() => setSelectedSize(size)}
-                className="h-10 min-w-0 flex-1 px-3 text-[12px] font-bold tracking-wider uppercase"
+                className="h-10 min-w-[80px] flex-1 px-3 text-[12px] font-bold tracking-wider uppercase"
               >
                 {size}
               </OptionButton>
