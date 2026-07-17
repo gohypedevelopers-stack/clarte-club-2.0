@@ -152,6 +152,17 @@
     @apply bg-background text-foreground;
   }
 
+  /* Global base cursors for clickable items */
+  a,
+  button,
+  select,
+  input[type="button"],
+  input[type="submit"],
+  [role="button"],
+  [data-hover-panel] {
+    cursor: pointer;
+  }
+
   html {
     @apply font-sans;
     scrollbar-gutter: stable;
