@@ -292,6 +292,21 @@ export function Navbar({
   const defaultNavKey: NavKey = "shop"
   const pathname = usePathname()
   const isOverlay = pathname === "/"
+
+  const safeClearHash = () => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      try {
+        const url = window.location.pathname + window.location.search;
+        const state = typeof window.history.state === "object" && window.history.state !== null 
+          ? window.history.state 
+          : {};
+        window.history.replaceState(state, document.title, url);
+      } catch (err) {
+        console.error("Failed to clear hash safely:", err);
+      }
+    }
+  };
+
   const [isScrolled, setIsScrolled] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
@@ -312,9 +327,7 @@ export function Navbar({
   useEffect(() => {
     if (mobileMenuOpen) {
       (window as any).lenis?.stop()
-      if (window.location.hash) {
-        window.history.pushState("", document.title, window.location.pathname + window.location.search);
-      }
+      safeClearHash()
     } else {
       (window as any).lenis?.start()
     }
@@ -408,6 +421,12 @@ export function Navbar({
       setIsScrolled((current) =>
         current === nextIsScrolled ? current : nextIsScrolled
       )
+
+      // Clear the hash from the address bar when scrolled near the top of the page
+      if (window.scrollY < 80 && window.location.hash) {
+        safeClearHash();
+        setSelectedNav(defaultNavKey);
+      }
     }
 
     const syncScrollState = () => {
@@ -459,10 +478,10 @@ export function Navbar({
       )}
     >
       <div className="relative h-full w-full px-4 sm:px-6 lg:px-8">
-        <div className="hidden h-full lg:grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-0">
+        <div className="hidden h-full lg:flex items-center justify-between">
           <nav
             aria-label="Primary"
-            className="flex items-center gap-10 justify-self-start"
+            className="flex items-center gap-6 xl:gap-10"
             onMouseEnter={cancelMenuClose}
             onMouseLeave={scheduleMenuClose}
           >
@@ -504,11 +523,9 @@ export function Navbar({
             href="/"
             aria-label="Clarte Club home"
             onClick={() => {
-              if (window.location.hash) {
-                window.history.pushState("", document.title, window.location.pathname + window.location.search);
-              }
+              safeClearHash()
             }}
-            className="justify-self-center transition-opacity hover:opacity-70"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity hover:opacity-70 z-10"
           >
             <Image
               src="/logo.svg"
@@ -523,7 +540,7 @@ export function Navbar({
             />
           </Link>
 
-          <div className="flex items-center justify-self-end gap-4 xl:gap-6">
+          <div className="flex items-center gap-4 xl:gap-6">
             <div className="relative h-[34px] w-[220px] shrink-0 xl:w-[266px]">
               <button
                 type="button"
@@ -588,9 +605,7 @@ export function Navbar({
             href="/"
             aria-label="Clarte Club home"
             onClick={() => {
-              if (window.location.hash) {
-                window.history.pushState("", document.title, window.location.pathname + window.location.search);
-              }
+              safeClearHash()
             }}
             className="justify-self-center transition-opacity hover:opacity-70"
           >
