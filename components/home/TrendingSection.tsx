@@ -168,7 +168,7 @@ export function ProductCardView({
             </div>
 
             {/* Fit sizes + Quick View */}
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center justify-between gap-2.5">
               <div
                 className="flex flex-wrap items-center gap-1.5 text-[10px] font-normal uppercase"
                 style={{ letterSpacing: "0.12em", color: "#FFFFFF" }}
