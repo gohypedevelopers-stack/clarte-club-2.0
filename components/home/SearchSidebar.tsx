@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import Image from "next/image"
 import { Search, X } from "lucide-react"
 
@@ -75,6 +76,20 @@ function FeaturedImage({
 }
 
 export function SearchSidebar({ open, onOpenChange }: SearchSidebarProps) {
+  useEffect(() => {
+    if (open) {
+      (window as any).lenis?.stop()
+      if (window.location.hash) {
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+    } else {
+      (window as any).lenis?.start()
+    }
+    return () => {
+      (window as any).lenis?.start()
+    }
+  }, [open])
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
@@ -105,7 +120,10 @@ export function SearchSidebar({ open, onOpenChange }: SearchSidebarProps) {
             Search products, browse trending searches, and view featured best sellers.
           </SheetDescription>
 
-          <div className="flex-1 overflow-y-auto px-5 py-6">
+          <div
+            data-lenis-prevent
+            className="flex-1 overflow-y-auto px-5 py-6"
+          >
             <div className="relative">
               <input
                 type="search"

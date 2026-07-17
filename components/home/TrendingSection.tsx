@@ -228,7 +228,7 @@ export function ProductCardView({
 
 export function TrendingSection() {
   return (
-    <section className="w-full bg-white px-4 py-14 text-black sm:px-6 lg:px-8 md:py-16">
+    <section className="w-full bg-white px-4 pt-14 pb-4 text-black sm:px-6 lg:px-8 md:pt-16 md:pb-4">
       <div className="flex w-full flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
         <h2 className="font-heading text-[clamp(1.7rem,2.2vw,2.6rem)] font-semibold uppercase leading-none tracking-[-0.04em]">
           Trending
@@ -241,7 +241,7 @@ export function TrendingSection() {
         ))}
       </div>
 
-      <div className="mt-8 flex justify-center">
+      <div className="mt-4 flex justify-center">
         <Link
           href="/collections"
           className="inline-flex h-9 items-center justify-center border border-black px-5 text-[0.6875rem] uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
