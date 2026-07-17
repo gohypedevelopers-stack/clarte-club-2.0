@@ -2,7 +2,7 @@
 
 export function MotionBannerSection() {
   return (
-    <section className="relative h-[100svh] w-full overflow-hidden bg-black">
+    <section className="relative w-full aspect-video lg:aspect-auto lg:h-[100svh] overflow-hidden bg-black">
       <video
         src="/video/Model_wearing_sunglasses_banner_202607161313.mp4"
         autoPlay

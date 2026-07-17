@@ -99,25 +99,73 @@ export function FrameSequenceHero() {
 
       const imageRatio = image.naturalWidth / image.naturalHeight;
       const canvasRatio = canvasWidth / canvasHeight;
+      const isMobile = window.innerWidth < 1024;
 
-      let drawWidth: number;
-      let drawHeight: number;
-      let offsetX: number;
-      let offsetY: number;
+      if (!isMobile) {
+        let drawWidth: number;
+        let drawHeight: number;
+        let offsetX: number;
+        let offsetY: number;
 
-      if (imageRatio > canvasRatio) {
-        drawHeight = canvasHeight;
-        drawWidth = drawHeight * imageRatio;
-        offsetX = (canvasWidth - drawWidth) / 2;
-        offsetY = 0;
+        if (imageRatio > canvasRatio) {
+          drawHeight = canvasHeight;
+          drawWidth = drawHeight * imageRatio;
+          offsetX = (canvasWidth - drawWidth) / 2;
+          offsetY = 0;
+        } else {
+          drawWidth = canvasWidth;
+          drawHeight = drawWidth / imageRatio;
+          offsetX = 0;
+          offsetY = (canvasHeight - drawHeight) / 2;
+        }
+
+        context!.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
       } else {
-        drawWidth = canvasWidth;
-        drawHeight = drawWidth / imageRatio;
-        offsetX = 0;
-        offsetY = (canvasHeight - drawHeight) / 2;
-      }
+        // Draw blurred cover as background
+        let coverWidth: number;
+        let coverHeight: number;
+        let coverX: number;
+        let coverY: number;
 
-      context!.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
+        if (imageRatio > canvasRatio) {
+          coverHeight = canvasHeight;
+          coverWidth = coverHeight * imageRatio;
+          coverX = (canvasWidth - coverWidth) / 2;
+          coverY = 0;
+        } else {
+          coverWidth = canvasWidth;
+          coverHeight = coverWidth / imageRatio;
+          coverX = 0;
+          coverY = (canvasHeight - coverHeight) / 2;
+        }
+
+        context!.save();
+        if ("filter" in context!) {
+          context!.filter = "blur(20px) brightness(0.5) saturate(0.8)";
+        }
+        context!.drawImage(image, coverX - 10, coverY - 10, coverWidth + 20, coverHeight + 20);
+        context!.restore();
+
+        // Draw clean contain as foreground
+        let containWidth: number;
+        let containHeight: number;
+        let containX: number;
+        let containY: number;
+
+        if (imageRatio < canvasRatio) {
+          containHeight = canvasHeight;
+          containWidth = containHeight * imageRatio;
+          containX = (canvasWidth - containWidth) / 2;
+          containY = 0;
+        } else {
+          containWidth = canvasWidth;
+          containHeight = containWidth / imageRatio;
+          containX = 0;
+          containY = (canvasHeight - containHeight) / 2;
+        }
+
+        context!.drawImage(image, containX, containY, containWidth, containHeight);
+      }
     }
 
     function renderFrame() {
