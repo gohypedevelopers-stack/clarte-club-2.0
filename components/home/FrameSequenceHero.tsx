@@ -77,29 +77,29 @@ export function FrameSequenceHero() {
     let loadedCount = 0;
     let currentFrame = 0;
     let resizeFrame = 0;
+    let cachedWidth = 0;
+    let cachedHeight = 0;
+    let isMobile = false;
 
     function resizeCanvas() {
-      const width = canvas!.clientWidth;
-      const height = canvas!.clientHeight;
+      cachedWidth = canvas!.clientWidth;
+      cachedHeight = canvas!.clientHeight;
+      isMobile = window.innerWidth < 1024;
       const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
 
-      canvas!.width = Math.round(width * pixelRatio);
-      canvas!.height = Math.round(height * pixelRatio);
+      canvas!.width = Math.round(cachedWidth * pixelRatio);
+      canvas!.height = Math.round(cachedHeight * pixelRatio);
 
       context!.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
     }
 
     function drawCover(image: HTMLImageElement) {
-      const canvasWidth = canvas!.clientWidth;
-      const canvasHeight = canvas!.clientHeight;
+      if (!cachedWidth || !cachedHeight) return;
 
-      if (!canvasWidth || !canvasHeight) return;
-
-      context!.clearRect(0, 0, canvasWidth, canvasHeight);
+      context!.clearRect(0, 0, cachedWidth, cachedHeight);
 
       const imageRatio = image.naturalWidth / image.naturalHeight;
-      const canvasRatio = canvasWidth / canvasHeight;
-      const isMobile = window.innerWidth < 1024;
+      const canvasRatio = cachedWidth / cachedHeight;
 
       if (!isMobile) {
         let drawWidth: number;
@@ -108,15 +108,15 @@ export function FrameSequenceHero() {
         let offsetY: number;
 
         if (imageRatio > canvasRatio) {
-          drawHeight = canvasHeight;
+          drawHeight = cachedHeight;
           drawWidth = drawHeight * imageRatio;
-          offsetX = (canvasWidth - drawWidth) / 2;
+          offsetX = (cachedWidth - drawWidth) / 2;
           offsetY = 0;
         } else {
-          drawWidth = canvasWidth;
+          drawWidth = cachedWidth;
           drawHeight = drawWidth / imageRatio;
           offsetX = 0;
-          offsetY = (canvasHeight - drawHeight) / 2;
+          offsetY = (cachedHeight - drawHeight) / 2;
         }
 
         context!.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
@@ -128,15 +128,15 @@ export function FrameSequenceHero() {
         let coverY: number;
 
         if (imageRatio > canvasRatio) {
-          coverHeight = canvasHeight;
+          coverHeight = cachedHeight;
           coverWidth = coverHeight * imageRatio;
-          coverX = (canvasWidth - coverWidth) / 2;
+          coverX = (cachedWidth - coverWidth) / 2;
           coverY = 0;
         } else {
-          coverWidth = canvasWidth;
+          coverWidth = cachedWidth;
           coverHeight = coverWidth / imageRatio;
           coverX = 0;
-          coverY = (canvasHeight - coverHeight) / 2;
+          coverY = (cachedHeight - coverHeight) / 2;
         }
 
         context!.save();
@@ -153,15 +153,15 @@ export function FrameSequenceHero() {
         let containY: number;
 
         if (imageRatio < canvasRatio) {
-          containHeight = canvasHeight;
+          containHeight = cachedHeight;
           containWidth = containHeight * imageRatio;
-          containX = (canvasWidth - containWidth) / 2;
+          containX = (cachedWidth - containWidth) / 2;
           containY = 0;
         } else {
-          containWidth = canvasWidth;
+          containWidth = cachedWidth;
           containHeight = containWidth / imageRatio;
           containX = 0;
-          containY = (canvasHeight - containHeight) / 2;
+          containY = (cachedHeight - containHeight) / 2;
         }
 
         context!.drawImage(image, containX, containY, containWidth, containHeight);
@@ -231,8 +231,8 @@ export function FrameSequenceHero() {
           start: "top top",
           // Dynamically calculate exactly 500vh scroll distance
           end: () => `+=${window.innerHeight * 5}`,
-          // 2s scrub lag introduces natural deceleration for smoother frame blending
-          scrub: 2,
+          // Sync closely with scroll (0.5s scrub provides a smooth deceleration catch-up without feeling delayed/laggy)
+          scrub: 0.5,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
@@ -260,7 +260,6 @@ export function FrameSequenceHero() {
           frame: FRAME_COUNT - 1,
           duration: 1,
           ease: "none",
-          snap: { frame: 1 },
           onUpdate: renderFrame,
         },
         0
