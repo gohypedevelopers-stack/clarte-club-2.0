@@ -1,3 +1,4 @@
+// Clarté Club - Considered Eyewear
 "use client"
 
 import Image from "next/image"
@@ -17,6 +18,7 @@ import {
 import { cn } from "@/lib/utils"
 import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
+import { WishlistSidebar } from "@/components/wishlist/WishlistSidebar"
 import {
   Sheet,
   SheetClose,
@@ -310,6 +312,7 @@ export function Navbar({
   const [isScrolled, setIsScrolled] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
+  const [wishlistOpen, setWishlistOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedNav, setSelectedNav] = useState<NavKey>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu | null>(null)
@@ -322,7 +325,7 @@ export function Navbar({
   const isInteractiveSurface = isHovered || hasOpenMenu
   const isLightSurface = !isOverlay || isScrolled || isInteractiveSurface
   const tone: "dark" | "light" = isLightSurface ? "dark" : "light"
-  const isWishlistOpen = activeMenu === "wishlist"
+  const isWishlistOpen = wishlistOpen
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -376,7 +379,7 @@ export function Navbar({
   }
 
   const toggleWishlist = () => {
-    setActiveMenu((current) => (current === "wishlist" ? null : "wishlist"))
+    setWishlistOpen((current) => !current)
   }
 
   useEffect(() => {
@@ -687,6 +690,7 @@ export function Navbar({
 
       <SearchSidebar open={searchOpen} onOpenChange={setSearchOpen} />
       <CartSidebar open={cartOpen} onOpenChange={setCartOpen} />
+      <WishlistSidebar open={wishlistOpen} onOpenChange={setWishlistOpen} />
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 bg-[#F6F2EA] text-black border-r border-black/10 flex flex-col h-full z-[99999]">
           <div className="flex items-center justify-between px-6 py-5 border-b border-black/5">
