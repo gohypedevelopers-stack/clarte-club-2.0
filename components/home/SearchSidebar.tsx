@@ -80,7 +80,14 @@ export function SearchSidebar({ open, onOpenChange }: SearchSidebarProps) {
     if (open) {
       (window as any).lenis?.stop()
       if (window.location.hash) {
-        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+        try {
+          const state = typeof window.history.state === "object" && window.history.state !== null 
+            ? window.history.state 
+            : {};
+          window.history.replaceState(state, document.title, window.location.pathname + window.location.search);
+        } catch (err) {
+          console.error("Failed to clear hash safely in SearchSidebar:", err);
+        }
       }
     } else {
       (window as any).lenis?.start()
