@@ -149,7 +149,7 @@ export function ProductSummary({
 
   return (
     <aside className="self-start w-full">
-      <div className="space-y-5 text-black xl:w-[573px] xl:max-w-[573px] xl:justify-self-end">
+      <div className="space-y-5 text-black lg:w-full lg:max-w-[480px] xl:max-w-[573px] lg:justify-self-end">
         {/* RATINGS & REVIEWS AT THE TOP */}
         <div className="space-y-2">
           <button
