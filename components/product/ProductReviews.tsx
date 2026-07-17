@@ -174,7 +174,7 @@ export function ProductReviews({ productSlug }: { productSlug: string }) {
 
   return (
     <section id="reviews" className="w-full bg-white border-t border-black/15 py-16 text-black">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <div className="flex flex-col md:flex-row md:items-end md:justify-between border-b border-black/10 pb-8 gap-4">
           <div>
