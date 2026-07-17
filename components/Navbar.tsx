@@ -309,6 +309,20 @@ export function Navbar({
   const tone: "dark" | "light" = isLightSurface ? "dark" : "light"
   const isWishlistOpen = activeMenu === "wishlist"
 
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      (window as any).lenis?.stop()
+      if (window.location.hash) {
+        window.history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+    } else {
+      (window as any).lenis?.start()
+    }
+    return () => {
+      (window as any).lenis?.start()
+    }
+  }, [mobileMenuOpen])
+
   const openMenu = (menu: NavKey) => {
     if (menuCloseTimeoutRef.current !== null) {
       window.clearTimeout(menuCloseTimeoutRef.current)
@@ -489,6 +503,11 @@ export function Navbar({
           <Link
             href="/"
             aria-label="Clarte Club home"
+            onClick={() => {
+              if (window.location.hash) {
+                window.history.pushState("", document.title, window.location.pathname + window.location.search);
+              }
+            }}
             className="justify-self-center transition-opacity hover:opacity-70"
           >
             <Image
@@ -554,19 +573,26 @@ export function Navbar({
         </div>
 
         {/* Mobile Header Row */}
-        <div className="flex items-center justify-between h-full lg:hidden">
-          <IconButton
-            label="Open Menu"
-            tone={tone}
-            onClick={() => setMobileMenuOpen(true)}
-          >
-            <Menu className="size-[20px] stroke-[1.7]" />
-          </IconButton>
+        <div className="grid h-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center lg:hidden">
+          <div className="justify-self-start">
+            <IconButton
+              label="Open Menu"
+              tone={tone}
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <Menu className="size-[20px] stroke-[1.7]" />
+            </IconButton>
+          </div>
 
           <Link
             href="/"
             aria-label="Clarte Club home"
-            className="transition-opacity hover:opacity-70"
+            onClick={() => {
+              if (window.location.hash) {
+                window.history.pushState("", document.title, window.location.pathname + window.location.search);
+              }
+            }}
+            className="justify-self-center transition-opacity hover:opacity-70"
           >
             <Image
               src="/logo.svg"
@@ -581,7 +607,7 @@ export function Navbar({
             />
           </Link>
 
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-self-end gap-1.5">
             <IconButton
               label="Search"
               tone={tone}
@@ -658,7 +684,10 @@ export function Navbar({
             </SheetClose>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-6 py-8 space-y-8">
+          <div
+            data-lenis-prevent
+            className="flex-1 overflow-y-auto px-6 py-8 space-y-8"
+          >
             {/* Primary Nav Links */}
             <nav aria-label="Mobile Primary Navigation" className="flex flex-col gap-6">
               {primaryNav.map((item) => (
@@ -704,14 +733,14 @@ export function Navbar({
           </div>
 
           {/* Mobile Menu Footer */}
-          <div className="p-6 border-t border-black/5 bg-[#ebe8e1] space-y-4">
-            <div className="flex items-center justify-between">
+          <div className="px-6 pt-6 pb-10 border-t border-black/5 bg-[#ebe8e1] space-y-4">
+            <div className="flex items-center justify-center gap-14">
               <Link
                 href="/account"
                 onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-black/70 hover:text-black transition-colors"
+                className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-black/70 hover:text-black transition-colors"
               >
-                <UserRound className="size-4 stroke-[1.5]" />
+                <UserRound className="size-[15px] stroke-[1.5]" />
                 Account
               </Link>
               <button
@@ -719,9 +748,9 @@ export function Navbar({
                   setMobileMenuOpen(false)
                   toggleWishlist()
                 }}
-                className="flex items-center gap-2 text-[12px] uppercase tracking-wider text-black/70 hover:text-black transition-colors cursor-pointer"
+                className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-black/70 hover:text-black transition-colors cursor-pointer"
               >
-                <Heart className="size-4 stroke-[1.5]" />
+                <Heart className="size-[15px] stroke-[1.5]" />
                 Wishlist
               </button>
             </div>

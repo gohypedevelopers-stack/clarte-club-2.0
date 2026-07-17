@@ -19,6 +19,9 @@ export default function SmoothScroll() {
       infinite: false,
     });
 
+    // Save to window for external control
+    (window as any).lenis = lenis;
+
     // Sync ScrollTrigger with Lenis scroll events
     lenis.on("scroll", () => {
       ScrollTrigger.update();
@@ -35,6 +38,7 @@ export default function SmoothScroll() {
 
     return () => {
       lenis.destroy();
+      (window as any).lenis = null;
       gsap.ticker.remove(updateTicker);
     };
   }, []);
