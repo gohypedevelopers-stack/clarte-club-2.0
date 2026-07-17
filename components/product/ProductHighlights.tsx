@@ -30,7 +30,7 @@ const HIGHLIGHTS_DATA: HighlightBlock[] = [
 export function ProductHighlights() {
   return (
     <section className="w-full bg-[#fcfbfa] border-t border-black/15 py-20 text-black">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="w-full px-4 sm:px-6 lg:px-8">
         
         {/* Section Title */}
         <div className="text-center mb-16 space-y-3">
