@@ -47,8 +47,8 @@ export function ProductPage({
             </ol>
           </nav>
 
-          <div className="mt-5 grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_573px] xl:items-start xl:gap-12 min-w-0 w-full">
-            <div className="xl:sticky xl:top-[104px] w-full min-w-0">
+          <div className="mt-5 grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_480px] xl:grid-cols-[minmax(0,1fr)_573px] lg:items-start lg:gap-8 xl:gap-12 min-w-0 w-full">
+            <div className="lg:sticky lg:top-[104px] w-full min-w-0">
               <ProductGallery images={product.gallery} />
             </div>
             <ProductSummary product={product} />
