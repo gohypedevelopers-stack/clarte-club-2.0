@@ -286,13 +286,13 @@ export function ProductQuickViewModal({
                   </Link>
                 </div>
 
-                <div className="flex gap-2.5">
+                <div className="flex flex-wrap gap-2.5">
                   {product.sizes.map((size) => (
                     <QuickViewSizeButton
                       key={size}
                       active={selectedSize === size}
                       onClick={() => setSelectedSize(size)}
-                      className="flex-1"
+                      className="flex-1 min-w-[80px]"
                     >
                       {size}
                     </QuickViewSizeButton>
