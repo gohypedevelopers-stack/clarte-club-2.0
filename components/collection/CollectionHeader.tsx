@@ -26,7 +26,7 @@ export function CollectionHeader({
           </h1>
         </div>
 
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between border-t border-black/10 pt-4">
+        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between border-t border-black/10 pt-4">
           <div className="flex flex-wrap items-center gap-4 text-[13px] uppercase tracking-[0.08em] text-black/60">
             <span>CURATED PIECES</span>
             <span className="text-black/45">|</span>
