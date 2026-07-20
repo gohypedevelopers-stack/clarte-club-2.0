@@ -116,7 +116,7 @@ function NavLink({
         mobile
           ? "flex-none text-[0.75rem] tracking-[0.18em]"
           : "text-[0.72rem] tracking-[0.2em]",
-        active ? "opacity-100" : "hover:opacity-60"
+        active || selected ? "opacity-100" : "hover:opacity-60"
       )}
     >
       <span className="leading-none">{children}</span>
@@ -124,7 +124,7 @@ function NavLink({
         aria-hidden="true"
         className={cn(
           "mt-[1px] h-px w-full origin-left bg-current transition-transform duration-200",
-          active
+          active || selected
             ? "scale-x-100"
             : "scale-x-0 group-hover/link:scale-x-100 group-focus-visible/link:scale-x-100"
         )}
@@ -314,7 +314,7 @@ export function Navbar({
   const [cartOpen, setCartOpen] = useState(false)
   const [wishlistOpen, setWishlistOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [selectedNav, setSelectedNav] = useState<NavKey>(defaultNavKey)
+  const [selectedNav, setSelectedNav] = useState<NavKey | null>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu | null>(null)
   const [isHovered, setIsHovered] = useState(false)
   const scrollFrameRef = useRef<number | null>(null)
@@ -384,7 +384,16 @@ export function Navbar({
 
   useEffect(() => {
     const updateSelectedNav = () => {
-      setSelectedNav(getNavKeyFromHash(window.location.hash) ?? defaultNavKey)
+      const hash = typeof window !== "undefined" ? window.location.hash : ""
+      if (pathname === "/collections" || pathname.startsWith("/collections/") || pathname.startsWith("/collection/")) {
+        setSelectedNav("collections")
+      } else if (pathname === "/about" || pathname.startsWith("/about/")) {
+        setSelectedNav("about")
+      } else if (pathname === "/") {
+        setSelectedNav(getNavKeyFromHash(hash) ?? "shop")
+      } else {
+        setSelectedNav(null)
+      }
     }
 
     updateSelectedNav()
@@ -399,7 +408,7 @@ export function Navbar({
       window.removeEventListener("hashchange", updateSelectedNav)
       window.removeEventListener("popstate", updateSelectedNav)
     }
-  }, [])
+  }, [pathname])
 
   useIsomorphicLayoutEffect(() => {
     const readAnnouncementHeight = () => {
