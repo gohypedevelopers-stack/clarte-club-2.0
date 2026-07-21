@@ -10,8 +10,8 @@ export default function ContactPage() {
   const contactMethods = [
     {
       name: "Email",
-      value: "hello@clarteclub.in",
-      href: "mailto:hello@clarteclub.in",
+      value: "contact@clarte.club",
+      href: "mailto:contact@clarte.club",
       label: "Write to us"
     },
     {
