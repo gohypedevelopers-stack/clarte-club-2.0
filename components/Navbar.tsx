@@ -19,14 +19,16 @@ import { cn } from "@/lib/utils"
 import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
 import { WishlistSidebar } from "@/components/wishlist/WishlistSidebar"
+import { getCartItems } from "@/lib/cart"
 import {
   Sheet,
   SheetClose,
   SheetContent,
   SheetTitle,
 } from "@/components/ui/sheet"
+import { motion, AnimatePresence } from "motion/react"
 
-type NavKey = "shop" | "bestsellers" | "collections" | "about"
+type NavKey = "new_in" | "collections"
 type ActiveMenu = NavKey | "wishlist"
 
 type PrimaryNavItem = {
@@ -36,23 +38,17 @@ type PrimaryNavItem = {
 }
 
 const primaryNav: PrimaryNavItem[] = [
-  { key: "shop", label: "Shop", href: "/#shop" },
-  { key: "bestsellers", label: "Bestsellers", href: "/#bestsellers" },
+  { key: "new_in", label: "New In", href: "/#new-drops" },
   { key: "collections", label: "Collections", href: "/collections" },
-  { key: "about", label: "About", href: "/about" },
 ]
 
-const megaMenuFeatured = ["New", "Bestsellers", "Sale"]
+const megaMenuFeatured = ["Noir Collection", "Heritage Collection", "Crystal Collection", "Atelier Collection"]
 
 const megaMenuCategories = [
-  "Aviator Sunglasses",
-  "Round Sunglasses",
-  "Square Sunglasses",
-  "Oval Sunglasses",
-  "Cateye Sunglasses",
-  "Hexagonal Sunglasses",
-  "D-Frame Sunglasses",
-  "Optical Glasses",
+  "Noir",
+  "Heritage",
+  "Crystal",
+  "Atelier",
 ]
 
 const megaMenuCards = [
@@ -277,10 +273,10 @@ function getNavKeyFromHash(hash: string): NavKey | null {
   const normalized = hash.replace(/^#/, "").toLowerCase()
 
   if (
-    normalized === "shop" ||
-    normalized === "bestsellers"
+    normalized === "new-drops" ||
+    normalized === "new_in"
   ) {
-    return normalized
+    return "new_in"
   }
 
   return null
@@ -291,7 +287,7 @@ export function Navbar({
 }: {
   className?: string
 }) {
-  const defaultNavKey: NavKey = "shop"
+  const defaultNavKey: NavKey = "new_in"
   const pathname = usePathname()
   const isOverlay = pathname === "/"
 
@@ -326,6 +322,51 @@ export function Navbar({
   const isLightSurface = !isOverlay || isScrolled || isInteractiveSurface
   const tone: "dark" | "light" = isLightSurface ? "dark" : "light"
   const isWishlistOpen = wishlistOpen
+  const [cartCount, setCartCount] = useState(0)
+  const [cartToast, setCartToast] = useState<{
+    visible: boolean
+    item: {
+      title: string
+      image: string
+      size: string
+      price: string
+    } | null
+  }>({ visible: false, item: null })
+
+  useEffect(() => {
+    const updateCount = () => {
+      const items = getCartItems()
+      const total = items.reduce((sum, item) => sum + item.quantity, 0)
+      setCartCount(total)
+    }
+
+    updateCount()
+
+    const handleCartUpdated = (e: any) => {
+      updateCount()
+      if (e.detail?.open) {
+        setCartOpen(true)
+      }
+      if (e.detail?.addedItem) {
+        setCartToast({
+          visible: true,
+          item: e.detail.addedItem,
+        })
+      }
+    }
+
+    window.addEventListener("cart-updated", handleCartUpdated)
+    return () => window.removeEventListener("cart-updated", handleCartUpdated)
+  }, [])
+
+  useEffect(() => {
+    if (cartToast.visible) {
+      const t = setTimeout(() => {
+        setCartToast((prev) => ({ ...prev, visible: false }))
+      }, 6000)
+      return () => clearTimeout(t)
+    }
+  }, [cartToast.visible])
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -387,10 +428,8 @@ export function Navbar({
       const hash = typeof window !== "undefined" ? window.location.hash : ""
       if (pathname === "/collections" || pathname.startsWith("/collections/") || pathname.startsWith("/collection/")) {
         setSelectedNav("collections")
-      } else if (pathname === "/about" || pathname.startsWith("/about/")) {
-        setSelectedNav("about")
       } else if (pathname === "/") {
-        setSelectedNav(getNavKeyFromHash(hash) ?? "shop")
+        setSelectedNav(getNavKeyFromHash(hash) ?? "new_in")
       } else {
         setSelectedNav(null)
       }
@@ -493,7 +532,7 @@ export function Navbar({
         <div className="hidden h-full lg:flex items-center justify-between">
           <nav
             aria-label="Primary"
-            className="flex items-center gap-6 xl:gap-10"
+            className="flex items-center gap-3.5 xl:gap-6 shrink-0"
             onMouseEnter={cancelMenuClose}
             onMouseLeave={scheduleMenuClose}
           >
@@ -503,13 +542,13 @@ export function Navbar({
                 href={item.href}
                 active={activeMenu === item.key}
                 selected={selectedNav === item.key}
-                ariaHaspopup={item.key === "shop" ? "menu" : undefined}
-                ariaExpanded={item.key === "shop" ? activeMenu === item.key : undefined}
+                ariaHaspopup={item.key === "collections" ? "menu" : undefined}
+                ariaExpanded={item.key === "collections" ? activeMenu === item.key : undefined}
                 onMouseEnter={() => {
-                  if (item.key === "shop") openMenu(item.key)
+                  if (item.key === "collections") openMenu(item.key)
                 }}
                 onFocus={() => {
-                  if (item.key === "shop") openMenu(item.key)
+                  if (item.key === "collections") openMenu(item.key)
                 }}
                 onBlur={(event) => {
                   const nextTarget = event.relatedTarget as Node | null
@@ -537,23 +576,23 @@ export function Navbar({
             onClick={() => {
               safeClearHash()
             }}
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity hover:opacity-70 z-10"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transition-opacity hover:opacity-75 z-10"
           >
             <Image
-              src="/logo.svg"
+              src="/wordmark.svg"
               alt="Clarte Club"
-              width={140}
-              height={84}
+              width={360}
+              height={34}
               priority
               className={cn(
-                "block h-auto w-[4.6rem] max-w-none transition-[filter] duration-300 ease-out",
+                "block h-auto w-[9.5rem] lg:w-[10.5rem] xl:w-[12.5rem] max-w-none transition-[filter] duration-300 ease-out",
                 !isLightSurface && "invert"
               )}
             />
           </Link>
 
-          <div className="flex items-center gap-4 xl:gap-6">
-            <div className="relative h-[34px] w-[220px] shrink-0 xl:w-[266px]">
+          <div className="flex items-center gap-2.5 xl:gap-4 ml-auto shrink-0">
+            <div className="relative h-[34px] w-[110px] shrink-0 xl:w-[160px]">
               <button
                 type="button"
                 aria-label="Search products"
@@ -561,18 +600,14 @@ export function Navbar({
                 aria-expanded={searchOpen}
                 onClick={() => setSearchOpen(true)}
                 className={cn(
-                  "relative flex h-full w-full items-center border border-current/80 bg-transparent px-4 pr-10 text-left text-[0.875rem] text-current outline-none transition-[color,border-color,opacity] duration-300 ease-out hover:opacity-80"
+                  "relative flex h-full w-full items-center border border-current/80 bg-transparent px-3 pr-8 text-left text-[0.8125rem] text-current outline-none transition-[color,border-color,opacity] duration-300 ease-out hover:opacity-80"
                 )}
               >
-                <span
-                  className="block truncate text-current/80"
-                >
-                  What are you looking for?
-                </span>
+                <span className="block truncate text-current/80">Search...</span>
               </button>
               <Search
                 aria-hidden="true"
-                className="pointer-events-none absolute right-4 top-1/2 size-4 -translate-y-1/2 stroke-[1.75] text-current transition-colors duration-300 ease-out"
+                className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 stroke-[1.75] text-current transition-colors duration-300 ease-out"
               />
             </div>
 
@@ -581,10 +616,17 @@ export function Navbar({
               tone={tone}
               onClick={() => setCartOpen(true)}
             >
-              <ShoppingBag className="size-[18px] stroke-[1.7]" />
+              <div className="relative">
+                <ShoppingBag className="size-[18px] stroke-[1.7]" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2.5 -right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#C9B07A] text-[9px] font-bold text-black border border-white animate-in scale-in duration-200">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
             </IconButton>
 
-            <div className="flex shrink-0 items-center gap-4">
+            <div className="flex shrink-0 items-center gap-3 xl:gap-4">
               <IconButton
                 label="Wishlist"
                 tone={tone}
@@ -619,16 +661,16 @@ export function Navbar({
             onClick={() => {
               safeClearHash()
             }}
-            className="justify-self-center transition-opacity hover:opacity-70"
+            className="justify-self-center transition-opacity hover:opacity-75"
           >
             <Image
-              src="/logo.svg"
+              src="/wordmark.svg"
               alt="Clarte Club"
-              width={100}
-              height={60}
+              width={220}
+              height={21}
               priority
               className={cn(
-                "block h-auto w-[3.3rem] max-w-none transition-[filter] duration-300 ease-out",
+                "block h-auto w-[9.5rem] sm:w-[11rem] max-w-none transition-[filter] duration-300 ease-out",
                 !isLightSurface && "invert"
               )}
             />
@@ -647,7 +689,14 @@ export function Navbar({
               tone={tone}
               onClick={() => setCartOpen(true)}
             >
-              <ShoppingBag className="size-[18px] stroke-[1.7]" />
+              <div className="relative">
+                <ShoppingBag className="size-[18px] stroke-[1.7]" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-2.5 -right-2.5 flex h-4 w-4 items-center justify-center rounded-full bg-[#C9B07A] text-[9px] font-bold text-black border border-white animate-in scale-in duration-200">
+                    {cartCount}
+                  </span>
+                )}
+              </div>
             </IconButton>
           </div>
         </div>
@@ -665,7 +714,7 @@ export function Navbar({
         >
           {activeMenu === "wishlist" ? (
             <WishlistPanel />
-          ) : activeMenu === "shop" ? (
+          ) : activeMenu === "collections" ? (
             <div className="grid h-full w-full gap-x-14 gap-y-8 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(10rem,12rem)_minmax(14rem,18rem)_minmax(0,1fr)] lg:px-8">
               <MenuSection
                 title="Featured"
@@ -700,6 +749,8 @@ export function Navbar({
       <SearchSidebar open={searchOpen} onOpenChange={setSearchOpen} />
       <CartSidebar open={cartOpen} onOpenChange={setCartOpen} />
       <WishlistSidebar open={wishlistOpen} onOpenChange={setWishlistOpen} />
+
+
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
         <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 bg-[#F6F2EA] text-black border-r border-black/10 flex flex-col h-full z-[99999]">
           <div className="flex items-center justify-between px-6 py-5 border-b border-black/5">
@@ -791,9 +842,54 @@ export function Navbar({
     </header>
   )
 
-  return isOverlay ? (
-    <div className="main-navbar-slot">{headerContent}</div>
-  ) : (
-    headerContent
+  return (
+    <>
+      {isOverlay ? (
+        <div className="main-navbar-slot">{headerContent}</div>
+      ) : (
+        headerContent
+      )}
+
+      {/* Premium Cart Toast Notification (Desktop Only - Top Right Corner) */}
+      <AnimatePresence>
+        {cartToast.visible && cartToast.item && (
+          <motion.div
+            initial={{ opacity: 0, x: 50, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 30, scale: 0.95 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed top-24 right-6 z-[99999] hidden md:flex items-center gap-3 bg-black border border-[#C9B07A] p-3 text-white shadow-[0_8px_30px_rgba(0,0,0,0.5)] w-[290px]"
+          >
+            <div className="relative h-12 w-9 shrink-0 bg-neutral-900 border border-white/5 overflow-hidden">
+              <Image
+                src={cartToast.item.image}
+                alt={cartToast.item.title}
+                fill
+                sizes="36px"
+                className="object-cover object-center"
+              />
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-[8px] font-semibold uppercase tracking-[0.2em] text-[#C9B07A]">
+                Added To Cart
+              </p>
+              <h4 className="mt-0.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-white truncate leading-none">
+                {cartToast.item.title}
+              </h4>
+              <p className="mt-1 text-[9px] text-white/50 uppercase tracking-wider font-light">
+                {cartToast.item.size} • {cartToast.item.price}
+              </p>
+            </div>
+            <button
+              onClick={() => setCartToast((prev) => ({ ...prev, visible: false }))}
+              className="text-white/40 hover:text-[#C9B07A] transition-colors p-0.5 cursor-pointer shrink-0"
+              aria-label="Close notification"
+            >
+              <X className="size-3.5 stroke-[1.8]" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   )
 }
