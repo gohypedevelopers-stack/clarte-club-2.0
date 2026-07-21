@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -17,11 +18,11 @@ const SLIDES = [
     ctaLink: "/collections"
   },
   {
-    tag: "Handcrafted Designs",
+    tag: "Precision Sculpted Designs",
     title: "Uncompromised Quality",
     description: "Meticulously designed frames made to last.",
-    ctaText: "View Bestsellers",
-    ctaLink: "/#bestsellers"
+    ctaText: "View New Drops",
+    ctaLink: "/#new-drops"
   },
   {
     tag: "The Craftsmanship",
@@ -198,7 +199,7 @@ export function FrameSequenceHero() {
     resizeCanvas();
 
     for (let index = 0; index < FRAME_COUNT; index += 1) {
-      const image = new Image();
+      const image = new window.Image();
       image.src = getFramePath(index);
       image.decoding = "async";
 
@@ -230,8 +231,8 @@ export function FrameSequenceHero() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          // Dynamically calculate exactly 500vh scroll distance
-          end: () => `+=${window.innerHeight * 5}`,
+          // Dynamically calculate compact 250vh scroll distance for fast responsive animation
+          end: () => `+=${window.innerHeight * 2.5}`,
           // Sync closely with scroll (0.5s scrub provides a smooth deceleration catch-up without feeling delayed/laggy)
           scrub: 0.5,
           pin: true,
