@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Check, X } from "lucide-react"
@@ -16,33 +16,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 
-type CartItem = {
-  id: string
-  image: string
-  alt: string
-  title: string
-  size: string
-  price: string
-}
-
-const cartItems: CartItem[] = [
-  {
-    id: "cart-item-1",
-    image: trendingProducts[0].image,
-    alt: trendingProducts[0].alt,
-    title: trendingProducts[0].name ?? "Signature Frame",
-    size: "XS",
-    price: trendingProducts[0].price ?? "₹ 4,500",
-  },
-  {
-    id: "cart-item-2",
-    image: trendingProducts[2].image,
-    alt: trendingProducts[2].alt,
-    title: trendingProducts[2].name ?? "Signature Frame",
-    size: "XS",
-    price: trendingProducts[2].price ?? "₹ 4,500",
-  },
-]
+import { getCartItems, updateCartQuantity, removeFromCart, type CartItem } from "@/lib/cart"
 
 const promoStripText = "Additional Discount on Pre-paid | Free Return and Exchange"
 
@@ -97,6 +71,7 @@ function CartItemRow({ item }: { item: CartItem }) {
 
           <button
             type="button"
+            onClick={() => removeFromCart(item.id, item.size)}
             aria-label={`Remove ${item.title}`}
             className="mt-0.5 text-[0.85rem] font-light uppercase leading-none text-white/70 transition-opacity hover:opacity-70 cursor-pointer"
           >
@@ -108,16 +83,18 @@ function CartItemRow({ item }: { item: CartItem }) {
           <div className="flex items-center gap-2.5 text-[0.8rem] leading-none border border-white/10 px-2 py-1 bg-white/5">
             <button
               type="button"
+              onClick={() => updateCartQuantity(item.id, item.size, item.quantity - 1)}
               aria-label="Decrease quantity"
-              className="text-white/60 hover:text-white transition-colors px-1"
+              className="text-white/60 hover:text-white transition-colors px-1 cursor-pointer"
             >
               -
             </button>
-            <span className="font-semibold text-white px-0.5">1</span>
+            <span className="font-semibold text-white px-0.5">{item.quantity}</span>
             <button
               type="button"
+              onClick={() => updateCartQuantity(item.id, item.size, item.quantity + 1)}
               aria-label="Increase quantity"
-              className="text-white/60 hover:text-white transition-colors px-1"
+              className="text-white/60 hover:text-white transition-colors px-1 cursor-pointer"
             >
               +
             </button>
@@ -150,6 +127,19 @@ type CartSidebarProps = {
 }
 
 export function CartSidebar({ open, onOpenChange }: CartSidebarProps) {
+  const [cartItems, setCartItems] = useState<CartItem[]>([])
+
+  useEffect(() => {
+    setCartItems(getCartItems())
+
+    const handleCartUpdated = () => {
+      setCartItems(getCartItems())
+    }
+
+    window.addEventListener("cart-updated", handleCartUpdated)
+    return () => window.removeEventListener("cart-updated", handleCartUpdated)
+  }, [])
+
   useEffect(() => {
     if (open) {
       (window as any).lenis?.stop()
@@ -190,10 +180,10 @@ export function CartSidebar({ open, onOpenChange }: CartSidebarProps) {
             <SheetClose asChild>
               <button
                 type="button"
-                className="inline-flex items-center gap-2 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-white/70 transition-opacity hover:opacity-100 cursor-pointer"
+                className="inline-flex items-center gap-2 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-white/70 transition-opacity hover:opacity-100 cursor-pointer leading-none"
               >
-                <span>CLOSE</span>
-                <X className="size-4 stroke-[1.8]" />
+                <span className="leading-none">CLOSE</span>
+                <X className="size-4 stroke-[1.8] shrink-0 relative -top-[0.5px]" />
               </button>
             </SheetClose>
           </div>
