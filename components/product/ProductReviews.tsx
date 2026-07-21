@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useId } from "react"
 import { Star, Check, X, ThumbsUp } from "lucide-react"
+import { motion, AnimatePresence } from "motion/react"
 
 type Review = {
   id: string
@@ -71,6 +72,7 @@ const INITIAL_REVIEWS: Review[] = [
 export function ProductReviews({ productSlug }: { productSlug: string }) {
   const [reviews, setReviews] = useState<Review[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showAll, setShowAll] = useState(false)
   
   // Review form state
   const [name, setName] = useState("")
@@ -172,6 +174,10 @@ export function ProductReviews({ productSlug }: { productSlug: string }) {
     }, 1800)
   }
 
+  const handleToggleShowAll = () => {
+    setShowAll(!showAll)
+  }
+
   return (
     <section id="reviews" className="w-full bg-white border-t border-black/15 py-16 text-black">
       <div className="w-full px-4 sm:px-6 lg:px-8">
@@ -240,72 +246,153 @@ export function ProductReviews({ productSlug }: { productSlug: string }) {
               </p>
             </div>
           </div>
-
           {/* Right Column: Review List */}
-          <div className="space-y-8 divide-y divide-black/10">
+          <div className="space-y-8">
             {reviews.length === 0 ? (
               <div className="py-12 text-center text-black/40 text-[14px] uppercase tracking-wider">
                 No reviews yet. Be the first to write one!
               </div>
             ) : (
-              reviews.map((review, idx) => (
-                <div key={review.id} className={idx > 0 ? "pt-8" : ""}>
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
-                    {/* User Rating and Info */}
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <div className="flex items-center gap-0.5">
-                          {[1, 2, 3, 4, 5].map((star) => (
-                            <Star 
-                              key={star} 
-                              className={`h-3.5 w-3.5 ${star <= review.rating ? "fill-black text-black" : "text-black/15"}`} 
-                            />
-                          ))}
+              <div className="space-y-8">
+                {/* First 3 reviews */}
+                {reviews.slice(0, 3).map((review, idx) => (
+                  <div key={review.id} className={idx > 0 ? "border-t border-black/10 pt-8" : ""}>
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                      {/* User Rating and Info */}
+                      <div>
+                        <div className="flex items-center gap-2">
+                          <div className="flex items-center gap-0.5">
+                            {[1, 2, 3, 4, 5].map((star) => (
+                              <Star 
+                                key={star} 
+                                className={`h-3.5 w-3.5 ${star <= review.rating ? "fill-black text-black" : "text-black/15"}`} 
+                              />
+                            ))}
+                          </div>
+                          {review.verified && (
+                            <span className="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider text-[#5b8c38] uppercase">
+                              <Check className="h-3 w-3 stroke-[3]" />
+                              Verified Buyer
+                            </span>
+                          )}
                         </div>
-                        {review.verified && (
-                          <span className="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider text-[#5b8c38] uppercase">
-                            <Check className="h-3 w-3 stroke-[3]" />
-                            Verified Buyer
-                          </span>
-                        )}
+                        
+                        <h4 className="mt-2 text-[15px] font-semibold uppercase tracking-[0.04em] text-black">
+                          {review.title}
+                        </h4>
                       </div>
-                      
-                      <h4 className="mt-2 text-[15px] font-semibold uppercase tracking-[0.04em] text-black">
-                        {review.title}
-                      </h4>
+
+                      {/* Date and Name */}
+                      <div className="text-left sm:text-right">
+                        <p className="text-[12px] font-semibold text-black/80">{review.name}</p>
+                        <p className="text-[11px] text-black/45 uppercase tracking-wider">{review.date}</p>
+                      </div>
                     </div>
 
-                    {/* Date and Name */}
-                    <div className="text-left sm:text-right">
-                      <p className="text-[12px] font-semibold text-black/80">{review.name}</p>
-                      <p className="text-[11px] text-black/45 uppercase tracking-wider">{review.date}</p>
+                    {/* Review Content */}
+                    <p className="mt-4 text-[14px] leading-relaxed text-black/70 font-sans max-w-3xl">
+                      {review.body}
+                    </p>
+
+                    {/* Helpfulness and Actions */}
+                    <div className="mt-6 flex items-center gap-4">
+                      <button
+                        onClick={() => handleHelpfulClick(review.id)}
+                        className={`inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] transition-colors py-1 px-3 border rounded-full cursor-pointer ${
+                          review.hasVoted 
+                            ? "border-black bg-black text-white" 
+                            : "border-black/10 bg-white text-black/60 hover:text-black hover:border-black/30"
+                        }`}
+                      >
+                        <ThumbsUp className="h-3 w-3" />
+                        <span>Helpful ({review.helpfulCount})</span>
+                      </button>
                     </div>
                   </div>
+                ))}
 
-                  {/* Review Content */}
-                  <p className="mt-4 text-[14px] leading-relaxed text-black/70 font-sans max-w-3xl">
-                    {review.body}
-                  </p>
-
-                  {/* Helpfulness and Actions */}
-                  <div className="mt-6 flex items-center gap-4">
-                    <button
-                      onClick={() => handleHelpfulClick(review.id)}
-                      className={`inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] transition-colors py-1 px-3 border rounded-full cursor-pointer ${
-                        review.hasVoted 
-                          ? "border-black bg-black text-white" 
-                          : "border-black/10 bg-white text-black/60 hover:text-black hover:border-black/30"
-                      }`}
+                {/* Extra reviews with smooth collapse/expand transition */}
+                <AnimatePresence initial={false}>
+                  {showAll && reviews.length > 3 && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                      className="overflow-hidden space-y-8"
                     >
-                      <ThumbsUp className="h-3 w-3" />
-                      <span>Helpful ({review.helpfulCount})</span>
-                    </button>
-                  </div>
-                </div>
-              ))
+                      {reviews.slice(3).map((review) => (
+                        <div key={review.id} className="border-t border-black/10 pt-8">
+                          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                            {/* User Rating and Info */}
+                            <div>
+                              <div className="flex items-center gap-2">
+                                <div className="flex items-center gap-0.5">
+                                  {[1, 2, 3, 4, 5].map((star) => (
+                                    <Star 
+                                      key={star} 
+                                      className={`h-3.5 w-3.5 ${star <= review.rating ? "fill-black text-black" : "text-black/15"}`} 
+                                    />
+                                  ))}
+                                </div>
+                                {review.verified && (
+                                  <span className="inline-flex items-center gap-1 text-[9px] font-semibold tracking-wider text-[#5b8c38] uppercase">
+                                    <Check className="h-3 w-3 stroke-[3]" />
+                                    Verified Buyer
+                                  </span>
+                                )}
+                              </div>
+                              
+                              <h4 className="mt-2 text-[15px] font-semibold uppercase tracking-[0.04em] text-black">
+                                {review.title}
+                              </h4>
+                            </div>
+
+                            {/* Date and Name */}
+                            <div className="text-left sm:text-right">
+                              <p className="text-[12px] font-semibold text-black/80">{review.name}</p>
+                              <p className="text-[11px] text-black/45 uppercase tracking-wider">{review.date}</p>
+                            </div>
+                          </div>
+
+                          {/* Review Content */}
+                          <p className="mt-4 text-[14px] leading-relaxed text-black/70 font-sans max-w-3xl">
+                            {review.body}
+                          </p>
+
+                          {/* Helpfulness and Actions */}
+                          <div className="mt-6 flex items-center gap-4">
+                            <button
+                              onClick={() => handleHelpfulClick(review.id)}
+                              className={`inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.08em] transition-colors py-1 px-3 border rounded-full cursor-pointer ${
+                                review.hasVoted 
+                                  ? "border-black bg-black text-white" 
+                                  : "border-black/10 bg-white text-black/60 hover:text-black hover:border-black/30"
+                              }`}
+                            >
+                              <ThumbsUp className="h-3 w-3" />
+                              <span>Helpful ({review.helpfulCount})</span>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            )}
+            
+            {reviews.length > 3 && (
+              <div className="pt-8 flex justify-center border-t border-black/10">
+                <button
+                  onClick={handleToggleShowAll}
+                  className="inline-flex items-center justify-center border border-black/25 hover:border-black px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.14em] text-black transition-colors bg-white cursor-pointer"
+                >
+                  {showAll ? "Show Less" : "View All Comments"}
+                </button>
+              </div>
             )}
           </div>
-
         </div>
       </div>
 
