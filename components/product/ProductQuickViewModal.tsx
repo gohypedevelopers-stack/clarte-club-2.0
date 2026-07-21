@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Star, X } from "lucide-react"
+import { ChevronLeft, ChevronRight, Heart, Star, X } from "lucide-react"
 import { useEffect, useState } from "react"
 import type { ButtonHTMLAttributes } from "react"
 
@@ -100,7 +100,7 @@ export function ProductQuickViewModal({
   const [activeImageIndex, setActiveImageIndex] = useState(() =>
     Math.min(initialImageIndex, Math.max(gallery.length - 1, 0))
   )
-  const [selectedColor, setSelectedColor] = useState(product.colorName)
+  const [isWishlisted, setIsWishlisted] = useState(false)
   const [selectedSize, setSelectedSize] = useState(
     product.sizes[1] ?? product.sizes[0] ?? ""
   )
@@ -261,51 +261,33 @@ export function ProductQuickViewModal({
                 </Link>
               </p>
 
-              <section className="space-y-2">
-                <p className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
-                  Color: <span className="font-normal text-black/60 normal-case">{selectedColor}</span>
-                </p>
-
-                <QuickViewColorSwatches
-                  colors={product.colors}
-                  selectedColor={selectedColor}
-                  onSelectColor={setSelectedColor}
-                />
-              </section>
-
-              <section className="space-y-3">
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
-                    Choose Size
-                  </h3>
-                  <Link
-                    href="/products#size-guide"
-                    className="text-[11px] font-bold text-black/45 uppercase tracking-wider underline underline-offset-4 transition-opacity hover:opacity-70"
-                  >
-                    Size Guide
-                  </Link>
-                </div>
-
-                <div className="flex flex-wrap gap-2.5">
-                  {product.sizes.map((size) => (
-                    <QuickViewSizeButton
-                      key={size}
-                      active={selectedSize === size}
-                      onClick={() => setSelectedSize(size)}
-                      className="flex-1 min-w-[80px]"
-                    >
-                      {size}
-                    </QuickViewSizeButton>
-                  ))}
-                </div>
-              </section>
-
-              <button
-                type="button"
-                className="flex h-12 w-full items-center justify-center bg-black text-[15px] sm:text-[18px] font-medium uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90 cursor-pointer"
-              >
-                Add To Cart
-              </button>
+              <div className="flex items-center gap-3 pt-2">
+                <button
+                  type="button"
+                  className="flex h-12 flex-1 items-center justify-center bg-black text-[14px] sm:text-[16px] font-medium uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90 cursor-pointer"
+                >
+                  Add To Cart
+                </button>
+                <button
+                  type="button"
+                  aria-label="Add to wishlist"
+                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  className={cn(
+                    "flex h-12 w-12 shrink-0 items-center justify-center border transition-all duration-200 cursor-pointer",
+                    isWishlisted
+                      ? "border-black bg-black text-white"
+                      : "border-black/20 bg-white text-black hover:border-black"
+                  )}
+                >
+                  <Heart
+                    className="size-5 transition-transform duration-200 active:scale-125"
+                    style={{
+                      fill: isWishlisted ? "currentColor" : "none",
+                      strokeWidth: 1.8,
+                    }}
+                  />
+                </button>
+              </div>
 
               <div className="pt-1 text-center">
                 <Link
