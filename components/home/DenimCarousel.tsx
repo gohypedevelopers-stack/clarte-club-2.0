@@ -14,35 +14,40 @@ import { cn } from "@/lib/utils"
 
 type DenimSlide = {
   title: string
+  subtitle: string
+  categorySlug: string
   image: string
   alt: string
 }
 
 const denimSlides: DenimSlide[] = [
   {
-    title: "AVIATOR SHADES",
-    image: "/images/products/product5-white.png",
-    alt: "Model wearing aviator sunglasses",
+    title: "NOIR COLLECTION",
+    subtitle: "Deep, Structural Blacks & Architectural Lines",
+    categorySlug: "noir",
+    image: "/images/products/product1.png",
+    alt: "Noir Collection featured eyewear",
   },
   {
-    title: "OVAL FRAMES",
-    image: "/images/products/product5-white.png",
-    alt: "Model wearing oval frames",
+    title: "HERITAGE COLLECTION",
+    subtitle: "Warm Tortoise Tones & Classic Craftsmanship",
+    categorySlug: "heritage",
+    image: "/images/products/product4.png",
+    alt: "Heritage Collection featured eyewear",
   },
   {
-    title: "CATEYE SUNGLASSES",
-    image: "/images/products/product5-white.png",
-    alt: "Model wearing cateye sunglasses",
+    title: "CRYSTAL COLLECTION",
+    subtitle: "Translucent Smoke & Clear Bio-Acetate Silhouettes",
+    categorySlug: "crystal",
+    image: "/images/products/product3.png",
+    alt: "Crystal Collection featured eyewear",
   },
   {
-    title: "SQUARE GLASSES",
-    image: "/images/products/product5-white.png",
-    alt: "Model wearing square glasses",
-  },
-  {
-    title: "OPTICAL FRAMES",
-    image: "/images/products/product5-white.png",
-    alt: "Model wearing clear optical frames",
+    title: "ATELIER COLLECTION",
+    subtitle: "Limited-Batch Precision Hardware & Bold Profiles",
+    categorySlug: "atelier",
+    image: "/images/products/product2.png",
+    alt: "Atelier Collection featured eyewear",
   },
 ]
 
@@ -61,27 +66,33 @@ function DenimSlideCard({ slide }: { slide: DenimSlide }) {
       {/* Vignette Overlay for readability */}
       <div
         aria-hidden
-        className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"
+        className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
       />
 
-      <div className="absolute inset-x-6 bottom-14 z-10 text-white">
+      <div className="absolute inset-x-6 bottom-14 z-10 text-white space-y-1">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C9B07A]">
+          Signature Collection
+        </p>
         <h3
           className="font-semibold uppercase tracking-[0.1em]"
-          style={{ fontSize: "clamp(0.9rem, 1.2vw, 1.25rem)" }}
+          style={{ fontSize: "clamp(1.1rem, 1.6vw, 1.75rem)" }}
         >
           {slide.title}
         </h3>
+        <p className="text-[12px] font-light text-white/80 tracking-wide max-w-md pb-2">
+          {slide.subtitle}
+        </p>
 
         <Link
-          href="/collections"
-          className="group relative mt-3 inline-flex h-8 items-center justify-center overflow-hidden border border-white/80 px-4 text-[0.625rem] font-semibold uppercase tracking-[0.16em] text-white no-underline transition-colors duration-300 hover:text-black"
+          href={`/collections?category=${slide.categorySlug}`}
+          className="group relative mt-3 inline-flex h-9 items-center justify-center overflow-hidden border border-white/80 px-5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-white no-underline transition-colors duration-300 hover:text-black"
         >
           {/* Slide fill background on hover */}
           <span
             aria-hidden
             className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0"
           />
-          <span className="relative z-10">Explore Collection</span>
+          <span className="relative z-10">Explore {slide.title.replace(" COLLECTION", "")}</span>
         </Link>
       </div>
     </article>
@@ -108,8 +119,12 @@ export function DenimCarousel() {
     if (!api) return
 
     const interval = setInterval(() => {
-      api.scrollNext()
-    }, 5000)
+      if (api.canScrollNext()) {
+        api.scrollNext()
+      } else {
+        api.scrollTo(0)
+      }
+    }, 4000)
 
     return () => clearInterval(interval)
   }, [api, current])
