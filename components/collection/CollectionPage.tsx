@@ -8,6 +8,7 @@ import { CollectionHeader } from "@/components/collection/CollectionHeader"
 export function CollectionPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedType, setSelectedType] = useState<string | null>(null)
+  const [sortBy, setSortBy] = useState<string>("bestseller")
 
   return (
     <main className="flex-1 bg-white text-black">
@@ -17,12 +18,15 @@ export function CollectionPage() {
           setSelectedCategory={setSelectedCategory}
           selectedType={selectedType}
           setSelectedType={setSelectedType}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
         />
 
-        <div className="mt-8">
+        <div className="mt-3.5">
           <CollectionGrid 
             selectedCategory={selectedCategory}
             selectedType={selectedType}
+            sortBy={sortBy}
           />
         </div>
 
