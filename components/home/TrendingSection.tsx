@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
+import { ChevronLeft, ChevronRight, Heart, Plus } from "lucide-react"
 
 import { ProductQuickViewModal } from "@/components/product/ProductQuickViewModal"
 import {
@@ -11,22 +11,9 @@ import {
   trendingProducts,
   type ProductCard,
 } from "@/components/product/productData"
+import { addToCart } from "@/lib/cart"
 
-const eyewearFits = ["Narrow", "Medium", "Wide"]
 const eyewearDetails = { shape: "Round", lens: "UV400" }
-
-
-function SizeMarker({ size }: { size: string }) {
-  return (
-    <span className="group/size relative inline-flex flex-col items-center pb-0.5">
-      <span className="leading-none">{size}</span>
-      <span
-        aria-hidden="true"
-        className="mt-[1px] h-px w-full origin-left scale-x-0 bg-current transition-transform duration-200 group-hover/size:scale-x-100"
-      />
-    </span>
-  )
-}
 
 export function ProductCardView({
   product,
@@ -38,6 +25,11 @@ export function ProductCardView({
   const gallery = product.gallery?.length ? product.gallery : [product.image]
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [quickViewOpen, setQuickViewOpen] = useState(false)
+  const [isWishlisted, setIsWishlisted] = useState(false)
+
+  // Touch Swipe Gesture State for Homepage Cards
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
 
   const activeImage = gallery[activeImageIndex] ?? product.image
   const hasGalleryControls = gallery.length > 1
@@ -52,9 +44,45 @@ export function ProductCardView({
     setActiveImageIndex((currentIndex) => (currentIndex + 1) % gallery.length)
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const distance = touchStartX.current - touchEndX.current
+    const minSwipeDistance = 30
+
+    if (distance > minSwipeDistance) {
+      // Swiped Left -> Next Image
+      handleNextImage()
+    } else if (distance < -minSwipeDistance) {
+      // Swiped Right -> Previous Image
+      handlePreviousImage()
+    }
+
+    touchStartX.current = null
+    touchEndX.current = null
+  }
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    e.preventDefault()
+    setIsWishlisted(!isWishlisted)
+  }
+
   return (
     <article className="group relative overflow-hidden" style={{ background: "#0F0F10" }}>
-      <div className="relative aspect-[330/479]">
+      <div
+        className="relative aspect-[330/479] select-none"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <Link href="/products" className="absolute inset-0 cursor-pointer z-0">
           <Image
             key={`${product.id}-${activeImageIndex}`}
@@ -92,7 +120,7 @@ export function ProductCardView({
               type="button"
               aria-label="Previous product image"
               onClick={(e) => { e.stopPropagation(); handlePreviousImage() }}
-              className="pointer-events-auto inline-flex size-9 items-center justify-center transition-colors duration-200"
+              className="pointer-events-auto inline-flex size-9 items-center justify-center transition-colors duration-200 cursor-pointer"
               style={{ background: "rgba(15,15,16,0.55)", color: "#F6F2EA" }}
             >
               <ChevronLeft className="size-5" strokeWidth={2} />
@@ -101,7 +129,7 @@ export function ProductCardView({
               type="button"
               aria-label="Next product image"
               onClick={(e) => { e.stopPropagation(); handleNextImage() }}
-              className="pointer-events-auto inline-flex size-9 items-center justify-center transition-colors duration-200"
+              className="pointer-events-auto inline-flex size-9 items-center justify-center transition-colors duration-200 cursor-pointer"
               style={{ background: "rgba(15,15,16,0.55)", color: "#F6F2EA" }}
             >
               <ChevronRight className="size-5" strokeWidth={2} />
@@ -148,41 +176,31 @@ export function ProductCardView({
             style={{ background: "rgba(10,10,11,0.97)" }}
           >
             {/* Frame details row */}
-            <div className="flex items-center gap-3">
-              <span
-                className="text-[9px] uppercase"
-                style={{ letterSpacing: "0.16em", color: "#FFFFFF" }}
-              >
-                {eyewearDetails.shape}
-              </span>
-              <span
-                aria-hidden
-                style={{ width: "1px", height: "10px", background: "rgba(255,255,255,0.3)", display: "inline-block" }}
-              />
-              <span
-                className="text-[9px] uppercase"
-                style={{ letterSpacing: "0.16em", color: "#FFFFFF" }}
-              >
-                {eyewearDetails.lens} Lens
-              </span>
-            </div>
-
-            {/* Fit sizes + Quick View */}
-            <div className="flex flex-wrap items-center justify-between gap-2.5">
-              <div
-                className="flex flex-wrap items-center gap-1.5 text-[10px] font-normal uppercase"
-                style={{ letterSpacing: "0.12em", color: "#FFFFFF" }}
-              >
-                {eyewearFits.map((fit) => (
-                  <SizeMarker key={fit} size={fit} />
-                ))}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span
+                  className="text-[9px] uppercase"
+                  style={{ letterSpacing: "0.16em", color: "#FFFFFF" }}
+                >
+                  {eyewearDetails.shape}
+                </span>
+                <span
+                  aria-hidden
+                  style={{ width: "1px", height: "10px", background: "rgba(255,255,255,0.3)", display: "inline-block" }}
+                />
+                <span
+                  className="text-[9px] uppercase"
+                  style={{ letterSpacing: "0.16em", color: "#FFFFFF" }}
+                >
+                  {eyewearDetails.lens} Lens
+                </span>
               </div>
 
               <button
                 type="button"
                 aria-label={`Quick view ${product.alt}`}
                 onClick={(e) => { e.stopPropagation(); setQuickViewOpen(true) }}
-                className="group/qv shrink-0 text-[10px] font-medium uppercase"
+                className="group/qv shrink-0 text-[10px] font-medium uppercase cursor-pointer"
                 style={{ letterSpacing: "0.14em", color: "#C9B07A" }}
               >
                 <span className="inline-block bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-left-bottom bg-no-repeat transition-[background-size] duration-200 group-hover/qv:bg-[length:100%_1px]">
@@ -191,25 +209,59 @@ export function ProductCardView({
               </button>
             </div>
 
-            {/* Add to Cart */}
-            <button
-              type="button"
-              className="group/cart relative overflow-hidden text-[10px] font-semibold uppercase"
-              style={{
-                height: "2.4rem",
-                width: "100%",
-                border: "1px solid rgba(201,176,122,0.45)",
-                letterSpacing: "0.18em",
-                color: "#F6F2EA",
-              }}
-            >
-              <span
-                aria-hidden
-                className="absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover/cart:translate-x-0"
-                style={{ background: "rgba(201,176,122,0.15)" }}
-              />
-              <span className="relative">Add To Cart</span>
-            </button>
+            {/* Action buttons: Add to Cart + Subtle Heart Wishlist Icon */}
+            <div className="flex items-center gap-2 w-full">
+              <button
+                type="button"
+                onClick={() => {
+                  addToCart({
+                    id: product.id,
+                    image: product.image,
+                    alt: product.alt,
+                    title: product.name ?? "Signature Frame",
+                    size: "XS",
+                    price: product.price ?? "₹ 4,500",
+                  })
+                }}
+                className="group/cart relative flex-1 overflow-hidden text-[10px] font-semibold uppercase cursor-pointer flex items-center justify-center"
+                style={{
+                  height: "2.4rem",
+                  border: "1px solid rgba(201,176,122,0.45)",
+                  letterSpacing: "0.18em",
+                  color: "#F6F2EA",
+                }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover/cart:translate-x-0"
+                  style={{ background: "rgba(201,176,122,0.15)" }}
+                />
+                <span className="relative">Add To Cart</span>
+              </button>
+
+              {/* Heart Wishlist Button */}
+              <button
+                type="button"
+                aria-label="Add to wishlist"
+                onClick={toggleWishlist}
+                className="flex size-9 shrink-0 items-center justify-center transition-all duration-200 cursor-pointer"
+                style={{
+                  height: "2.4rem",
+                  width: "2.4rem",
+                  border: isWishlisted ? "1px solid #C9B07A" : "1px solid rgba(201,176,122,0.35)",
+                  background: isWishlisted ? "rgba(201,176,122,0.15)" : "transparent",
+                }}
+              >
+                <Heart
+                  className="size-4 transition-transform duration-200 active:scale-125"
+                  style={{
+                    color: isWishlisted ? "#C9B07A" : "#F6F2EA",
+                    fill: isWishlisted ? "#C9B07A" : "none",
+                    strokeWidth: 1.8,
+                  }}
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -228,11 +280,16 @@ export function ProductCardView({
 
 export function TrendingSection() {
   return (
-    <section className="w-full bg-white px-4 pt-14 pb-4 text-black sm:px-6 lg:px-8 md:pt-16 md:pb-4">
+    <section id="new-drops" className="w-full bg-white px-4 pt-14 pb-4 text-black sm:px-6 lg:px-8 md:pt-16 md:pb-4">
       <div className="flex w-full flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-        <h2 className="font-heading text-[clamp(1.7rem,2.2vw,2.6rem)] font-semibold uppercase leading-none tracking-[-0.04em]">
-          Trending
-        </h2>
+        <div>
+          <p className="text-[10px] uppercase font-semibold tracking-[0.25em] text-[#C9B07A] mb-1">
+            Fresh Arrivals
+          </p>
+          <h2 className="font-heading text-[clamp(1.7rem,2.2vw,2.6rem)] font-semibold uppercase leading-none tracking-[-0.04em]">
+            New Drops
+          </h2>
+        </div>
       </div>
 
       <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
@@ -241,12 +298,12 @@ export function TrendingSection() {
         ))}
       </div>
 
-      <div className="mt-4 flex justify-center">
+      <div className="mt-6 flex justify-center">
         <Link
           href="/collections"
-          className="inline-flex h-9 items-center justify-center border border-black px-5 text-[0.6875rem] uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white"
+          className="inline-flex h-9 items-center justify-center border border-black px-5 text-[0.6875rem] uppercase tracking-[0.12em] transition-colors hover:bg-black hover:text-white font-medium"
         >
-          View All
+          View All Drops
         </Link>
       </div>
     </section>
