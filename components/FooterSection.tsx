@@ -55,8 +55,8 @@ function YoutubeIcon(props: React.ComponentProps<"svg">) {
   )
 }
 
-const companyLinks = [
-  { label: "About Us", href: "/about" },
+const clarteClubLinks = [
+  { label: "Our Story", href: "/about" },
   { label: "Help", href: "/#help" },
   { label: "Chat With Us", href: "/#chat" },
   { label: "Privacy Policy", href: "/#privacy" },
@@ -64,17 +64,10 @@ const companyLinks = [
   { label: "Terms of Service", href: "/#terms" },
 ] as const
 
-const quickLinks = [
-  { label: "Eyewear Collection", href: "/collections" },
-  { label: "My Account", href: "/#account" },
-  { label: "Returns/ Exchange", href: "/#returns" },
+const supportLinks = [
+  { label: "Returns & Exchange", href: "/#returns" },
   { label: "Order Tracking", href: "/#tracking" },
-] as const
-
-const bottomLinks = [
-  { label: "Privacy Policy", href: "/#privacy" },
-  { label: "Terms of Use", href: "/#terms" },
-  { label: "Returns", href: "/#returns" },
+  { label: "My Account", href: "/account" },
 ] as const
 
 function FooterLink({
@@ -119,78 +112,81 @@ export function FooterSection() {
     <footer className="w-full border-t border-[#C9B07A]/20" style={{ background: "#F6F2EA" }}>
       <div className="mx-auto max-w-[1268px] px-5 pt-8 pb-0 sm:px-8 md:pt-10 md:pb-0">
         
-        {/* Top Header Block with Logo */}
+        {/* Top Header Block with Wordmark */}
         <div className="flex flex-col gap-6 border-b border-[#0F0F10]/8 pb-6 sm:flex-row sm:items-center sm:justify-between">
           <Link href="/" aria-label="Clarte Club Home" className="transition-all duration-300 hover:opacity-75 hover:scale-[1.01]">
             <Image
-              src="/logo.svg"
-              alt="Clarte Club"
-              width={120}
-              height={72}
-              className="h-auto w-[6rem] object-contain"
+              src="/wordmark.svg"
+              alt="Clarté Club"
+              width={260}
+              height={26}
+              className="h-auto w-[10rem] sm:w-[12rem] object-contain"
             />
           </Link>
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#0F0F10]/70 font-semibold">
-            Signature Eyewear &bull; Crafted for Style
+            Signature Eyewear &bull; Sculpted for Perspective
           </p>
         </div>
 
-        {/* Links Grid */}
-        <div className="grid grid-cols-2 gap-x-8 gap-y-6 pt-8 pb-2 lg:grid-cols-4 lg:gap-12 lg:pb-4">
+        {/* 3 Main Footer Columns: CLARTÉ CLUB, GET SUPPORT, CONNECT WITH US */}
+        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-8 pb-4 md:grid-cols-3 lg:gap-12 lg:pb-6">
           
-          <FooterGroup title="Company">
-            {companyLinks.map((link) => (
+          {/* Column 1: CLARTÉ CLUB */}
+          <FooterGroup title="Clarté Club">
+            {clarteClubLinks.map((link) => (
               <FooterLink key={link.label} href={link.href}>
                 {link.label}
               </FooterLink>
             ))}
           </FooterGroup>
 
-          <FooterGroup title="Quick Links">
-            {quickLinks.map((link) => (
-              <FooterLink key={link.label} href={link.href}>
-                {link.label}
-              </FooterLink>
-            ))}
-          </FooterGroup>
-
-          <div className="col-span-2 lg:col-span-1">
+          {/* Column 2: GET SUPPORT */}
+          <div className="flex flex-col">
             <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
-              Contact
+              Get Support
             </h3>
-            <div className="mt-2.5 lg:mt-5 space-y-3 lg:space-y-4 text-[11px] uppercase tracking-[0.08em] text-[#0F0F10]/90">
+            <div className="mt-5 space-y-4 text-[11px] uppercase tracking-[0.08em] text-[#0F0F10]/90">
               <div className="space-y-1">
-                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">For Customer Care</p>
+                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">Customer Care Email</p>
                 <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10] hover:text-[#C9B07A] transition-colors duration-200">
-                  <a href="mailto:customercare@clarteclub.in">customercare@clarteclub.in</a>
+                  <a href="mailto:contact@clarte.club">contact@clarte.club</a>
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">For Online Orders</p>
+                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">Phone Assistance</p>
                 <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10] hover:text-[#C9B07A] transition-colors duration-200">
                   <a href="tel:+91000000000">+91 00000 00000</a>
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">Timings</p>
+                <p className="font-semibold text-[#0F0F10]/60 text-[9px] tracking-[0.15em]">Support Hours</p>
                 <p className="normal-case tracking-[0.02em] font-semibold text-[#0F0F10]">
-                  Mon-Sat : 9AM - 8PM
+                  Mon-Sat : 9AM - 8PM IST
                 </p>
+              </div>
+
+              <div className="pt-2 flex flex-col gap-2.5">
+                {supportLinks.map((link) => (
+                  <FooterLink key={link.label} href={link.href}>
+                    {link.label}
+                  </FooterLink>
+                ))}
               </div>
             </div>
           </div>
 
-          <div className="col-span-2 lg:col-span-1">
+          {/* Column 3: CONNECT WITH US */}
+          <div className="flex flex-col">
             <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
-              Newsletter
+              Connect With Us
             </h3>
-            <p className="mt-2.5 lg:mt-4 text-[11px] font-medium uppercase tracking-[0.12em] text-[#0F0F10]/70 leading-relaxed">
-              Subscribe for exclusive launches & offers
+            <p className="mt-4 text-[11px] font-medium uppercase tracking-[0.12em] text-[#0F0F10]/70 leading-relaxed">
+              Subscribe for private drop announcements & capsule access
             </p>
 
-            <form className="mt-4 lg:mt-6 flex flex-col gap-2">
+            <form className="mt-5 flex flex-col gap-2">
               <div className="relative flex items-center border-b border-[#0F0F10]/20 pb-2.5 transition-colors duration-300 focus-within:border-[#C9B07A]">
                 <input
                   type="email"
@@ -214,45 +210,60 @@ export function FooterSection() {
                 By subscribing, you agree to our Terms & Privacy Policy.
               </p>
             </form>
+
+            <div className="mt-6 pt-2 space-y-2">
+              <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]/60">
+                Follow Clarté Club
+              </p>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="group flex size-8 items-center justify-center rounded-full border border-[#0F0F10]/15 hover:border-[#C9B07A] hover:bg-[#C9B07A]/10 transition-all duration-300"
+                >
+                  <FacebookIcon className="size-[13px] text-[#0F0F10]/70 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
+                </a>
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Instagram"
+                  className="group flex size-8 items-center justify-center rounded-full border border-[#0F0F10]/15 hover:border-[#C9B07A] hover:bg-[#C9B07A]/10 transition-all duration-300"
+                >
+                  <InstagramIcon className="size-[13px] text-[#0F0F10]/70 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
+                </a>
+                <a
+                  href="https://youtube.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="YouTube"
+                  className="group flex size-8 items-center justify-center rounded-full border border-[#0F0F10]/15 hover:border-[#C9B07A] hover:bg-[#C9B07A]/10 transition-all duration-300"
+                >
+                  <YoutubeIcon className="size-[13px] text-[#0F0F10]/70 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
+                </a>
+              </div>
+            </div>
           </div>
 
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-[#0F0F10]/8 mt-4 pt-4 pb-6 lg:mt-8 lg:pt-8 lg:pb-10 px-1">
-          <div className="flex flex-row items-center justify-between gap-4 w-full">
+        <div className="border-t border-[#0F0F10]/8 mt-4 pt-4 pb-6 lg:mt-8 lg:pt-6 lg:pb-8 px-1">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 w-full text-center sm:text-left">
             {/* Copyright */}
-            <div className="text-[7.5px] sm:text-[9px] uppercase tracking-[0.14em] text-[#0F0F10]/65 font-medium z-10 whitespace-nowrap">
+            <div className="text-[8px] sm:text-[9.5px] uppercase tracking-[0.16em] text-[#0F0F10]/65 font-medium z-10">
               &copy; {new Date().getFullYear()} CLARTÉ CLUB. ALL RIGHTS RESERVED.
             </div>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-3 z-10">
-              <a
-                href="#facebook"
-                aria-label="Facebook"
-                className="group flex size-7 items-center justify-center rounded-full border border-[#0F0F10]/10 hover:border-[#C9B07A] hover:bg-[#C9B07A]/5 transition-all duration-300"
-              >
-                <FacebookIcon className="size-[12px] text-[#0F0F10]/60 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
-              </a>
-              <a
-                href="#instagram"
-                aria-label="Instagram"
-                className="group flex size-7 items-center justify-center rounded-full border border-[#0F0F10]/10 hover:border-[#C9B07A] hover:bg-[#C9B07A]/5 transition-all duration-300"
-              >
-                <InstagramIcon className="size-[12px] text-[#0F0F10]/60 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
-              </a>
-              <a
-                href="#youtube"
-                aria-label="YouTube"
-                className="group flex size-7 items-center justify-center rounded-full border border-[#0F0F10]/10 hover:border-[#C9B07A] hover:bg-[#C9B07A]/5 transition-all duration-300"
-              >
-                <YoutubeIcon className="size-[12px] text-[#0F0F10]/60 group-hover:text-[#C9B07A] transition-colors duration-300" style={{ strokeWidth: "1.75px" }} />
-              </a>
+            <div className="text-[8px] sm:text-[9.5px] uppercase tracking-[0.16em] text-[#0F0F10]/50 font-normal">
+              A CONSIDERED, DESIGN-LED EYEWEAR LABEL
             </div>
+          </div>
         </div>
+
       </div>
-    </div>
-  </footer>
+    </footer>
   )
 }
