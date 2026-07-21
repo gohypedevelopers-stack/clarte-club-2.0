@@ -110,7 +110,6 @@ export const trendingProducts: ProductCard[] = [
     image: "/images/products/product4.png",
     alt: "Model wearing Noyer D-Frame acetate sunglasses in tortoiseshell",
     featured: true,
-    sizes: ["Narrow", "Medium", "Wide"],
     swatches: ["#6f5639", "#000000"],
     gallery: [
       "/images/products/product4.png",
@@ -170,16 +169,16 @@ export const featuredProduct: ProductDetail = {
     { label: "Homepage", href: "/" },
     { label: "Collections", href: "/collections" },
     { label: "Heritage Oval" },
-    { label: "Glossy Black, Medium" },
+    { label: "Glossy Black" },
   ],
   originalPrice: "₹10,500",
   price: "₹8,999",
   sold: "1,238 Sold",
   rating: "4.8",
   description:
-    "An architectural oval frame sculpted from premium hand-polished acetate, featuring custom hardware and signature wire cores. Engineered to balance sharp contours with smooth, beveled edges for an elevated, timeless profile.",
+    "An architectural oval frame sculpted from premium polished bio-acetate, featuring custom hardware and signature wire cores. Engineered to balance sharp contours with smooth, beveled edges for an elevated, timeless profile.",
   detailsBody:
-    "Handmade bio-acetate with 100% UV400 protective lenses. Designed with a robust 5-barrel hinge construction and signature metal temple accents to ensure lasting durability and comfort.",
+    "Precision-sculpted bio-acetate with 100% UV400 protective lenses. Designed with a robust 5-barrel hinge construction and signature metal temple accents to ensure lasting durability and comfort.",
   careNotes: [
     "Wipe lenses with the microfiber cleaning cloth.",
     "Store in the provided leather protective case.",
@@ -198,7 +197,7 @@ export const featuredProduct: ProductDetail = {
     { name: "Ivory Mist", value: "#ebe8e1" },
     { name: "Midnight Blue", value: "#111722" },
   ],
-  sizes: ["Narrow", "Medium", "Wide"],
+  sizes: [],
   gallery: [
     { src: "/images/products/product1.png", alt: "Model wearing Classic Heritage Oval sunglasses in glossy black frame", objectPosition: "center 36%" },
     { src: "/images/products/product5.png", alt: "Detail view of the premium acetate frame and custom wire core", objectPosition: "center 44%" },
