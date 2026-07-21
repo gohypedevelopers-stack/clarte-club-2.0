@@ -87,10 +87,10 @@ export function WishlistSidebar({ open, onOpenChange }: WishlistSidebarProps) {
             <SheetClose asChild>
               <button
                 type="button"
-                className="inline-flex items-center gap-2 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-white/70 transition-opacity hover:opacity-100 cursor-pointer"
+                className="inline-flex items-center gap-2 text-[0.75rem] font-medium uppercase tracking-[0.18em] text-white/70 transition-opacity hover:opacity-100 cursor-pointer leading-none"
               >
-                <span>CLOSE</span>
-                <X className="size-4 stroke-[1.8]" />
+                <span className="leading-none">CLOSE</span>
+                <X className="size-4 stroke-[1.8] shrink-0 relative -top-[0.5px]" />
               </button>
             </SheetClose>
           </div>
