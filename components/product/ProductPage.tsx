@@ -16,7 +16,7 @@ export function ProductPage({
 }) {
   return (
     <main className="flex-1 bg-white text-black min-w-0 w-full overflow-x-clip">
-      <section className="relative w-full px-4 pb-16 pt-1 sm:pt-4 sm:px-6 lg:px-8 lg:pt-10 min-w-0">
+      <section className="relative w-full px-4 pb-16 pt-1.5 sm:pt-2.5 sm:px-6 lg:px-8 lg:pt-4 min-w-0">
         <div className="w-full min-w-0">
           <nav aria-label="Breadcrumb" className="text-[0.7rem] text-black/45">
             <ol className="flex flex-wrap items-center gap-1.5 uppercase tracking-[0.14em]">
