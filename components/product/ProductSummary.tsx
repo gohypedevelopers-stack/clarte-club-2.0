@@ -5,6 +5,7 @@ import Link from "next/link"
 import {
   Check,
   CreditCard,
+  Heart,
   RefreshCcw,
   ShieldCheck,
   Star,
@@ -20,6 +21,7 @@ import {
 } from "@/components/ui/carousel"
 import { cn } from "@/lib/utils"
 import type { ProductDetail } from "@/components/product/productData"
+import { addToCart } from "@/lib/cart"
 
 const deliveryIcons = {
   truck: Truck,
@@ -94,6 +96,7 @@ export function ProductSummary({
   const [reviewsCount, setReviewsCount] = useState(5)
   const [averageRating, setAverageRating] = useState(4.8)
   const [cartState, setCartState] = useState<"idle" | "adding" | "added">("idle")
+  const [isWishlisted, setIsWishlisted] = useState(false)
   const [activeAccordion, setActiveAccordion] = useState<"care" | "shipping" | null>(null)
   
   // Coupon and cross-sell states
@@ -124,6 +127,14 @@ export function ProductSummary({
 
   const handleAddToCart = () => {
     setCartState("adding")
+    addToCart({
+      id: product.slug,
+      image: product.gallery[0]?.src || "/images/products/product1.png",
+      alt: product.gallery[0]?.alt || product.title,
+      title: product.title,
+      size: selectedSize,
+      price: product.price,
+    })
     setTimeout(() => {
       setCartState("added")
       setTimeout(() => {
@@ -207,84 +218,22 @@ export function ProductSummary({
           </p>
           <p className="max-w-[36rem] font-sans text-[13px] sm:text-[15px] font-normal leading-[1.7] text-black/68">
             {product.description}{" "}
-            <Link
-              href="#details"
-              className="font-semibold text-black underline underline-offset-4 transition-opacity hover:opacity-70"
-            >
-              See More...
-            </Link>
-          </p>
-        </section>
-
-        <section className="space-y-3 pt-2">
-          <p className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
-            Color: <span className="font-normal text-black/60 normal-case">{selectedColor}</span>
-          </p>
-
-          <div className="flex flex-wrap items-center gap-2.5">
-            {product.colors.map((color) => {
-              const isSelected = color.name === selectedColor
-
-              return (
-                <button
-                  key={color.name}
-                  type="button"
-                  aria-pressed={isSelected}
-                  aria-label={`Select ${color.name}`}
-                  onClick={() => setSelectedColor(color.name)}
-                  className={cn(
-                    "flex h-[40px] w-[75px] items-stretch justify-stretch bg-white transition-[box-shadow] duration-200 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-black/45 cursor-pointer",
-                    isSelected
-                      ? "border-[2px] border-black p-[4px]"
-                      : "border-0 p-0"
-                  )}
-                >
-                  <span
-                    className="block h-full w-full"
-                    style={{ backgroundColor: color.value }}
-                  />
-                </button>
-              )
-            })}
-          </div>
-        </section>
-
-        <section className="space-y-3 pt-2">
-          <div className="flex items-center justify-between gap-3">
-            <h3 className="text-[13px] sm:text-[15px] font-bold uppercase tracking-wider text-black">
-              Choose Size
-            </h3>
             <button
-              onClick={() => {
-                const detailsSec = document.getElementById("details")
-                if (detailsSec) {
-                  detailsSec.scrollIntoView({ behavior: "smooth" })
-                  setActiveAccordion("care")
+              onClick={(e) => {
+                e.preventDefault()
+                const element = document.getElementById("details")
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" })
                 }
               }}
-              className="text-[11px] font-bold text-black/45 uppercase tracking-wider underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer"
+              className="font-semibold text-black underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer inline-block"
             >
-              Size Guide
+              See More...
             </button>
-          </div>
-
-          <div className="flex flex-wrap gap-2.5">
-            {product.sizes.map((size) => (
-              <OptionButton
-                key={size}
-                active={selectedSize === size}
-                onClick={() => setSelectedSize(size)}
-                className="h-10 min-w-[80px] flex-1 px-3 text-[12px] font-bold tracking-wider uppercase"
-              >
-                {size}
-              </OptionButton>
-            ))}
-          </div>
-          
-          <p className="text-[10px] text-black/55 flex items-center gap-1.5 mt-2 uppercase tracking-wide leading-tight">
-            <span className="text-[#5b8c38] font-bold text-xs">✓</span> 80% of customers kept their usual size. Prefer a cleaner fit? Size down.
           </p>
         </section>
+
+
 
         {/* AVAILABLE COUPONS */}
         <section className="space-y-3 pt-4 border-t border-black/15">
@@ -436,21 +385,42 @@ export function ProductSummary({
 
         {/* PRIMARY CTA */}
         <div className="space-y-4 pt-4 border-t border-black/15">
-          <button
-            type="button"
-            onClick={handleAddToCart}
-            disabled={cartState !== "idle"}
-            className={cn(
-              "flex h-12 w-full items-center justify-center border border-black text-[16px] sm:text-[18px] md:text-[22px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
-              cartState === "idle" && "bg-white text-black hover:bg-black hover:text-white",
-              cartState === "adding" && "bg-black/10 text-black/40 border-black/10 cursor-not-allowed",
-              cartState === "added" && "bg-[#5b8c38] text-white border-[#5b8c38]"
-            )}
-          >
-            {cartState === "idle" && "Add To Cart"}
-            {cartState === "adding" && "Adding..."}
-            {cartState === "added" && "Added To Bag ✓"}
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              disabled={cartState !== "idle"}
+              className={cn(
+                "flex h-12 flex-1 items-center justify-center border border-black text-[15px] sm:text-[17px] md:text-[19px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
+                cartState === "idle" && "bg-white text-black hover:bg-black hover:text-white",
+                cartState === "adding" && "bg-black/10 text-black/40 border-black/10 cursor-not-allowed",
+                cartState === "added" && "bg-[#5b8c38] text-white border-[#5b8c38]"
+              )}
+            >
+              {cartState === "idle" && "Add To Cart"}
+              {cartState === "adding" && "Adding..."}
+              {cartState === "added" && "Added To Bag ✓"}
+            </button>
+            <button
+              type="button"
+              aria-label="Add to wishlist"
+              onClick={() => setIsWishlisted(!isWishlisted)}
+              className={cn(
+                "flex h-12 w-12 shrink-0 items-center justify-center border transition-all duration-200 cursor-pointer",
+                isWishlisted
+                  ? "border-black bg-black text-white"
+                  : "border-black/20 bg-white text-black hover:border-black"
+              )}
+            >
+              <Heart
+                className="size-5 transition-transform duration-200 active:scale-125"
+                style={{
+                  fill: isWishlisted ? "currentColor" : "none",
+                  strokeWidth: 1.8,
+                }}
+              />
+            </button>
+          </div>
 
           {/* COMMUNITY PROOF */}
           <div className="flex items-center justify-center gap-3 py-1 text-center">
