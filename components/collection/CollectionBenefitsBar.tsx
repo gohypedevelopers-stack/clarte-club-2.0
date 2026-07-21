@@ -1,4 +1,7 @@
+"use client"
+
 import { CornerUpLeft, Lock, ShoppingCart } from "lucide-react"
+import { motion } from "motion/react"
 
 const benefits = [
   {
@@ -22,29 +25,37 @@ export function CollectionBenefitsBar() {
   return (
     <section
       aria-label="Store benefits"
-      className="mt-10 -mx-4 bg-accent px-4 py-7 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8"
+      className="mt-20 -mx-4 bg-[#C9B07A] px-4 py-8 sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8 border-y border-black/5"
     >
-      <ul className="mx-auto grid max-w-[980px] grid-cols-3 gap-2 px-1 sm:px-0 sm:gap-8">
-        {benefits.map(({ icon: Icon, title, description }) => (
-          <li key={title} className="flex justify-center">
-            <div className="flex w-full max-w-[250px] flex-col items-center text-center gap-1.5 text-black sm:flex-row sm:items-start sm:text-left sm:gap-3">
-              <Icon
-                aria-hidden="true"
-                className="size-5 shrink-0 stroke-[1.8] sm:mt-0.5 sm:size-6"
-              />
+      <div className="mx-auto max-w-[1100px] border border-black/10 py-6 px-4">
+        <ul className="grid grid-cols-3 divide-x divide-black/10">
+          {benefits.map(({ icon: Icon, title, description }) => (
+            <li key={title} className="flex justify-center px-1 sm:px-4 md:px-6">
+              <motion.div 
+                whileHover={{ y: -3 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                className="flex flex-col items-center text-center gap-1.5 text-black cursor-default w-full"
+              >
+                <div className="flex size-8 sm:size-10 items-center justify-center rounded-full bg-white/20 shrink-0">
+                  <Icon
+                    aria-hidden="true"
+                    className="size-4 sm:size-5 stroke-[1.8] text-black"
+                  />
+                </div>
 
-              <div className="min-w-0">
-                <p className="text-[0.62rem] font-semibold uppercase leading-tight tracking-[0.03em] sm:text-[0.95rem] sm:font-medium sm:tracking-[0.01em]">
-                  {title}
-                </p>
-                <p className="text-[0.58rem] leading-tight text-black/85 mt-0.5 sm:text-[0.9rem] sm:text-black/90 sm:mt-0">
-                  {description}
-                </p>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+                <div className="min-w-0 flex flex-col items-center">
+                  <p className="text-[8px] sm:text-[10px] md:text-[11px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em] leading-tight text-center">
+                    {title}
+                  </p>
+                  <p className="text-[7.5px] sm:text-[9px] md:text-[10px] text-black/75 uppercase tracking-[0.04em] sm:tracking-[0.06em] mt-0.5 font-medium leading-tight text-center">
+                    {description}
+                  </p>
+                </div>
+              </motion.div>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   )
 }
