@@ -12,10 +12,10 @@ type HighlightBlock = {
 
 const HIGHLIGHTS_DATA: HighlightBlock[] = [
   {
-    title: "Handcrafted Italian Bio-Acetate",
-    description: "Meticulously sculpted from organically sourced bio-acetate, each frame undergoes a multi-day tumbling process and hand-polishing. This creates a rich, lustrous finish with exceptional durability and lightweight, hypoallergenic comfort.",
+    title: "Precision Bio-Acetate",
+    description: "Meticulously sculpted from organically sourced bio-acetate, each frame undergoes a multi-day tumbling process and precision polishing. This creates a rich, lustrous finish with exceptional durability and lightweight, hypoallergenic comfort.",
     imageSrc: "/images/products/product8.png",
-    imageAlt: "Close-up of premium hand-polished acetate frame details",
+    imageAlt: "Close-up of premium polished acetate frame details",
     imagePosition: "center 42%",
   },
   {
