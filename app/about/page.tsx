@@ -13,39 +13,26 @@ export default function AboutPage() {
     {
       num: "01",
       title: "Who We Are",
-      desc: "Clarté Club is an independent, design-led eyewear studio. We curated the range, selected materials, and refined the details we care about.",
-      bg: "bg-neutral-900 text-white border border-white/10",
-      image: "/images/products/product1.png"
+      subtitle: "Independent Studio",
+      desc: "Clarté Club is an independent, design-led eyewear studio. We curate the range, select materials, and refine every line with intention.",
+      image: "/images/products/product1.png",
+      tag: "Design Curation"
     },
     {
       num: "02",
       title: "Radical Honesty",
-      desc: "We don't run our own factory, and we won't dress that up. We design, we select, we inspect, and we stand behind our work.",
-      bg: "bg-[#F6F2EA] text-[#0F0F10] border border-black/5",
-      svg: (
-        <svg viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-20 h-20 text-[#0F0F10]/25">
-          <path d="M15 25h12c2 0 4 2 4 4v2c0 3-2 5-5 5H18c-3 0-5-2-5-5v-2c0-2 2-4 4-4z" />
-          <path d="M53 25h12c2 0 4 2 4 4v2c0 3-2 5-5 5H56c-3 0-5-2-5-5v-2c0-2 2-4 4-4z" />
-          <path d="M31 29c2-2 4-2 6-2s4 0 6 2" />
-          <path d="M13 27C11 20 8 18 5 18M69 27c2-7 5-9 8-9" />
-        </svg>
-      )
+      subtitle: "Transparent Craft",
+      desc: "We don't run our own factory, and we won't dress that up. We design, select, inspect, and stand behind every single pair we produce.",
+      image: "/images/products/product4.png",
+      tag: "Pure Curation"
     },
     {
       num: "03",
       title: "Small-Batch Scarcity",
-      desc: "To reduce waste and ensure exclusivity, we run batches of only 150–300 frames. Once they sell out, they're gone.",
-      bg: "bg-neutral-900 text-white border border-white/10",
-      svg: (
-        <svg viewBox="0 0 100 60" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="w-20 h-20 text-white/20">
-          <rect x="25" y="15" width="50" height="30" rx="2" />
-          <line x1="25" y1="25" x2="75" y2="25" />
-          <line x1="25" y1="35" x2="75" y2="35" />
-          <circle cx="50" cy="25" r="3" />
-          <circle cx="35" cy="35" r="2" />
-          <circle cx="65" cy="35" r="2" />
-        </svg>
-      )
+      subtitle: "150-300 Frames Per Run",
+      desc: "To eliminate excess waste and ensure true exclusivity, we release strictly limited runs. When a batch sells out, it is retired.",
+      image: "/images/products/product2.png",
+      tag: "Limited Releases"
     }
   ]
 
@@ -118,48 +105,68 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 2. The Clarté Philosophy (3-Card Grid) */}
-      <section className="bg-[#fcfbfa] text-[#0F0F10] py-24 px-6 sm:px-12 md:px-20 border-t border-black/5">
-        <div className="mx-auto max-w-7xl">
-          
+      {/* 2. The Clarté Philosophy (Rich Visual 3-Card Grid) */}
+      <section className="relative w-full bg-[#0B0B0C] text-white py-24 px-6 sm:px-12 md:px-20 border-y border-[#C9B07A]/25 overflow-hidden">
+        {/* Subtle background glow */}
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-[#C9B07A]/5 blur-3xl pointer-events-none rounded-full" />
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-[#C9B07A]/5 blur-3xl pointer-events-none rounded-full" />
+
+        <div className="relative z-10 mx-auto max-w-7xl">
           {/* Header Split */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-start mb-16">
             <div className="md:col-span-5">
-              <h2 className="font-heading text-3xl md:text-4xl font-normal uppercase tracking-tight text-[#0F0F10] leading-none">
+              <p className="text-[10px] uppercase font-semibold tracking-[0.3em] text-[#C9B07A] mb-2">
+                Core Principles
+              </p>
+              <h2 className="font-heading text-3xl md:text-5xl font-normal uppercase tracking-tight text-white leading-none">
                 THE CLARTÉ PHILOSOPHY
               </h2>
             </div>
             <div className="md:col-span-7">
-              <p className="text-[15px] leading-[1.8] text-[#0F0F10]/60 font-light">
-                We believe in strict constraints. We didn't build this to be everything to everyone. We designed the shapes because we wear them, selected the materials because they last, and set a standard that refuses shortcuts.
+              <p className="text-[15px] leading-[1.8] text-white/70 font-light">
+                We believe in strict constraints. We didn't build this label to be everything to everyone. We design silhouettes we wear ourselves, choose high-grade materials built for longevity, and refuse short-lived trends.
               </p>
             </div>
           </div>
 
-          {/* Cards Grid */}
+          {/* Cards Grid with Strong Visual Imagery */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {philosophyCards.map((card, idx) => (
               <div
                 key={idx}
-                className={`relative flex flex-col justify-between p-10 h-[380px] group transition-all duration-500 overflow-hidden shadow-[0_4px_30px_rgba(0,0,0,0.02)] ${card.bg}`}
+                className="group relative flex flex-col justify-between h-[440px] p-8 overflow-hidden border border-white/10 bg-[#121214] transition-all duration-500 hover:border-[#C9B07A]/50 shadow-2xl"
               >
-                {/* Background Image (If present) */}
-                {card.image && (
-                  <div className="absolute inset-0 z-0 opacity-10 group-hover:opacity-20 group-hover:scale-105 transition-all duration-700">
-                    <Image src={card.image} alt={card.title} fill className="object-cover filter grayscale" />
-                  </div>
-                )}
-
-                <div className="relative z-10 flex justify-between items-start">
-                  <span className="font-mono text-sm tracking-wider opacity-40">{card.num}</span>
-                  {card.svg && card.svg}
+                {/* Editorial Background Image with Overlay */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={card.image}
+                    alt={card.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover object-center filter grayscale opacity-40 group-hover:opacity-60 group-hover:scale-105 transition-all duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0C] via-[#0B0B0C]/70 to-black/30" />
                 </div>
 
-                <div className="relative z-10 space-y-4">
-                  <h3 className="font-heading text-xl font-normal uppercase tracking-wider">
+                {/* Card Top */}
+                <div className="relative z-10 flex items-center justify-between">
+                  <span className="font-mono text-xs font-semibold tracking-widest text-[#C9B07A] bg-black/60 px-2.5 py-1 border border-[#C9B07A]/30">
+                    {card.num}
+                  </span>
+                  <span className="text-[9px] uppercase tracking-[0.2em] text-white/60 bg-white/10 px-2 py-0.5 font-medium">
+                    {card.tag}
+                  </span>
+                </div>
+
+                {/* Card Bottom Content */}
+                <div className="relative z-10 space-y-3 pt-12">
+                  <p className="text-[10px] uppercase tracking-[0.22em] text-[#C9B07A] font-semibold">
+                    {card.subtitle}
+                  </p>
+                  <h3 className="font-heading text-2xl font-normal uppercase tracking-wider text-white">
                     {card.title}
                   </h3>
-                  <p className="text-[13.5px] leading-[1.7] opacity-70 font-light">
+                  <p className="text-[13px] leading-[1.7] text-white/75 font-light">
                     {card.desc}
                   </p>
                 </div>
