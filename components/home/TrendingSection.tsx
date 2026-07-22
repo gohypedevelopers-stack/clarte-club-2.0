@@ -3,7 +3,7 @@
 import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ChevronLeft, ChevronRight, Heart, Plus } from "lucide-react"
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react"
 
 import { ProductQuickViewModal } from "@/components/product/ProductQuickViewModal"
 import {
@@ -104,14 +104,7 @@ export function ProductCardView({
           </span>
         ) : null}
 
-        {/* Plus icon top-right */}
-        <div
-          aria-hidden
-          className="absolute right-3 top-3 z-10 inline-flex size-7 items-center justify-center opacity-0 transition-all duration-300 group-hover:opacity-100"
-          style={{ border: "1px solid rgba(201,176,122,0.5)", background: "rgba(15,15,16,0.6)" }}
-        >
-          <Plus className="size-3.5" style={{ color: "#C9B07A", strokeWidth: 2.2 }} />
-        </div>
+
 
         {/* Gallery arrows */}
         {hasGalleryControls ? (
