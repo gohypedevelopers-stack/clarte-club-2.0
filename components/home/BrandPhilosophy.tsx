@@ -21,7 +21,7 @@ const PHILOSOPHIES = [
   {
     icon: Layers,
     title: "Uncompromising Quality",
-    description: "Built using Japanese hinges, hand-polished Italian bio-acetate, and premium impact-resistant UV400 protective lenses to guarantee lifetime wearability.",
+    description: "Built using Japanese hinges, precision-polished Italian bio-acetate, and premium impact-resistant UV400 protective lenses to guarantee lifetime wearability.",
   },
 ]
 
