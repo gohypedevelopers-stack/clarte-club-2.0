@@ -9,28 +9,28 @@ const desires = [
   {
     id: "precision",
     title: "Precision",
-    text: "CNC-milled organic bio-acetate shaped to sub-millimeter tolerances.",
+    text: "Tested against our own standard, every time.",
     imageDesktop: "/images/products/product1.png",
     imageMobile: "/images/products/product1.png"
   },
   {
     id: "longevity",
     title: "Longevity",
-    text: "Custom 5-barrel riveted Japanese steel hinges engineered for decades of wear.",
+    text: "Built for daily use, not just good photos",
     imageDesktop: "/images/products/product6.png",
     imageMobile: "/images/products/product6.png"
   },
   {
-    id: "clarity",
-    title: "Clarity",
-    text: "Impact-resistant CR-39 optical lenses with full spectrum UV400 shield.",
+    id: "consistency",
+    title: "Consistency",
+    text: "One standard. No exceptions.",
     imageDesktop: "/images/products/product4.png",
     imageMobile: "/images/products/product4.png"
   },
   {
     id: "exclusivity",
     title: "Exclusivity",
-    text: "Strictly limited small batches of 150 to 300 serialized frames worldwide.",
+    text: "Small runs, by choice. Considered over crowded.",
     imageDesktop: "/images/products/product12.png",
     imageMobile: "/images/products/product12.png"
   }
@@ -50,7 +50,7 @@ export default function SecretDesire() {
 
         {/* Section Heading */}
         <h2 className="text-[2.2rem] sm:text-[2.8rem] md:text-[3.8rem] font-heading font-extrabold uppercase leading-[1.08] tracking-tight mb-16 max-w-[900px]">
-          Every frame is built for those who demand <span className="text-[#C9B07A] underline decoration-[#C9B07A]/30 underline-offset-8">quiet excellence.</span>
+          Every piece, built to <span className="text-[#C9B07A] underline decoration-[#C9B07A]/30 underline-offset-8">the same standard.</span>
         </h2>
 
         {/* Expanding Cards Container */}
