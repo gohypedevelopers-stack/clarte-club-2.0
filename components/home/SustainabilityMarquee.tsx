@@ -7,7 +7,10 @@ function MarqueeStrip() {
   return (
     <div className="flex shrink-0 items-center gap-16 pr-16 whitespace-nowrap">
       {Array.from({ length: 4 }).map((_, repeatIndex) => (
-        <span key={`repeat-${repeatIndex}`} className="whitespace-nowrap">
+        <span
+          key={`repeat-${repeatIndex}`}
+          className="whitespace-nowrap font-marquee text-[10.08px] font-normal uppercase tracking-[0.25em] text-[#F6F2EA]"
+        >
           {marqueeText}
         </span>
       ))}
@@ -17,7 +20,7 @@ function MarqueeStrip() {
 
 export function SustainabilityMarquee() {
   return (
-    <section className="w-full overflow-hidden bg-black py-3 text-white">
+    <section className="w-full overflow-hidden bg-black py-3 text-white border-y border-white/10">
       <h2 className="sr-only">Sustainability marquee</h2>
 
       <div

@@ -10,6 +10,7 @@
   --font-serif: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-marquee: 'nits-UIText-Regular', ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
 
   --color-sidebar-ring: var(--sidebar-ring);

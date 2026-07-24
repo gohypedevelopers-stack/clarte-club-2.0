@@ -1,7 +1,7 @@
 export function ShippingAnnouncementBar() {
   return (
-    <section className="announcement-bar bg-black text-white">
-      <div className="flex h-full w-full items-center justify-center px-4 text-[10px] sm:text-[11px] lg:text-[13px] font-normal leading-none sm:px-6 lg:grid lg:grid-cols-3 lg:px-8">
+    <section className="announcement-bar bg-black text-[#F6F2EA]">
+      <div className="flex h-full w-full items-center justify-center px-4 font-marquee text-[10.08px] font-normal uppercase tracking-[0.2em] leading-none sm:px-6 lg:grid lg:grid-cols-3 lg:px-8">
         <p className="hidden lg:block justify-self-start whitespace-nowrap">
           International Shipping Available
         </p>
