@@ -2,12 +2,12 @@
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import { Heart, Bookmark, MoreHorizontal } from "lucide-react"
 import { TextReveal } from "@/components/ui/text-reveal"
 import SecretDesire from "@/components/home/SecretDesire"
+import StandardsAccordion from "@/components/about/StandardsAccordion"
 
 export const metadata: Metadata = {
-  title: "Our Story | Clarté Club - Considered Eyewear",
+  title: "Our Story | Clarté Club",
   description: "The story behind Clarté Club: an independent, design-led studio building considered eyewear in strictly limited numbers.",
 }
 
@@ -51,8 +51,8 @@ export default function AboutPage() {
       desc: "What you see is the true price, not an inflated cost with a fake discount. If a price moves, it's a real change, not a fake sale."
     },
     {
-      title: "Full UV400 Protection",
-      desc: "Every pair carries complete ultraviolet defense, keeping your vision shielded without compromising on structural clarity."
+      title: "Made to Last",
+      desc: "Built for daily use, not just for photos."
     },
     {
       title: "Zero Restocks",
@@ -60,7 +60,7 @@ export default function AboutPage() {
     },
     {
       title: "If it's wrong, we fix it",
-      desc: "If something is not right with your frames, tell us. We'll make it right without a fuss. That's a real answer, not a policy line."
+      desc: "If something is not right with your order, tell us. We'll make it right without a fuss. That's a real answer, not a policy line."
     }
   ]
 
@@ -80,7 +80,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 mt-6 border-t border-[#E5E0D8] text-[10px] sm:text-[11px] font-semibold uppercase tracking-[0.25em] text-neutral-500">
             <div>DESIGN-LED INDEPENDENT STUDIO</div>
             <div>CONSIDERED MATERIALS & LONGEVITY</div>
-            <div>150-300 FRAMES PER LIMITED RUN</div>
+            <div>DESIGNED WITH PURPOSE</div>
           </div>
 
         </div>
@@ -102,7 +102,7 @@ export default function AboutPage() {
               />
             </div>
             <p className="text-[12px] leading-relaxed text-neutral-500 font-light tracking-wide">
-              Where intention and minimalism converge into daily eyewear.
+              Presence over noise. That's the whole idea.
             </p>
           </div>
 
@@ -110,7 +110,7 @@ export default function AboutPage() {
           <div className="lg:col-span-7 bg-[#F4F0E8] border border-[#E5E0D8] p-8 sm:p-12 flex flex-col justify-between">
             <div className="relative aspect-[16/10] w-full bg-[#FFFFFF] overflow-hidden border border-[#E5E0D8] shadow-sm">
               <Image
-                src="/images/products/product4.png"
+                src="/products/product-11.png"
                 alt="Precision bio-acetate construction"
                 fill
                 className="object-cover object-center"
@@ -122,7 +122,7 @@ export default function AboutPage() {
                   Precision Curation
                 </p>
                 <h3 className="font-heading text-xl uppercase font-medium text-[#0F0F10] mt-1">
-                  Custom Bio-Acetate & Hardware
+                  Materials, Chosen Carefully
                 </h3>
               </div>
               <Link
@@ -171,7 +171,7 @@ export default function AboutPage() {
       {/* 4. Scroll-Driven Text Reveal Statement */}
       <section className="w-full bg-[#FAF8F5] border-b border-[#E5E0D8]">
         <TextReveal>
-          WE ARE COMMITTED TO THE **INTEGRITY OF OUR FRAMES** AND **THE QUIET CONFIDENCE** THEY BRING FROM THE **ORIGINALITY OF OUR DESIGNS**
+          WE'RE COMMITTED TO **EVERYTHING WE MAKE**, CHOSEN WITH CARE, **CHECKED BEFORE IT EVER REACHES YOU**. THAT'S WHAT WE ACTUALLY **STAND ON**. NOT A CLAIM, JUST THE **WORK BEHIND IT**.
         </TextReveal>
       </section>
 
@@ -197,15 +197,14 @@ export default function AboutPage() {
                 />
               </div>
               <div className="flex flex-col sm:flex-row justify-between text-[11px] text-neutral-500 font-light uppercase tracking-wider gap-2">
-                <span>Immersive exploration of considered beauty</span>
-                <span>Each frame serves as a reminder</span>
+                <span>We design everything ourselves. If it doesn't feel right, it doesn't carry our name.</span>
               </div>
             </div>
 
             {/* Right Column: Text & Quality Card */}
             <div className="lg:col-span-6 space-y-6">
               <p className="text-[13.5px] leading-[1.8] text-neutral-600 font-light max-w-md lg:ml-auto">
-                Impeccable quality requires meticulous selection of high-grade materials. At Clarté Club, we begin with custom bio-acetate, Japanese-engineered hinges, and impact-resistant UV400 lenses.
+                The details most people miss are the ones we spend the most time on.
               </p>
               
               {/* Quality Card Frame */}
@@ -237,7 +236,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* 6. PURE FORM Section */}
+      {/* 6. OUR APPROACH Section */}
       <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#FAF8F5] border-b border-[#E5E0D8]">
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
@@ -262,11 +261,11 @@ export default function AboutPage() {
           {/* Right Text Block */}
           <div className="lg:col-span-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-8">
             <h2 className="font-heading text-4xl sm:text-6xl font-extrabold uppercase tracking-tight text-[#0F0F10] shrink-0">
-              PURE FORM
+              OUR APPROACH
             </h2>
             <div className="space-y-4 max-w-md">
               <p className="text-[13.5px] leading-[1.8] text-neutral-600 font-light">
-                Clarté Club transforms a space through an absolute commitment to design authenticity, CNC precision milling, and material quality.
+                No rushing. No shortcuts. Just work worth putting our name on.
               </p>
               <Link
                 href="/how-we-do-things"
@@ -285,140 +284,33 @@ export default function AboutPage() {
 
       {/* 7. Overlapping Floating Glasses Frame Banner (Before Footer) */}
       <section className="relative w-full px-6 sm:px-12 md:px-20 pt-16 pb-24 bg-[#FAF8F5] overflow-hidden border-b border-[#E5E0D8]">
-        <div className="mx-auto max-w-7xl relative">
+        <div className="mx-auto max-w-7xl relative space-y-12">
           
           {/* Top Line */}
-          <div className="flex justify-between items-center border-b border-[#E5E0D8] pb-3 mb-24 text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">
+          <div className="flex justify-between items-center border-b border-[#E5E0D8] pb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-neutral-400">
             <span>SOCIAL</span>
             <span>RESPONSIBILITY</span>
           </div>
 
-          {/* Floating Rotated Overlapping Glass Frame Card (z-40 for hover interactivity) */}
-          <div className="group/card absolute top-4 left-1/2 -translate-x-1/2 sm:left-[52%] w-[85%] sm:w-[580px] aspect-[16/9] z-40 pointer-events-auto cursor-pointer transform origin-center -rotate-12 sm:-rotate-16 hover:rotate-0 hover:scale-[1.04] shadow-[0_30px_70px_rgba(0,0,0,0.15)] hover:shadow-[0_45px_100px_rgba(0,0,0,0.25)] bg-[#FFFFFF] border border-[#E5E0D8] hover:border-[#C9B07A]/60 p-4 sm:p-6 transition-all duration-700 ease-out">
-            <div className="relative size-full overflow-hidden bg-[#FAF8F5] border border-[#E5E0D8]/60 flex items-center justify-center">
-              <Image
-                src="/images/products/product5-white.png"
-                alt="Clarté Club considered eyewear frame"
-                fill
-                className="object-contain p-4 filter contrast-[1.05] transition-transform duration-700 ease-out group-hover/card:scale-105"
-              />
-            </div>
+          {/* Heading on top before image drop */}
+          <div className="space-y-2 max-w-2xl">
+            <h2 className="font-heading text-3xl sm:text-5xl font-extrabold uppercase leading-tight tracking-tight text-[#0F0F10]">
+              One standard. Everything we make.
+            </h2>
           </div>
 
-          {/* Bottom Grid Content (Sufficient top padding to clear the card) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end pt-56 sm:pt-64 md:pt-72 relative z-20">
-            
-            {/* Left Big Heading */}
-            <div className="lg:col-span-6 space-y-2">
-              <h2 className="font-heading text-2xl sm:text-4xl font-extrabold uppercase leading-snug tracking-tight text-[#0F0F10] max-w-md">
-                Clarté Club: your trusted studio for considered eyewear.
-              </h2>
+          {/* Floating Rotated Overlapping Glass Frame Card Container */}
+          <div className="relative w-full pt-4 pb-8 flex justify-center items-center">
+            <div className="group/card relative w-[85%] sm:w-[620px] aspect-[16/9] z-20 cursor-pointer transform origin-center -rotate-6 sm:-rotate-8 hover:rotate-0 hover:scale-[1.03] shadow-[0_30px_70px_rgba(0,0,0,0.15)] hover:shadow-[0_45px_100px_rgba(0,0,0,0.25)] bg-[#FFFFFF] border border-[#E5E0D8] hover:border-[#C9B07A]/60 p-4 sm:p-6 transition-all duration-700 ease-out">
+              <div className="relative size-full overflow-hidden bg-[#FAF8F5] border border-[#E5E0D8]/60 flex items-center justify-center">
+                <Image
+                  src="/images/products/product5-white.png"
+                  alt="Clarté Club considered eyewear frame"
+                  fill
+                  className="object-contain p-4 filter contrast-[1.05] transition-transform duration-700 ease-out group-hover/card:scale-105"
+                />
+              </div>
             </div>
-
-            {/* Right Column: 3 Instagram Editorial Portrait Cards */}
-            <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              
-              {/* Instagram Card 1 */}
-              <div className="group relative bg-[#FFFFFF] border border-[#E5E0D8] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-500 flex flex-col">
-                {/* Post Header */}
-                <div className="flex items-center justify-between px-3 py-2 border-b border-[#E5E0D8]/60 bg-[#FAF8F5]">
-                  <div className="flex items-center gap-1.5">
-                    <div className="size-4.5 rounded-full bg-[#0F0F10] text-[#C9B07A] flex items-center justify-center font-heading text-[8px] font-bold">
-                      C
-                    </div>
-                    <span className="font-bold text-[9.5px] text-[#0F0F10] tracking-wide">clarteclub</span>
-                  </div>
-                  <MoreHorizontal className="w-3.5 h-3.5 text-neutral-400" />
-                </div>
-                {/* 4:5 Portrait Image */}
-                <div className="relative aspect-[4/5] w-full bg-[#E5E0D8] overflow-hidden">
-                  <Image
-                    src="/images/products/product6.png"
-                    alt="Bio-Acetate"
-                    fill
-                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                {/* Actions & Caption */}
-                <div className="p-3 bg-[#FFFFFF] space-y-1">
-                  <div className="flex items-center justify-between text-neutral-600 mb-0.5">
-                    <Heart className="w-3.5 h-3.5 hover:text-red-500 transition-colors cursor-pointer" />
-                    <Bookmark className="w-3.5 h-3.5 hover:text-[#C9B07A] transition-colors cursor-pointer" />
-                  </div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#0F0F10]">
-                    Bio-Acetate <span className="font-normal text-neutral-500 lowercase">• 100% organic</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Instagram Card 2 */}
-              <div className="group relative bg-[#FFFFFF] border border-[#E5E0D8] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-500 flex flex-col">
-                {/* Post Header */}
-                <div className="flex items-center justify-between px-3 py-2 border-b border-[#E5E0D8]/60 bg-[#FAF8F5]">
-                  <div className="flex items-center gap-1.5">
-                    <div className="size-4.5 rounded-full bg-[#0F0F10] text-[#C9B07A] flex items-center justify-center font-heading text-[8px] font-bold">
-                      C
-                    </div>
-                    <span className="font-bold text-[9.5px] text-[#0F0F10] tracking-wide">clarteclub</span>
-                  </div>
-                  <MoreHorizontal className="w-3.5 h-3.5 text-neutral-400" />
-                </div>
-                {/* 4:5 Portrait Image */}
-                <div className="relative aspect-[4/5] w-full bg-[#E5E0D8] overflow-hidden">
-                  <Image
-                    src="/images/products/product4.png"
-                    alt="UV400 Optics"
-                    fill
-                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                {/* Actions & Caption */}
-                <div className="p-3 bg-[#FFFFFF] space-y-1">
-                  <div className="flex items-center justify-between text-neutral-600 mb-0.5">
-                    <Heart className="w-3.5 h-3.5 hover:text-red-500 transition-colors cursor-pointer" />
-                    <Bookmark className="w-3.5 h-3.5 hover:text-[#C9B07A] transition-colors cursor-pointer" />
-                  </div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#0F0F10]">
-                    UV400 Optics <span className="font-normal text-neutral-500 lowercase">• CR-39 lens</span>
-                  </p>
-                </div>
-              </div>
-
-              {/* Instagram Card 3 */}
-              <div className="group relative bg-[#FFFFFF] border border-[#E5E0D8] rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-500 flex flex-col">
-                {/* Post Header */}
-                <div className="flex items-center justify-between px-3 py-2 border-b border-[#E5E0D8]/60 bg-[#FAF8F5]">
-                  <div className="flex items-center gap-1.5">
-                    <div className="size-4.5 rounded-full bg-[#0F0F10] text-[#C9B07A] flex items-center justify-center font-heading text-[8px] font-bold">
-                      C
-                    </div>
-                    <span className="font-bold text-[9.5px] text-[#0F0F10] tracking-wide">clarteclub</span>
-                  </div>
-                  <MoreHorizontal className="w-3.5 h-3.5 text-neutral-400" />
-                </div>
-                {/* 4:5 Portrait Image */}
-                <div className="relative aspect-[4/5] w-full bg-[#E5E0D8] overflow-hidden">
-                  <Image
-                    src="/images/products/product12.png"
-                    alt="Japanese Steel Hinges"
-                    fill
-                    className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                  />
-                </div>
-                {/* Actions & Caption */}
-                <div className="p-3 bg-[#FFFFFF] space-y-1">
-                  <div className="flex items-center justify-between text-neutral-600 mb-0.5">
-                    <Heart className="w-3.5 h-3.5 hover:text-red-500 transition-colors cursor-pointer" />
-                    <Bookmark className="w-3.5 h-3.5 hover:text-[#C9B07A] transition-colors cursor-pointer" />
-                  </div>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-[#0F0F10]">
-                    Japanese Steel <span className="font-normal text-neutral-500 lowercase">• 5-barrel</span>
-                  </p>
-                </div>
-              </div>
-
-            </div>
-
           </div>
 
         </div>
@@ -439,19 +331,19 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <div className="lg:col-span-8 flex flex-col divide-y divide-[#E5E0D8]">
-            {highlights.map((item, idx) => (
-              <div key={idx} className="grid grid-cols-1 sm:grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 items-start">
-                <h3 className="sm:col-span-4 font-heading text-base uppercase font-semibold text-[#0F0F10] tracking-wide">
-                  {item.title}
-                </h3>
-                <p className="sm:col-span-8 text-[13.5px] leading-[1.85] text-neutral-600 font-light">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+          <div className="lg:col-span-8">
+            <StandardsAccordion items={highlights} />
           </div>
 
+        </div>
+      </section>
+
+      {/* 9. Closing Statement */}
+      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#F0ECE3] text-center border-t border-[#E5E0D8]">
+        <div className="mx-auto max-w-4xl">
+          <p className="font-heading text-xl sm:text-3xl font-medium uppercase tracking-wide text-[#0F0F10]">
+            The kind of thing that doesn't ask for attention, and quietly gets it anyway.
+          </p>
         </div>
       </section>
 
