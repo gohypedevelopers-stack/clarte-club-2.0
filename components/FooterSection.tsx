@@ -124,12 +124,12 @@ export function FooterSection() {
             />
           </Link>
           <p className="text-[10px] uppercase tracking-[0.25em] text-[#0F0F10]/70 font-semibold">
-            Signature Eyewear &bull; Sculpted for Perspective
+            Presence over noise.
           </p>
         </div>
 
         {/* 3 Main Footer Columns: CLARTÉ CLUB, GET SUPPORT, CONNECT WITH US */}
-        <div className="grid grid-cols-1 gap-x-8 gap-y-8 pt-8 pb-4 md:grid-cols-3 lg:gap-12 lg:pb-6">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-8 pt-8 pb-4 md:grid-cols-3 lg:gap-12 lg:pb-6">
           
           {/* Column 1: CLARTÉ CLUB */}
           <FooterGroup title="Clarté Club">
@@ -178,7 +178,7 @@ export function FooterSection() {
           </div>
 
           {/* Column 3: CONNECT WITH US */}
-          <div className="flex flex-col">
+          <div className="flex flex-col col-span-2 md:col-span-1 pt-4 md:pt-0 border-t border-[#0F0F10]/10 md:border-t-0">
             <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#0F0F10]">
               Connect With Us
             </h3>
@@ -258,7 +258,7 @@ export function FooterSection() {
             </div>
 
             <div className="text-[8px] sm:text-[9.5px] uppercase tracking-[0.16em] text-[#0F0F10]/50 font-normal">
-              A CONSIDERED, DESIGN-LED EYEWEAR LABEL
+              PRESENCE OVER NOISE
             </div>
           </div>
         </div>
