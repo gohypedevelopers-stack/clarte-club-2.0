@@ -188,12 +188,12 @@ export default function AboutPage() {
                   OUR MISSION
                 </p>
               </div>
-              <div className="relative aspect-[16/10] w-full bg-[#E5E0D8] overflow-hidden border border-[#E5E0D8]">
+              <div className="relative aspect-[4/3] w-full bg-[#E5E0D8] overflow-hidden border border-[#E5E0D8]">
                 <Image
                   src="/images/products/product1.png"
                   alt="Clarté frame silhouette"
                   fill
-                  className="object-cover"
+                  className="object-cover object-top"
                 />
               </div>
               <div className="flex flex-col sm:flex-row justify-between text-[11px] text-neutral-500 font-light uppercase tracking-wider gap-2">
@@ -213,7 +213,7 @@ export default function AboutPage() {
                   src="/images/products/product12.png"
                   alt="Quality detail"
                   fill
-                  className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#FFFFFF] via-[#FFFFFF]/30 to-transparent" />
                 
