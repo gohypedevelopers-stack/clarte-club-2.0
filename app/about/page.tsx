@@ -77,7 +77,17 @@ export default function AboutPage() {
           {/* Right Panel: Genesis Story Narrative */}
           <div className="lg:col-span-7 bg-[#f4f4f4] border border-black/10 p-8 sm:p-12 flex flex-col justify-center space-y-6">
             <p className="font-heading text-xl sm:text-2xl font-medium leading-relaxed text-[#0F0F10]">
-              Clarté Club started with a simple idea: The things we choose to wear every day should feel distinctive, useful, and deeply personal.
+              <span className="inline-flex items-center gap-2 font-bold text-[#0F0F10] mr-1.5">
+                <Image
+                  src="/logo.svg"
+                  alt="Clarté Club Emblem"
+                  width={24}
+                  height={15}
+                  className="h-4 sm:h-5 w-auto object-contain opacity-90 inline-block align-middle -mt-0.5"
+                />
+                <span>Clarté Club</span>
+              </span>
+              started with a simple idea: The things we choose to wear every day should feel distinctive, useful, and deeply personal.
             </p>
             
             <p className="text-[14px] leading-[1.85] text-neutral-600 font-light">
