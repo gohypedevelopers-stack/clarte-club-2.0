@@ -364,7 +364,7 @@ export function FrameSequenceHero() {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[100svh] w-full overflow-hidden bg-black"
+      className="relative h-screen h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-black"
     >
       {/* Frame sequence canvas */}
       <canvas
