@@ -139,7 +139,36 @@ export function ProductCardView({
           />
         </button>
 
+        {/* Left & Right Gallery Navigation Arrows (Visible on Desktop Hover) */}
+        {hasGalleryControls ? (
+          <>
+            <button
+              type="button"
+              aria-label="Previous product image"
+              onClick={(e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                handlePreviousImage()
+              }}
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 hidden sm:flex size-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md opacity-0 -translate-x-2.5 pointer-events-none transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto hover:bg-white hover:text-black hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+            >
+              <ArrowLeft className="size-4" strokeWidth={2.2} />
+            </button>
 
+            <button
+              type="button"
+              aria-label="Next product image"
+              onClick={(e) => {
+                e.stopPropagation()
+                e.preventDefault()
+                handleNextImage()
+              }}
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 hidden sm:flex size-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md opacity-0 translate-x-2.5 pointer-events-none transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto hover:bg-white hover:text-black hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+            >
+              <ArrowRight className="size-4" strokeWidth={2.2} />
+            </button>
+          </>
+        ) : null}
 
         {/* Carousel Pagination Dots (. . .) */}
         {hasGalleryControls ? (
