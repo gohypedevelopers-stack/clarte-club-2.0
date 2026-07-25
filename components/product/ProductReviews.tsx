@@ -182,12 +182,12 @@ export function ProductReviews({ productSlug }: { productSlug: string }) {
     <section id="reviews" className="w-full bg-white border-t border-black/15 py-16 text-black">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between border-b border-black/10 pb-8 gap-4">
-          <div>
-            <h2 className="font-heading text-[32px] md:text-[40px] font-normal uppercase leading-none tracking-tight">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between border-b border-black/10 pb-8 gap-4 text-center md:text-left">
+          <div className="flex flex-col items-center md:items-start">
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-[40px] font-normal uppercase leading-none tracking-tight">
               Customer Reviews
             </h2>
-            <div className="mt-3 flex items-center gap-2">
+            <div className="mt-3 flex items-center justify-center md:justify-start gap-2">
               <div className="flex items-center gap-0.5">
                 {[1, 2, 3, 4, 5].map((star) => {
                   const isFilled = averageRating >= star
