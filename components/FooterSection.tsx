@@ -56,7 +56,7 @@ export function FooterSection() {
                 className="w-full h-auto object-contain pointer-events-none brightness-0 invert"
               />
             </Link>
-            <p className="text-xs text-[#8A8072] leading-relaxed pr-4 font-light mt-0">
+            <p className="text-xs text-[#E2DDD3] leading-relaxed pr-4 font-light mt-0">
               Clarté Club is the destination for premium eyewear and future fashion.
               Elevating your lifestyle through vision.
             </p>
@@ -65,7 +65,7 @@ export function FooterSection() {
           {/* Column 2: CLARTÉ CLUB */}
           <div className="col-span-1 md:col-span-3">
             <h4 className="font-bold text-xs sm:text-sm uppercase mb-4 tracking-wider text-[#F6F2EA]">CLARTÉ CLUB</h4>
-            <ul className="space-y-2.5 text-xs text-[#8A8072] uppercase tracking-wider">
+            <ul className="space-y-2.5 text-xs text-[#E2DDD3] uppercase tracking-wider">
               {clarteClubLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="hover:text-[#C9B07A] transition-colors">
@@ -79,24 +79,24 @@ export function FooterSection() {
           {/* Column 3: GET SUPPORT */}
           <div className="col-span-1 md:col-span-3">
             <h4 className="font-bold text-xs sm:text-sm uppercase mb-4 tracking-wider text-[#F6F2EA]">GET SUPPORT</h4>
-            
+
             <div className="space-y-3.5 text-xs">
               <div>
-                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#8A8072]">CUSTOMER CARE EMAIL</p>
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">CUSTOMER CARE EMAIL</p>
                 <p className="text-xs font-semibold text-[#F6F2EA] hover:text-[#C9B07A] transition-colors mt-0.5">
                   <a href="mailto:contact@clarte.club">contact@clarte.club</a>
                 </p>
               </div>
 
               <div>
-                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#8A8072]">PHONE ASSISTANCE</p>
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">PHONE ASSISTANCE</p>
                 <p className="text-xs font-semibold text-[#F6F2EA] hover:text-[#C9B07A] transition-colors mt-0.5">
                   <a href="tel:+91000000000">+91 00000 00000</a>
                 </p>
               </div>
 
               <div>
-                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#8A8072]">SUPPORT HOURS</p>
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">SUPPORT HOURS</p>
                 <p className="text-xs font-semibold text-[#F6F2EA] mt-0.5">
                   Mon-Sat : 9AM - 8PM IST
                 </p>
@@ -104,20 +104,19 @@ export function FooterSection() {
             </div>
           </div>
 
-          {/* Column 4: CONNECT WITH US */}
+          {/* Column 4: Newsletter & Social */}
           <div className="col-span-2 md:col-span-3">
-            <h4 className="font-bold text-xs sm:text-sm uppercase mb-3 tracking-wider text-[#F6F2EA]">CONNECT WITH US</h4>
-            <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#8A8072] leading-relaxed mb-3">
+            <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#E2DDD3] leading-relaxed mb-3">
               SUBSCRIBE FOR PRIVATE DROP ANNOUNCEMENTS & CAPSULE ACCESS
             </p>
-            
+
             <form className="flex flex-col space-y-2" onSubmit={(e) => e.preventDefault()}>
-              <div className="relative flex items-center border-b border-[#8A8072]/40 pb-2 focus-within:border-[#C9B07A] transition-colors">
+              <div className="relative flex items-center border-b border-[#E2DDD3]/40 pb-2 focus-within:border-[#C9B07A] transition-colors">
                 <input
                   type="email"
                   required
                   placeholder="ENTER YOUR EMAIL"
-                  className="w-full bg-transparent text-xs text-[#F6F2EA] placeholder:text-[#8A8072] uppercase tracking-wider outline-none pr-12 py-1"
+                  className="w-full bg-transparent text-xs text-[#F6F2EA] placeholder:text-[#A8A092] uppercase tracking-wider outline-none pr-12 py-1"
                 />
                 <button
                   type="submit"
@@ -126,13 +125,13 @@ export function FooterSection() {
                   JOIN
                 </button>
               </div>
-              <p className="text-[9px] uppercase tracking-wider text-[#8A8072] pt-1">
+              <p className="text-[9px] uppercase tracking-wider text-[#B8B0A2] pt-1">
                 BY SUBSCRIBING, YOU AGREE TO OUR TERMS & PRIVACY POLICY.
               </p>
             </form>
 
             <div className="mt-5">
-              <p className="text-[9px] font-bold uppercase tracking-wider text-[#8A8072] mb-2">
+              <p className="text-[9px] font-bold uppercase tracking-wider text-[#B8B0A2] mb-2">
                 FOLLOW CLARTÉ CLUB
               </p>
               <div className="flex items-center gap-3">
@@ -141,7 +140,7 @@ export function FooterSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="flex size-8 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
+                  className="flex size-8 items-center justify-center rounded-full border border-[#E2DDD3]/40 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
                   <FacebookIcon className="size-4" />
                 </a>
@@ -150,7 +149,7 @@ export function FooterSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="flex size-8 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
+                  className="flex size-8 items-center justify-center rounded-full border border-[#E2DDD3]/40 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
                   <InstagramIcon className="size-4" />
                 </a>
@@ -159,7 +158,7 @@ export function FooterSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
-                  className="flex size-8 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
+                  className="flex size-8 items-center justify-center rounded-full border border-[#E2DDD3]/40 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
                   <YoutubeIcon className="size-4" />
                 </a>
@@ -170,11 +169,11 @@ export function FooterSection() {
         </div>
 
         {/* Bottom copyright row */}
-        <div className="flex flex-row justify-between items-center pt-4 border-t border-[#8A8072]/20 relative z-10 w-full">
-          <p className="text-[8px] sm:text-[9px] text-[#8A8072] uppercase tracking-widest font-medium">
+        <div className="mt-8 sm:mt-12 pt-4 sm:pt-6 border-t border-[#8A8072]/20 flex flex-row justify-between items-center relative z-10 w-full">
+          <p className="text-[8px] sm:text-[9px] text-[#B8B0A2] uppercase tracking-widest font-medium">
             &copy; {new Date().getFullYear()} CLARTÉ CLUB. ALL RIGHTS RESERVED.
           </p>
-          <div className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#8A8072]">
+          <div className="text-[8px] sm:text-[9px] uppercase tracking-widest text-[#B8B0A2]">
             PRESENCE OVER NOISE
           </div>
         </div>
