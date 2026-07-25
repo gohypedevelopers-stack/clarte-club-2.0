@@ -35,7 +35,7 @@ export default function FounderNote() {
                 className="object-cover filter grayscale contrast-[1.05]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10]/70 via-transparent to-transparent" />
-              <div className="absolute bottom-5 sm:bottom-6 left-5 sm:left-6 right-5 sm:right-6 text-[#FAF8F5] text-center sm:text-left">
+              <div className="absolute bottom-5 sm:bottom-6 left-5 sm:left-6 right-5 sm:right-6 text-[#FAF8F5] text-left">
                 <p className="text-[11px] sm:text-xs uppercase tracking-[0.2em] font-semibold text-[#C9B07A] mb-0.5 sm:mb-1">
                   Design Studio & Atelier
                 </p>
@@ -50,17 +50,17 @@ export default function FounderNote() {
           </div>
 
           {/* Right Column: Narrative Letter */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6 bg-[#f4f4f4] border border-black/10 p-5 sm:p-8 md:p-12 text-center sm:text-left flex flex-col items-center sm:items-start justify-center">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6 bg-[#f4f4f4] border border-black/10 p-5 sm:p-8 md:p-12 text-left flex flex-col items-start justify-center">
             
             <div className="inline-block px-3 py-1 bg-[#e0e0e0] text-[#0F0F10] text-[10px] uppercase font-bold tracking-[0.25em]">
               A Note From The Founder
             </div>
 
-            <h3 className="font-heading text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight">
+            <h3 className="font-heading text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight text-left">
               "We didn't start Clarté Club to build another fast-fashion brand. We started it to create things that last."
             </h3>
 
-            <div className="space-y-3.5 sm:space-y-4 text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-700 font-light">
+            <div className="space-y-3.5 sm:space-y-4 text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-700 font-light text-left">
               <p>
                 Every day, we are bombarded by loud logos, endless sales events, and products designed to be replaced in a few months. I felt there was a missing space for people who appreciate quiet distinction—pieces that look effortless, feel substantial, and hold real integrity.
               </p>
@@ -73,7 +73,7 @@ export default function FounderNote() {
             </div>
 
             {/* Quote Signature Block */}
-            <div className="w-full pt-5 sm:pt-6 border-t border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 text-center sm:text-left">
+            <div className="w-full pt-5 sm:pt-6 border-t border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 text-left">
               <div>
                 <p className="font-heading font-bold text-sm sm:text-base uppercase text-[#0F0F10]">
                   Nawaz Gazi
@@ -81,14 +81,6 @@ export default function FounderNote() {
                 <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-[#C9B07A] font-semibold">
                   Founder, Clarté Club
                 </p>
-              </div>
-
-              <div className="flex items-center justify-center sm:justify-start gap-4 sm:gap-6 text-[10px] sm:text-[11px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-neutral-500">
-                <span>Hand-finished</span>
-                <span className="opacity-40">•</span>
-                <span>Small Batch</span>
-                <span className="opacity-40">•</span>
-                <span>Built for Life</span>
               </div>
             </div>
 

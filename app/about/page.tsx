@@ -59,7 +59,7 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center">
           
           {/* Left Panel: Architectural Studio Visual */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-3 text-center sm:text-left">
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-3 text-left">
             <div className="relative aspect-[4/4.5] w-full bg-[#efefef] overflow-hidden border border-black/10 shadow-sm">
               <Image
                 src="/images/hero-left.png"
@@ -69,15 +69,15 @@ export default function AboutPage() {
                 className="object-cover filter contrast-[1.03]"
               />
             </div>
-            <p className="text-[10px] sm:text-[11px] leading-relaxed text-neutral-500 font-light tracking-wide italic">
+            <p className="text-[10px] sm:text-[11px] leading-relaxed text-neutral-500 font-light tracking-wide italic text-left">
               Presence over noise. That is the foundational philosophy behind Clarté Club.
             </p>
           </div>
 
           {/* Right Panel: Genesis Story Narrative */}
-          <div className="lg:col-span-7 bg-[#f4f4f4] border border-black/10 p-5 sm:p-8 md:p-12 flex flex-col items-center sm:items-start justify-center space-y-5 sm:space-y-6 text-center sm:text-left">
-            <p className="font-heading text-base sm:text-xl md:text-2xl font-medium leading-snug sm:leading-relaxed text-[#0F0F10]">
-              <span className="inline-flex items-center justify-center sm:justify-start gap-1.5 font-bold text-[#0F0F10] mr-1.5">
+          <div className="lg:col-span-7 bg-[#f4f4f4] border border-black/10 p-5 sm:p-8 md:p-12 flex flex-col items-start justify-center space-y-5 sm:space-y-6 text-left">
+            <p className="font-heading text-base sm:text-xl md:text-2xl font-medium leading-snug sm:leading-relaxed text-[#0F0F10] text-left">
+              <span className="inline-flex items-center justify-start gap-1.5 font-bold text-[#0F0F10] mr-1.5">
                 <Image
                   src="/logo.svg"
                   alt="Clarté Club Emblem"
@@ -90,11 +90,11 @@ export default function AboutPage() {
               started with a simple idea: The things we choose to wear every day should feel distinctive, useful, and deeply personal.
             </p>
             
-            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light">
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light text-left">
               We began by questioning why modern luxury eyewear was defined by oversized logos and artificial markups. We set out to create an alternative—eyewear built with architectural restraint, premium hand-polished materials, and obsessive attention to proportions.
             </p>
 
-            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light">
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light text-left">
               We are starting with frames, but the vision goes far beyond one product category. Over time, Clarté Club is growing into a broader lifestyle label shaped by good design, thoughtful engineering, and a quieter way of doing things.
             </p>
 
@@ -198,15 +198,15 @@ export default function AboutPage() {
             </div>
 
             {/* Right Approach Narrative */}
-            <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
-              <h3 className="font-heading text-lg sm:text-2xl md:text-3xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-left flex flex-col items-start">
+              <h3 className="font-heading text-lg sm:text-2xl md:text-3xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight text-left">
                 We refuse to flood the market with disposable releases.
               </h3>
-              <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light max-w-xl">
+              <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light max-w-xl text-left">
                 Every release starts with a distinct architectural concept and is honed over months of wear testing. We evaluate frame balance, material weight, hardware tension, and tactile finish.
               </p>
               <div className="pt-3 sm:pt-4 border-t border-black/10 inline-block">
-                <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-[#0F0F10]">
+                <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-[#0F0F10] text-left">
                   The category may evolve. The approach will stay unyielding.
                 </p>
               </div>
@@ -241,11 +241,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
             
             {/* Left Direction Narrative Block */}
-            <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
-              <h3 className="font-heading text-lg sm:text-2xl md:text-4xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight">
+            <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-left flex flex-col items-start">
+              <h3 className="font-heading text-lg sm:text-2xl md:text-4xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight text-left">
                 Clarté Club is built slowly, intentionally, and without compromise.
               </h3>
-              <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light">
+              <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light text-left">
                 Starting with eyewear as our anchor, we are expanding into curated leather goods, accessories, and subtle daily objects that embody quiet distinction.
               </p>
 
@@ -283,13 +283,13 @@ export default function AboutPage() {
       <section className="w-full px-5 sm:px-12 md:px-20 py-16 sm:py-24 bg-[#fcfbfa] border-b border-black/10">
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-16">
           
-          <div className="lg:col-span-4 space-y-3 sm:space-y-4 text-center lg:text-left flex flex-col items-center lg:items-start">
+          <div className="lg:col-span-4 space-y-3 sm:space-y-4 text-left flex flex-col items-start">
             <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-semibold">Standards</span>
-            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-semibold uppercase tracking-tight text-[#0F0F10] leading-tight">
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-semibold uppercase tracking-tight text-[#0F0F10] leading-tight text-left">
               WHAT WE STAND BEHIND
             </h2>
             <div className="h-[2px] w-12 bg-[#0F0F10] my-3 sm:my-4" />
-            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.8] text-neutral-600 font-light">
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.8] text-neutral-600 font-light text-left">
               We design, inspect, and guarantee every piece that leaves our studio. These are our foundational promises to everyone who supports our vision.
             </p>
           </div>
