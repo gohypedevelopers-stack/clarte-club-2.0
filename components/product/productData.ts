@@ -28,6 +28,9 @@ export type ProductCard = {
   price?: string
   category?: "Heritage" | "Noyer" | "Crystal" | "Atelier"
   type?: "Sunglasses" | "Optical"
+  shape?: string
+  material?: string
+  colorGroup?: string
 }
 
 export type ProductDetail = {
