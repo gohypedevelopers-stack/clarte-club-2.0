@@ -3,19 +3,22 @@ import Link from "next/link"
 import { LaunchOfferCountdown } from "@/components/home/LaunchOfferCountdown"
 import { getServerTimestamp } from "@/lib/server-time"
 
-const launchDeadline = Date.parse("2026-07-18T00:00:00Z")
+import { cn } from "@/lib/utils"
 
-export function LaunchOfferBar() {
+// Fixed future target deadline (eliminates SSR/client timestamp mismatch)
+const launchDeadline = Date.parse("2026-07-29T00:00:00Z")
+
+export function LaunchOfferBar({ className }: { className?: string }) {
   const initialNow = getServerTimestamp()
 
   return (
     <section
-      className="relative w-full overflow-hidden"
-      style={{
+      className={cn("relative w-full overflow-hidden", className)}
+      style={!className ? {
         background: "linear-gradient(90deg, #0a0a0b 0%, #141415 50%, #0a0a0b 100%)",
         borderTop: "1px solid rgba(201,176,122,0.25)",
         borderBottom: "1px solid rgba(201,176,122,0.10)",
-      }}
+      } : undefined}
     >
       {/* Subtle gold noise texture overlay */}
       <div
@@ -27,25 +30,14 @@ export function LaunchOfferBar() {
         }}
       />
 
-      <div className="relative mx-auto flex h-[88px] w-full max-w-[1268px] items-center justify-between gap-4 px-5 sm:px-8 md:h-[96px]">
+      <div className="relative mx-auto flex sm:grid sm:grid-cols-[1fr_auto_1fr] h-[68px] sm:h-[76px] md:h-[84px] w-full max-w-[1268px] items-center justify-between gap-2 sm:gap-3 px-3 sm:px-8">
 
-        {/* Left: Headline */}
-        <div className="flex shrink-0 flex-col" style={{ minWidth: 0 }}>
+        {/* Left: Headline (Hidden on small mobile screens to prevent text overlap with countdown) */}
+        <div className="hidden sm:flex items-center justify-self-start min-w-0">
           <span
-            className="uppercase"
+            className="block font-semibold uppercase leading-none whitespace-nowrap"
             style={{
-              fontSize: "clamp(0.42rem, 0.8vw, 0.65rem)",
-              letterSpacing: "0.25em",
-              color: "#F6F2EA",
-              lineHeight: 1,
-            }}
-          >
-            Limited time
-          </span>
-          <span
-            className="mt-1 block font-semibold uppercase leading-none"
-            style={{
-              fontSize: "clamp(0.75rem, 1.5vw, 1.1rem)",
+              fontSize: "clamp(0.85rem, 1.6vw, 1.2rem)",
               letterSpacing: "0.08em",
               color: "#F6F2EA",
             }}
@@ -63,8 +55,8 @@ export function LaunchOfferBar() {
           </span>
         </div>
 
-        {/* Center: Countdown */}
-        <div className="flex flex-1 items-center justify-center">
+        {/* Center: Countdown (Guaranteed Dead-Center on desktop) */}
+        <div className="flex items-center justify-center justify-self-center">
           {/* Thin vertical rule left */}
           <div
             aria-hidden
@@ -86,34 +78,36 @@ export function LaunchOfferBar() {
         </div>
 
         {/* Right: CTA */}
-        <Link
-          href="/collections"
-          className="group relative shrink-0 overflow-hidden"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            height: "clamp(2rem, 4vw, 2.6rem)",
-            paddingInline: "clamp(0.9rem, 2vw, 1.75rem)",
-            border: "1px solid rgba(201,176,122,0.55)",
-            fontSize: "clamp(0.5rem, 0.9vw, 0.7rem)",
-            fontWeight: 600,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "#C9B07A",
-            textDecoration: "none",
-            transition: "color 280ms ease",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {/* Hover fill */}
-          <span
-            aria-hidden
-            className="absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0"
-            style={{ background: "rgba(201,176,122,0.12)" }}
-          />
-          <span className="relative">Shop Now</span>
-        </Link>
+        <div className="flex items-center justify-self-end">
+          <Link
+            href="/collections"
+            className="group relative shrink-0 overflow-hidden"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "clamp(2rem, 4vw, 2.6rem)",
+              paddingInline: "clamp(0.9rem, 2vw, 1.75rem)",
+              border: "1px solid rgba(201,176,122,0.55)",
+              fontSize: "clamp(0.5rem, 0.9vw, 0.7rem)",
+              fontWeight: 600,
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "#C9B07A",
+              textDecoration: "none",
+              transition: "color 280ms ease",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {/* Hover fill */}
+            <span
+              aria-hidden
+              className="absolute inset-0 -translate-x-full transition-transform duration-300 ease-out group-hover:translate-x-0"
+              style={{ background: "rgba(201,176,122,0.12)" }}
+            />
+            <span className="relative">Shop Now</span>
+          </Link>
+        </div>
       </div>
     </section>
   )
