@@ -7,17 +7,27 @@ import { motion, AnimatePresence } from "motion/react"
 export function CollectionGrid({
   selectedCategory,
   selectedType,
+  selectedShape,
+  selectedMaterial,
+  selectedColor,
   sortBy,
 }: {
   selectedCategory: string | null
   selectedType: string | null
+  selectedShape?: string | null
+  selectedMaterial?: string | null
+  selectedColor?: string | null
   sortBy: string
 }) {
   // Filter products based on selected states
   const filteredProducts = collectionProducts.filter((product) => {
     const matchesCategory = selectedCategory === null || product.category === selectedCategory
     const matchesType = selectedType === null || product.type === selectedType
-    return matchesCategory && matchesType
+    const matchesShape = !selectedShape || (product.shape && product.shape.toLowerCase().includes(selectedShape))
+    const matchesMaterial = !selectedMaterial || (product.material && product.material.toLowerCase().includes(selectedMaterial))
+    const matchesColor = !selectedColor || (product.colorGroup && product.colorGroup.toLowerCase().includes(selectedColor))
+
+    return matchesCategory && matchesType && matchesShape && matchesMaterial && matchesColor
   })
 
   // Sort products based on selected sort order
