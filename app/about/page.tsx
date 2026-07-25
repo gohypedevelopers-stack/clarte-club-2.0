@@ -1,4 +1,4 @@
-// Clarté Club - Our Story (Light Architectural Luxury Layout)
+// Clarté Club - Our Story (Smokey White Architectural Layout)
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
@@ -33,14 +33,14 @@ export default function AboutPage() {
   ]
 
   return (
-    <main className="flex-1 bg-[#FAF8F5] text-[#0F0F10] font-sans min-h-screen">
+    <main className="flex-1 bg-[#fcfbfa] text-[#0F0F10] font-sans min-h-screen">
       
-      {/* 1. OUR STORY - Architectural Header */}
-      <section className="w-full px-6 sm:px-12 md:px-20 pt-10 sm:pt-16 pb-12 border-b border-[#E5E0D8]">
+      {/* 1. OUR STORY - Header */}
+      <section className="w-full px-6 sm:px-12 md:px-20 pt-10 sm:pt-16 pb-12 border-b border-black/10">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
             <div>
-              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-[#C9B07A]">
+              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
                 Our Story
               </span>
               <h1 className="font-heading text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold uppercase leading-none tracking-[-0.03em] text-[#0F0F10] mt-2">
@@ -55,12 +55,12 @@ export default function AboutPage() {
       </section>
 
       {/* 1.1 Story Visual & Narrative Body */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-12 sm:py-16 border-b border-[#E5E0D8]">
+      <section className="w-full px-6 sm:px-12 md:px-20 py-12 sm:py-16 border-b border-black/10">
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           
           {/* Left Panel: Architectural Studio Visual */}
           <div className="lg:col-span-5 flex flex-col justify-between space-y-3">
-            <div className="relative aspect-[4/4.5] w-full bg-[#EDE8E0] overflow-hidden border border-[#E5E0D8] shadow-sm">
+            <div className="relative aspect-[4/4.5] w-full bg-[#efefef] overflow-hidden border border-black/10 shadow-sm">
               <Image
                 src="/images/hero-left.png"
                 alt="Clarté Club Eyewear Studio"
@@ -75,7 +75,7 @@ export default function AboutPage() {
           </div>
 
           {/* Right Panel: Genesis Story Narrative */}
-          <div className="lg:col-span-7 bg-[#F4F0E8] border border-[#E5E0D8] p-8 sm:p-12 flex flex-col justify-center space-y-6">
+          <div className="lg:col-span-7 bg-[#f4f4f4] border border-black/10 p-8 sm:p-12 flex flex-col justify-center space-y-6">
             <p className="font-heading text-xl sm:text-2xl font-medium leading-relaxed text-[#0F0F10]">
               Clarté Club started with a simple idea: The things we choose to wear every day should feel distinctive, useful, and deeply personal.
             </p>
@@ -88,17 +88,17 @@ export default function AboutPage() {
               We are starting with frames, but the vision goes far beyond one product category. Over time, Clarté Club is growing into a broader lifestyle label shaped by good design, thoughtful engineering, and a quieter way of doing things.
             </p>
 
-            <div className="pt-6 border-t border-[#E5E0D8] grid grid-cols-3 gap-4 text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
+            <div className="pt-6 border-t border-black/10 grid grid-cols-3 gap-4 text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
               <div>
-                <span className="block text-[#C9B07A] font-bold text-[9px] mb-1">Focus</span>
+                <span className="block text-neutral-400 font-bold text-[9px] mb-1">Focus</span>
                 <span className="text-[#0F0F10]">Eyewear & Beyond</span>
               </div>
               <div>
-                <span className="block text-[#C9B07A] font-bold text-[9px] mb-1">Ethos</span>
+                <span className="block text-neutral-400 font-bold text-[9px] mb-1">Ethos</span>
                 <span className="text-[#0F0F10]">Quiet Distinction</span>
               </div>
               <div>
-                <span className="block text-[#C9B07A] font-bold text-[9px] mb-1">Production</span>
+                <span className="block text-neutral-400 font-bold text-[9px] mb-1">Production</span>
                 <span className="text-[#0F0F10]">Small Batch Drops</span>
               </div>
             </div>
@@ -111,7 +111,7 @@ export default function AboutPage() {
       <FounderNote />
 
       {/* Ticker Marquee Bar */}
-      <section className="relative w-full overflow-hidden bg-[#F0ECE3] text-[#0F0F10] py-4 border-b border-[#E5E0D8]">
+      <section className="relative w-full overflow-hidden bg-[#f4f4f4] text-[#0F0F10] py-4 border-b border-black/10">
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes marqueeLight {
             0% { transform: translateX(0%); }
@@ -125,7 +125,7 @@ export default function AboutPage() {
         `}} />
         
         <div className="relative w-full overflow-hidden">
-          <div className="animate-marquee-light flex gap-8 text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#0F0F10]/50 whitespace-nowrap select-none">
+          <div className="animate-marquee-light flex gap-8 text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#0F0F10]/40 whitespace-nowrap select-none">
             {Array(4).fill([
               "DISTINCTIVE DESIGN",
               "HAND-POLISHED ACETATE",
@@ -143,19 +143,19 @@ export default function AboutPage() {
       </section>
 
       {/* Scroll-Driven Text Reveal Statement */}
-      <section className="w-full bg-[#FAF8F5] border-b border-[#E5E0D8]">
+      <section className="w-full bg-[#fcfbfa] border-b border-black/10">
         <TextReveal>
           WE'RE COMMITTED TO **EVERYTHING WE MAKE**, CHOSEN WITH CARE, **CHECKED BEFORE IT EVER REACHES YOU**. THAT'S WHAT WE ACTUALLY **STAND ON**. NOT A CLAIM, JUST THE **WORK BEHIND IT**.
         </TextReveal>
       </section>
 
       {/* 3. OUR APPROACH Section */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#FAF8F5] border-b border-[#E5E0D8]">
+      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#fcfbfa] border-b border-black/10">
         <div className="mx-auto max-w-7xl space-y-12">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E5E0D8] pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-black/10 pb-6">
             <div>
-              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-[#C9B07A]">
+              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
                 Our Approach
               </span>
               <h2 className="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-2">
@@ -176,7 +176,7 @@ export default function AboutPage() {
                 { img: "/images/products/product7.png", alt: "Frame detail 2" },
                 { img: "/images/products/product8.png", alt: "Frame detail 3" }
               ].map((item, idx) => (
-                <div key={idx} className="relative aspect-square flex-1 bg-[#E5E0D8] border border-[#E5E0D8] overflow-hidden group">
+                <div key={idx} className="relative aspect-square flex-1 bg-[#efefef] border border-black/10 overflow-hidden group">
                   <Image
                     src={item.img}
                     alt={item.alt}
@@ -195,7 +195,7 @@ export default function AboutPage() {
               <p className="text-[14px] leading-[1.85] text-neutral-600 font-light max-w-xl">
                 Every release starts with a distinct architectural concept and is honed over months of wear testing. We evaluate frame balance, material weight, hardware tension, and tactile finish.
               </p>
-              <div className="pt-4 border-t border-[#E5E0D8] inline-block">
+              <div className="pt-4 border-t border-black/10 inline-block">
                 <p className="text-[12px] uppercase tracking-[0.2em] font-semibold text-[#0F0F10]">
                   The category may evolve. The approach will stay unyielding.
                 </p>
@@ -211,12 +211,12 @@ export default function AboutPage() {
       <SecretDesire />
 
       {/* 4. THE DIRECTION Section */}
-      <section className="relative w-full px-6 sm:px-12 md:px-20 py-20 bg-[#FAF8F5] overflow-hidden border-b border-[#E5E0D8]">
+      <section className="relative w-full px-6 sm:px-12 md:px-20 py-20 bg-[#fcfbfa] overflow-hidden border-b border-black/10">
         <div className="mx-auto max-w-7xl space-y-12">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E5E0D8] pb-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-black/10 pb-6">
             <div>
-              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-[#C9B07A]">
+              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
                 The Direction
               </span>
               <h2 className="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-2">
@@ -252,8 +252,8 @@ export default function AboutPage() {
 
             {/* Right Interactive Card Visual */}
             <div className="lg:col-span-6 flex justify-center items-center py-6">
-              <div className="group/card relative w-full sm:w-[500px] aspect-[16/10] cursor-pointer transform origin-center -rotate-3 hover:rotate-0 hover:scale-[1.02] shadow-[0_20px_50px_rgba(0,0,0,0.12)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.2)] bg-[#FFFFFF] border border-[#E5E0D8] hover:border-[#C9B07A]/60 p-6 transition-all duration-700 ease-out">
-                <div className="relative size-full overflow-hidden bg-[#FAF8F5] border border-[#E5E0D8]/60 flex items-center justify-center">
+              <div className="group/card relative w-full sm:w-[500px] aspect-[16/10] cursor-pointer transform origin-center -rotate-3 hover:rotate-0 hover:scale-[1.02] shadow-[0_20px_50px_rgba(0,0,0,0.12)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.2)] bg-[#FFFFFF] border border-black/10 hover:border-black/30 p-6 transition-all duration-700 ease-out">
+                <div className="relative size-full overflow-hidden bg-[#fcfbfa] border border-black/10 flex items-center justify-center">
                   <Image
                     src="/images/products/product5-white.png"
                     alt="Clarté Club frame"
@@ -270,11 +270,11 @@ export default function AboutPage() {
       </section>
 
       {/* 5. STANDARDS & PROMISES */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-24 bg-[#FAF8F5] border-b border-[#E5E0D8]">
+      <section className="w-full px-6 sm:px-12 md:px-20 py-24 bg-[#fcfbfa] border-b border-black/10">
         <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-16">
           
           <div className="lg:col-span-4 space-y-4">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-[#C9B07A] font-semibold">Standards</span>
+            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-semibold">Standards</span>
             <h2 className="font-heading text-3xl sm:text-4xl font-semibold uppercase tracking-tight text-[#0F0F10] leading-tight">
               WHAT WE STAND BEHIND
             </h2>
@@ -292,7 +292,7 @@ export default function AboutPage() {
       </section>
 
       {/* Closing Brand Statement Banner */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#F0ECE3] text-center border-t border-[#E5E0D8]">
+      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#f4f4f4] text-center border-t border-black/10">
         <div className="mx-auto max-w-4xl space-y-4">
           <p className="font-heading text-xl sm:text-3xl font-medium uppercase tracking-wide text-[#0F0F10]">
             The kind of thing that doesn't ask for attention, and quietly gets it anyway.

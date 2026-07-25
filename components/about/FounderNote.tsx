@@ -4,13 +4,13 @@ import Image from "next/image"
 
 export default function FounderNote() {
   return (
-    <section className="w-full px-6 sm:px-12 md:px-20 py-16 sm:py-24 bg-[#F4F0E8] border-b border-[#E5E0D8]">
+    <section className="w-full px-6 sm:px-12 md:px-20 py-16 sm:py-24 bg-[#fcfbfa] border-b border-black/10">
       <div className="mx-auto max-w-7xl">
         
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#E5E0D8] pb-6 mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-black/10 pb-6 mb-12">
           <div>
-            <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-[#C9B07A]">
+            <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
               Founder's Note
             </span>
             <h2 className="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-2">
@@ -27,14 +27,14 @@ export default function FounderNote() {
           
           {/* Left Column: Founder Portrait Visual */}
           <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[3/4] w-full bg-[#E5E0D8] overflow-hidden border border-[#E5E0D8] shadow-sm">
+            <div className="relative aspect-[3/4] w-full bg-[#efefef] overflow-hidden border border-black/10 shadow-sm">
               <Image
                 src="/images/hero-right.png"
                 alt="Founder of Clarté Club"
                 fill
                 className="object-cover filter grayscale contrast-[1.05]"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10]/60 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0F0F10]/70 via-transparent to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-[#FAF8F5]">
                 <p className="text-xs uppercase tracking-[0.2em] font-semibold text-[#C9B07A] mb-1">
                   Design Studio & Atelier
@@ -50,9 +50,9 @@ export default function FounderNote() {
           </div>
 
           {/* Right Column: Narrative Letter */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-6 bg-[#f4f4f4] border border-black/10 p-8 sm:p-12">
             
-            <div className="inline-block px-3 py-1 bg-[#E5E0D8] text-[#0F0F10] text-[10px] uppercase font-bold tracking-[0.25em]">
+            <div className="inline-block px-3 py-1 bg-[#e0e0e0] text-[#0F0F10] text-[10px] uppercase font-bold tracking-[0.25em]">
               A Note From The Founder
             </div>
 
@@ -73,7 +73,7 @@ export default function FounderNote() {
             </div>
 
             {/* Quote Signature Block */}
-            <div className="pt-6 border-t border-[#E5E0D8] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div className="pt-6 border-t border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div>
                 <p className="font-heading font-bold text-base uppercase text-[#0F0F10]">
                   Nawaz Gazi
