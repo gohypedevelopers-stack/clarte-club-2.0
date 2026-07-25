@@ -119,8 +119,8 @@ export function EditsCarousel() {
       style={{ background: "#0F0F10" }}
     >
       {/* Section header */}
-      <div className="mb-8 flex w-full flex-col gap-1 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+      <div className="mb-8 flex w-full flex-col gap-1 sm:flex-row sm:items-end sm:justify-between text-center sm:text-left items-center sm:items-start">
+        <div className="flex flex-col items-center sm:items-start">
           <p
             className="mb-1.5 uppercase"
             style={{
@@ -131,14 +131,7 @@ export function EditsCarousel() {
           >
             Curated selections
           </p>
-          <h2
-            className="font-heading font-semibold uppercase leading-none"
-            style={{
-              fontSize: "clamp(1.7rem, 2.2vw, 2.6rem)",
-              letterSpacing: "-0.04em",
-              color: "#F6F2EA",
-            }}
-          >
+          <h2 className="font-heading text-[22px] sm:text-3xl md:text-[40px] font-semibold uppercase leading-none tracking-tight text-[#F6F2EA]">
             Edits
             <span
               style={{

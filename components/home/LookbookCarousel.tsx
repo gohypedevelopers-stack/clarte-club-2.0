@@ -74,14 +74,7 @@ export function LookbookCarousel() {
         >
           Community
         </p>
-        <h2
-          className="font-heading font-semibold uppercase leading-none"
-          style={{
-            fontSize: "clamp(1.2rem, 2vw, 1.8rem)",
-            letterSpacing: "0.18em",
-            color: "#F6F2EA",
-          }}
-        >
+        <h2 className="font-heading text-[22px] sm:text-3xl md:text-[40px] font-semibold uppercase leading-none tracking-tight text-[#F6F2EA]">
           As Seen On
         </h2>
         <div

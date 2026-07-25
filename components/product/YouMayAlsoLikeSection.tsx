@@ -15,7 +15,7 @@ export function YouMayAlsoLikeSection() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-black/40">
             Recommendations
           </p>
-          <h2 className="font-heading text-2xl sm:text-3xl md:text-[40px] font-normal uppercase leading-none tracking-tight">
+          <h2 className="font-heading text-[22px] sm:text-3xl md:text-[40px] font-semibold uppercase leading-none tracking-tight">
             You May Also Like
           </h2>
           <div className="mx-auto h-[1px] w-16 bg-black/10 pt-1" />

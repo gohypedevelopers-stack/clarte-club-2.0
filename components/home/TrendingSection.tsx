@@ -256,12 +256,12 @@ export function ProductCardView({
 export function TrendingSection() {
   return (
     <section id="new-drops" className="w-full bg-white px-4 pt-14 pb-4 text-black sm:px-6 lg:px-8 md:pt-16 md:pb-4">
-      <div className="flex w-full flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-        <div>
+      <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-end sm:justify-between text-center sm:text-left items-center sm:items-start">
+        <div className="flex flex-col items-center sm:items-start">
           <p className="text-[10px] uppercase font-semibold tracking-[0.25em] text-[#C9B07A] mb-1">
             Fresh Arrivals
           </p>
-          <h2 className="font-heading text-[clamp(1.7rem,2.2vw,2.6rem)] font-semibold uppercase leading-none tracking-[-0.04em]">
+          <h2 className="font-heading text-[22px] sm:text-3xl md:text-[40px] font-semibold uppercase leading-none tracking-tight">
             New Drops
           </h2>
         </div>

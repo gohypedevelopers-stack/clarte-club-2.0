@@ -35,7 +35,7 @@ export function BrandPhilosophy() {
           <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/40">
             Pillars of Clarté
           </p>
-          <h2 className="font-heading text-[32px] md:text-[40px] font-normal uppercase leading-none tracking-tight">
+          <h2 className="font-heading text-[22px] sm:text-3xl md:text-[40px] font-semibold uppercase leading-none tracking-tight">
             Our Philosophy
           </h2>
           <div className="mx-auto h-[1px] w-16 bg-white/10 pt-1" />
