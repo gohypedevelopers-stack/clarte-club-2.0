@@ -41,6 +41,7 @@ function CountdownDigit({ value, label }: { value: number; label: string }) {
   return (
     <div className="flex flex-col items-center" style={{ minWidth: "2.4rem" }}>
       <span
+        suppressHydrationWarning
         className="block text-center font-semibold tabular-nums leading-none"
         style={{
           fontSize: "clamp(1.35rem, 2.6vw, 2.1rem)",
@@ -54,8 +55,8 @@ function CountdownDigit({ value, label }: { value: number; label: string }) {
         {pad(displayed)}
       </span>
       <span
-        className="mt-0.5 uppercase tracking-widest text-center block w-full"
-        style={{ fontSize: "0.38rem", color: "#8A8072", letterSpacing: "0.2em", marginRight: "-0.2em" }}
+        className="mt-1 font-semibold uppercase text-center block w-full"
+        style={{ fontSize: "0.55rem", color: "#C9B07A", letterSpacing: "0.18em" }}
       >
         {label}
       </span>
@@ -90,6 +91,7 @@ export function LaunchOfferCountdown({
 
   return (
     <div
+      suppressHydrationWarning
       className="flex items-start justify-center"
       style={{ gap: "clamp(0.15rem, 0.5vw, 0.4rem)" }}
       aria-label={`${c.days} days ${c.hours} hours ${c.minutes} minutes ${c.seconds} seconds remaining`}
