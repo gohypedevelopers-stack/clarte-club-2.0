@@ -249,23 +249,23 @@ function MobileFloatingNav({
       )}
     >
       {/* Light Theme Glass Pill Navigation Bar */}
-      <div className="flex items-center gap-5 sm:gap-6 bg-[#F6F2EA]/95 backdrop-blur-xl border border-black/15 px-5 py-2.5 rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.25)] text-black">
+      <div className="flex h-9 items-center gap-4.5 sm:gap-5 bg-[#F6F2EA]/95 backdrop-blur-xl border border-black/15 px-4.5 rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.25)] text-black">
         {/* Explore / Collections */}
         <Link
           href="/collections"
           aria-label="Explore Collections"
-          className="text-black hover:opacity-60 transition-opacity"
+          className="text-black hover:opacity-60 transition-opacity flex items-center justify-center"
         >
-          <Compass className="size-5 stroke-[1.75]" />
+          <Compass className="size-[18px] stroke-[1.75]" />
         </Link>
 
         {/* Account / About */}
         <Link
           href="/about"
           aria-label="Account"
-          className="text-black hover:opacity-60 transition-opacity"
+          className="text-black hover:opacity-60 transition-opacity flex items-center justify-center"
         >
-          <UserRound className="size-5 stroke-[1.75]" />
+          <UserRound className="size-[18px] stroke-[1.75]" />
         </Link>
 
         {/* Wishlist */}
@@ -273,9 +273,9 @@ function MobileFloatingNav({
           type="button"
           onClick={onOpenWishlist}
           aria-label="Wishlist"
-          className="text-black hover:opacity-60 transition-opacity cursor-pointer"
+          className="text-black hover:opacity-60 transition-opacity cursor-pointer flex items-center justify-center"
         >
-          <Heart className="size-5 stroke-[1.75]" />
+          <Heart className="size-[18px] stroke-[1.75]" />
         </button>
       </div>
 
@@ -283,7 +283,7 @@ function MobileFloatingNav({
       <StoryRingButton
         onClick={onOpenStories}
         tone="dark"
-        className="shadow-[0_10px_35px_rgba(0,0,0,0.25)] hover:scale-110 active:scale-95"
+        className="size-9 shadow-[0_10px_35px_rgba(0,0,0,0.25)] hover:scale-110 active:scale-95"
       />
     </div>,
     document.body
@@ -850,7 +850,7 @@ export function Navbar({
           )}
         >
           <div className="mx-auto max-w-[1400px] max-h-[calc(82vh-60px)] overflow-y-auto custom-scrollbar rounded-[2.25rem] bg-[#EFEFEF] p-7 sm:p-8 md:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.14)] border border-black/5 text-black">
-            <div className="grid grid-cols-[170px_1fr_1fr_1fr_320px] gap-6 xl:gap-8 items-start">
+            <div className="grid grid-cols-1 md:grid-cols-[180px_1fr_1.2fr_1.2fr] gap-6 xl:gap-10 items-start">
               
               {/* Column 1: Main Eyewear Collections */}
               <div className="flex flex-col gap-3.5 font-heading text-[13px] font-medium tracking-[0.02em]">
@@ -920,39 +920,6 @@ export function Navbar({
                       className="rounded-full bg-white px-3.5 py-1.5 text-[11px] font-medium text-black/80 border border-black/5 hover:bg-black hover:text-white transition-all shadow-2xs"
                     >
                       {item}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-
-              {/* Column 5: Shop by Color (Matching reference screenshot) */}
-              <div className="flex flex-col gap-2.5">
-                <span className="text-[12px] font-bold text-black font-heading">Shop by color</span>
-                <div className="grid grid-cols-2 gap-2">
-                  {[
-                    { name: "BLUES", key: "blue", colors: ["#7dd3fc", "#38bdf8", "#2563eb", "#1e3a8a"] },
-                    { name: "BROWNS", key: "brown", colors: ["#e7d7c6", "#c4a482", "#8b5e3c", "#4a2c11"] },
-                    { name: "GREENS", key: "green", colors: ["#6ee7b7", "#34d399", "#10b981", "#047857"] },
-                    { name: "NEUTRALS", key: "monochrome", colors: ["#e2e8f0", "#94a3b8", "#475569", "#1e293b"] },
-                    { name: "PURPLES", key: "purple", colors: ["#f472b6", "#e879f9", "#a855f7", "#7e22ce"] },
-                    { name: "REDS", key: "red", colors: ["#facc15", "#fb923c", "#ef4444", "#991b1b"] },
-                  ].map((colorGroup) => (
-                    <Link
-                      key={colorGroup.name}
-                      href={`/collections?color=${colorGroup.key}`}
-                      onClick={closeMenu}
-                      className="flex items-center justify-between rounded-full bg-white px-3 py-1.5 border border-black/5 hover:border-black/20 hover:scale-[1.02] transition-all shadow-2xs"
-                    >
-                      <span className="text-[10px] font-semibold tracking-[0.04em] text-black/80">{colorGroup.name}</span>
-                      <div className="flex items-center -space-x-1 pl-1">
-                        {colorGroup.colors.map((c, idx) => (
-                          <span
-                            key={idx}
-                            className="size-2.5 rounded-full border border-white shadow-2xs shrink-0"
-                            style={{ backgroundColor: c, zIndex: 10 - idx }}
-                          />
-                        ))}
-                      </div>
                     </Link>
                   ))}
                 </div>
