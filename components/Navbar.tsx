@@ -1,10 +1,12 @@
 // Clarté Club - Considered Eyewear
 "use client"
 
+import { createPortal } from "react-dom"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Heart, Search, ShoppingBag, UserRound, Menu, X } from "lucide-react"
+import { Heart, Search, ShoppingBag, UserRound, Menu, X, MapPin, Bookmark, Compass } from "lucide-react"
+import { StoriesModal } from "@/components/home/StoriesModal"
 import {
   useEffect,
   useLayoutEffect,
@@ -163,6 +165,131 @@ function IconButton({
   )
 }
 
+function StoryRingButton({
+  onClick,
+  tone,
+  className,
+}: {
+  onClick: () => void
+  tone: "dark" | "light"
+  className?: string
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="View Stories"
+      title="View Stories"
+      className={cn(
+        "group relative flex size-8 sm:size-9 items-center justify-center rounded-full p-[2px] overflow-hidden hover:scale-105 transition-transform duration-300 cursor-pointer shadow-[0_0_12px_rgba(201,176,122,0.4)] shrink-0",
+        className
+      )}
+    >
+      {/* 360-degree rotating gold conic gradient ring */}
+      <span
+        className="absolute inset-[-60%] animate-spin bg-[conic-gradient(from_0deg,#987C3E_0deg,#C9B07A_120deg,#F5E8C7_240deg,#987C3E_360deg)] pointer-events-none"
+        style={{ animationDuration: "3.5s" }}
+      />
+      
+      {/* Inner Icon Container */}
+      <div className={cn(
+        "relative z-10 flex size-full items-center justify-center rounded-full transition-colors",
+        tone === "light" ? "bg-black text-white" : "bg-white text-black"
+      )}>
+        <svg viewBox="0 0 24 24" fill="currentColor" className="size-3.5 sm:size-4">
+          <rect x="4" y="5" width="7" height="6" rx="2" opacity="0.9" />
+          <rect x="13" y="5" width="7" height="6" rx="2" opacity="0.9" />
+          <rect x="4" y="13" width="7" height="6" rx="2" opacity="0.9" />
+          <rect x="13" y="13" width="7" height="6" rx="2" opacity="0.9" />
+        </svg>
+      </div>
+    </button>
+  )
+}
+
+function MobileFloatingNav({
+  onOpenStories,
+  onOpenWishlist,
+}: {
+  onOpenStories: () => void
+  onOpenWishlist: () => void
+}) {
+  const [mounted, setMounted] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    setMounted(true)
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      if (currentScrollY <= 80) {
+        setIsVisible(true)
+      } else if (currentScrollY > lastScrollY.current + 5) {
+        setIsVisible(false) // Hide when scrolling down
+      } else if (currentScrollY < lastScrollY.current - 5) {
+        setIsVisible(true) // Show when scrolling up
+      }
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  if (!mounted) return null
+
+  return createPortal(
+    <div
+      className={cn(
+        "fixed bottom-6 left-1/2 -translate-x-1/2 z-[99999] md:hidden flex items-center gap-2.5 transition-all duration-300 ease-out select-none",
+        isVisible
+          ? "translate-y-0 opacity-100 pointer-events-auto"
+          : "translate-y-28 opacity-0 pointer-events-none"
+      )}
+    >
+      {/* Light Theme Glass Pill Navigation Bar */}
+      <div className="flex items-center gap-5 sm:gap-6 bg-[#F6F2EA]/95 backdrop-blur-xl border border-black/15 px-5 py-2.5 rounded-full shadow-[0_10px_35px_rgba(0,0,0,0.25)] text-black">
+        {/* Explore / Collections */}
+        <Link
+          href="/collections"
+          aria-label="Explore Collections"
+          className="text-black hover:opacity-60 transition-opacity"
+        >
+          <Compass className="size-5 stroke-[1.75]" />
+        </Link>
+
+        {/* Account / About */}
+        <Link
+          href="/about"
+          aria-label="Account"
+          className="text-black hover:opacity-60 transition-opacity"
+        >
+          <UserRound className="size-5 stroke-[1.75]" />
+        </Link>
+
+        {/* Wishlist */}
+        <button
+          type="button"
+          onClick={onOpenWishlist}
+          aria-label="Wishlist"
+          className="text-black hover:opacity-60 transition-opacity cursor-pointer"
+        >
+          <Heart className="size-5 stroke-[1.75]" />
+        </button>
+      </div>
+
+      {/* Story Ring Button (Same Gold Rotating Ring as Desktop Header) */}
+      <StoryRingButton
+        onClick={onOpenStories}
+        tone="dark"
+        className="shadow-[0_10px_35px_rgba(0,0,0,0.25)] hover:scale-110 active:scale-95"
+      />
+    </div>,
+    document.body
+  )
+}
+
 function MenuSection({
   title,
   items,
@@ -309,6 +436,7 @@ export function Navbar({
   const [searchOpen, setSearchOpen] = useState(false)
   const [cartOpen, setCartOpen] = useState(false)
   const [wishlistOpen, setWishlistOpen] = useState(false)
+  const [storiesOpen, setStoriesOpen] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedNav, setSelectedNav] = useState<NavKey | null>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu | null>(null)
@@ -516,11 +644,11 @@ export function Navbar({
     <header
       ref={headerRef}
       className={cn(
-        "main-navbar navbar-shell border-b",
+        "main-navbar navbar-shell border-b transition-colors duration-200",
         isScrolled ? "translate-y-0" : "translate-y-[var(--announcement-height)]",
         "h-[64px] lg:h-[80px]",
-        isInteractiveSurface
-          ? "bg-white text-black border-transparent shadow-none"
+        hasOpenMenu
+          ? "bg-white text-black border-black/5 shadow-none"
           : isLightSurface
             ? "bg-white text-black border-black/10 shadow-[0_1px_0_rgba(0,0,0,0.08)]"
             : "bg-transparent text-white border-transparent shadow-none",
@@ -533,8 +661,6 @@ export function Navbar({
           <nav
             aria-label="Primary"
             className="flex items-center gap-3.5 xl:gap-6 shrink-0"
-            onMouseEnter={cancelMenuClose}
-            onMouseLeave={scheduleMenuClose}
           >
             {primaryNav.map((item) => (
               <NavLink
@@ -544,25 +670,14 @@ export function Navbar({
                 selected={selectedNav === item.key}
                 ariaHaspopup={item.key === "collections" ? "menu" : undefined}
                 ariaExpanded={item.key === "collections" ? activeMenu === item.key : undefined}
-                onMouseEnter={() => {
-                  if (item.key === "collections") openMenu(item.key)
-                }}
-                onFocus={() => {
-                  if (item.key === "collections") openMenu(item.key)
-                }}
-                onBlur={(event) => {
-                  const nextTarget = event.relatedTarget as Node | null
-
-                  if (
-                    !nextTarget ||
-                    !headerRef.current?.contains(nextTarget)
-                  ) {
+                onClick={(e) => {
+                  if (item.key === "collections") {
+                    e.preventDefault()
+                    setActiveMenu((current) => (current === "collections" ? null : "collections"))
+                  } else {
+                    setSelectedNav(item.key)
                     setActiveMenu(null)
                   }
-                }}
-                onClick={() => {
-                  setSelectedNav(item.key)
-                  setActiveMenu(null)
                 }}
               >
                 {item.label}
@@ -586,34 +701,46 @@ export function Navbar({
               priority
               className={cn(
                 "block h-auto w-[9.5rem] lg:w-[10.5rem] xl:w-[12.5rem] max-w-none transition-[filter] duration-300 ease-out",
-                !isLightSurface && "invert"
+                !(isLightSurface || hasOpenMenu) && "invert"
               )}
             />
           </Link>
 
-          <div className="flex items-center gap-2.5 xl:gap-4 ml-auto shrink-0">
-            <div className="relative h-[34px] w-[110px] shrink-0 xl:w-[160px]">
-              <button
-                type="button"
-                aria-label="Search products"
-                aria-haspopup="dialog"
-                aria-expanded={searchOpen}
-                onClick={() => setSearchOpen(true)}
-                className={cn(
-                  "relative flex h-full w-full items-center border border-current/80 bg-transparent px-3 pr-8 text-left text-[0.8125rem] text-current outline-none transition-[color,border-color,opacity] duration-300 ease-out hover:opacity-80"
-                )}
-              >
-                <span className="block truncate text-current/80">Search...</span>
-              </button>
-              <Search
-                aria-hidden="true"
-                className="pointer-events-none absolute right-3 top-1/2 size-3.5 -translate-y-1/2 stroke-[1.75] text-current transition-colors duration-300 ease-out"
-              />
-            </div>
+          <div className="flex items-center gap-2.5 xl:gap-3.5 ml-auto shrink-0">
+            {/* Story Ring Button */}
+            <StoryRingButton onClick={() => setStoriesOpen(true)} tone={hasOpenMenu ? "dark" : tone} />
 
+            {/* Search Icon Button */}
+            <IconButton
+              label="Search"
+              tone={hasOpenMenu ? "dark" : tone}
+              onClick={() => setSearchOpen(true)}
+              ariaHaspopup="dialog"
+              ariaExpanded={searchOpen}
+            >
+              <Search className="size-[18px] stroke-[1.7]" />
+            </IconButton>
+
+            {/* Account Icon */}
+            <IconButton label="Account" tone={hasOpenMenu ? "dark" : tone}>
+              <UserRound className="size-[18px] stroke-[1.7]" />
+            </IconButton>
+
+            {/* Wishlist / Bookmark Icon */}
+            <IconButton
+              label="Wishlist"
+              tone={hasOpenMenu ? "dark" : tone}
+              onClick={toggleWishlist}
+              ariaHaspopup="menu"
+              ariaExpanded={isWishlistOpen}
+            >
+              <Heart className="size-[18px] stroke-[1.7]" />
+            </IconButton>
+
+            {/* Cart Icon */}
             <IconButton
               label="Cart"
-              tone={tone}
+              tone={hasOpenMenu ? "dark" : tone}
               onClick={() => setCartOpen(true)}
             >
               <div className="relative">
@@ -626,25 +753,27 @@ export function Navbar({
               </div>
             </IconButton>
 
-            <div className="flex shrink-0 items-center gap-3 xl:gap-4">
-              <IconButton
-                label="Wishlist"
-                tone={tone}
-                onClick={toggleWishlist}
-                ariaHaspopup="menu"
-                ariaExpanded={isWishlistOpen}
-              >
-                <Heart className="size-[18px] stroke-[1.7]" />
-              </IconButton>
-              <IconButton label="Account" tone={tone}>
-                <UserRound className="size-[18px] stroke-[1.7]" />
-              </IconButton>
-            </div>
+            {/* Hamburger / Menu Toggle Button at the end */}
+            <IconButton
+              label={hasOpenMenu ? "Close Menu" : "Open Menu"}
+              tone={hasOpenMenu ? "dark" : tone}
+              onClick={() => {
+                setActiveMenu((current) => (current ? null : "collections"))
+              }}
+              ariaHaspopup="menu"
+              ariaExpanded={hasOpenMenu}
+            >
+              {hasOpenMenu ? (
+                <X className="size-[20px] stroke-[1.8]" />
+              ) : (
+                <Menu className="size-[20px] stroke-[1.8]" />
+              )}
+            </IconButton>
           </div>
         </div>
 
         {/* Mobile Header Row */}
-        <div className="grid h-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center lg:hidden">
+        <div className="grid h-full grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center lg:hidden px-0.5">
           <div className="justify-self-start">
             <IconButton
               label="Open Menu"
@@ -661,7 +790,7 @@ export function Navbar({
             onClick={() => {
               safeClearHash()
             }}
-            className="justify-self-center transition-opacity hover:opacity-75"
+            className="justify-self-center transition-opacity hover:opacity-75 min-w-0 px-1"
           >
             <Image
               src="/wordmark.svg"
@@ -670,13 +799,14 @@ export function Navbar({
               height={21}
               priority
               className={cn(
-                "block h-auto w-[9.5rem] sm:w-[11rem] max-w-none transition-[filter] duration-300 ease-out",
+                "block h-auto w-[7.2rem] min-[380px]:w-[8.2rem] sm:w-[10.5rem] max-w-full transition-[filter] duration-300 ease-out",
                 !isLightSurface && "invert"
               )}
             />
           </Link>
 
-          <div className="flex items-center justify-self-end gap-1.5">
+          <div className="flex items-center justify-self-end gap-1 min-[380px]:gap-1.5 sm:gap-2">
+            <StoryRingButton onClick={() => setStoriesOpen(true)} tone={tone} className="hidden sm:flex" />
             <IconButton
               label="Search"
               tone={tone}
@@ -701,58 +831,150 @@ export function Navbar({
           </div>
         </div>
 
+        {/* Backdrop Overlay when Mega Menu is open */}
+        {activeMenu && (
+          <div
+            className="fixed inset-0 top-[80px] bg-black/40 backdrop-blur-[2px] z-40 hidden lg:block animate-in fade-in duration-200"
+            onClick={closeMenu}
+          />
+        )}
+
+        {/* Floating Mega Menu Card with connected curved white background shell (Inspired by Bluorng screenshot 2) */}
         <div
           aria-hidden={!activeMenu}
           className={cn(
-            "absolute left-0 top-full hidden w-full bg-white text-black shadow-[0_24px_60px_rgba(0,0,0,0.08)] transition-opacity duration-150 ease-out lg:block lg:h-[460px] lg:overflow-hidden",
+            "absolute inset-x-0 top-full hidden w-full bg-white rounded-b-[2.5rem] px-4 sm:px-6 lg:px-8 pt-2 pb-6 transition-all duration-300 ease-out lg:block z-50 border-b border-x border-black/5 shadow-[0_25px_60px_-10px_rgba(0,0,0,0.18)]",
             activeMenu
-              ? "pointer-events-auto opacity-100"
-              : "pointer-events-none opacity-0"
+              ? "pointer-events-auto opacity-100 translate-y-0"
+              : "pointer-events-none opacity-0 -translate-y-2"
           )}
-          onMouseEnter={cancelMenuClose}
-          onMouseLeave={scheduleMenuClose}
         >
-          {activeMenu === "wishlist" ? (
-            <WishlistPanel />
-          ) : activeMenu === "collections" ? (
-            <div className="grid h-full w-full gap-x-14 gap-y-8 px-4 py-6 sm:px-6 lg:grid-cols-[minmax(10rem,12rem)_minmax(14rem,18rem)_minmax(0,1fr)] lg:px-8">
-              <MenuSection
-                title="Featured"
-                items={megaMenuFeatured}
-                open={Boolean(activeMenu)}
-                onClose={closeMenu}
-              />
-
-              <MenuSection
-                title="Categories"
-                items={megaMenuCategories}
-                open={Boolean(activeMenu)}
-                onClose={closeMenu}
-              />
-
-              <div className="grid w-full max-w-[652px] min-w-0 grid-cols-2 gap-6 justify-self-end">
-                {megaMenuCards.map((card) => (
-                  <MenuCard
-                    key={card.src}
-                    src={card.src}
-                    alt={card.alt}
-                    eyebrow={card.eyebrow}
-                    titleLines={card.titleLines}
-                  />
-                ))}
+          <div className="mx-auto max-w-[1400px] max-h-[calc(82vh-60px)] overflow-y-auto custom-scrollbar rounded-[2.25rem] bg-[#EFEFEF] p-7 sm:p-8 md:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.14)] border border-black/5 text-black">
+            <div className="grid grid-cols-[170px_1fr_1fr_1fr_320px] gap-6 xl:gap-8 items-start">
+              
+              {/* Column 1: Main Eyewear Collections */}
+              <div className="flex flex-col gap-3.5 font-heading text-[13px] font-medium tracking-[0.02em]">
+                <Link href="/collections" onClick={closeMenu} className="font-bold text-black hover:opacity-70 transition-opacity">
+                  New Arrivals
+                </Link>
+                <Link href="/collections" onClick={closeMenu} className="font-semibold text-black/80 hover:text-black transition-colors">
+                  Bestseller Eyewear
+                </Link>
+                <Link href="/collections?category=Heritage" onClick={closeMenu} className="font-semibold text-black/80 hover:text-black transition-colors">
+                  Heritage Collection
+                </Link>
+                <Link href="/collections?category=Noyer" onClick={closeMenu} className="font-semibold text-black/80 hover:text-black transition-colors">
+                  Noyer Collection
+                </Link>
+                <Link href="/collections?category=Crystal" onClick={closeMenu} className="font-semibold text-black/80 hover:text-black transition-colors">
+                  Crystal Collection
+                </Link>
+                <Link href="/collections?category=Atelier" onClick={closeMenu} className="font-semibold text-black/80 hover:text-black transition-colors">
+                  Atelier Collection
+                </Link>
               </div>
+
+              {/* Column 2: Eyewear Type */}
+              <div className="flex flex-col gap-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-black">Type</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Sunglasses", "Optical Frames", "Blue Light", "Reading Glasses"].map((item) => (
+                    <Link
+                      key={item}
+                      href={`/collections?type=${item.toLowerCase()}`}
+                      onClick={closeMenu}
+                      className="rounded-full bg-white px-3.5 py-1.5 text-[11px] font-medium text-black/80 border border-black/5 hover:bg-black hover:text-white transition-all shadow-2xs"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 3: Frame Shape */}
+              <div className="flex flex-col gap-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-black">Frame Shape</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Aviator", "Oval", "Square", "D-Frame", "Round", "Cat-Eye", "Hexagon"].map((item) => (
+                    <Link
+                      key={item}
+                      href={`/collections?shape=${item.toLowerCase()}`}
+                      onClick={closeMenu}
+                      className="rounded-full bg-white px-3.5 py-1.5 text-[11px] font-medium text-black/80 border border-black/5 hover:bg-black hover:text-white transition-all shadow-2xs"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 4: Material & Acc */}
+              <div className="flex flex-col gap-2.5">
+                <span className="text-[11px] font-bold uppercase tracking-[0.12em] text-black">Material & Acc</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {["Acetate", "Titanium", "Clear Crystal", "Leather Cases", "Eyewear Chains"].map((item) => (
+                    <Link
+                      key={item}
+                      href={`/collections?material=${item.toLowerCase()}`}
+                      onClick={closeMenu}
+                      className="rounded-full bg-white px-3.5 py-1.5 text-[11px] font-medium text-black/80 border border-black/5 hover:bg-black hover:text-white transition-all shadow-2xs"
+                    >
+                      {item}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              {/* Column 5: Shop by Color (Matching reference screenshot) */}
+              <div className="flex flex-col gap-2.5">
+                <span className="text-[12px] font-bold text-black font-heading">Shop by color</span>
+                <div className="grid grid-cols-2 gap-2">
+                  {[
+                    { name: "BLUES", key: "blue", colors: ["#7dd3fc", "#38bdf8", "#2563eb", "#1e3a8a"] },
+                    { name: "BROWNS", key: "brown", colors: ["#e7d7c6", "#c4a482", "#8b5e3c", "#4a2c11"] },
+                    { name: "GREENS", key: "green", colors: ["#6ee7b7", "#34d399", "#10b981", "#047857"] },
+                    { name: "NEUTRALS", key: "monochrome", colors: ["#e2e8f0", "#94a3b8", "#475569", "#1e293b"] },
+                    { name: "PURPLES", key: "purple", colors: ["#f472b6", "#e879f9", "#a855f7", "#7e22ce"] },
+                    { name: "REDS", key: "red", colors: ["#facc15", "#fb923c", "#ef4444", "#991b1b"] },
+                  ].map((colorGroup) => (
+                    <Link
+                      key={colorGroup.name}
+                      href={`/collections?color=${colorGroup.key}`}
+                      onClick={closeMenu}
+                      className="flex items-center justify-between rounded-full bg-white px-3 py-1.5 border border-black/5 hover:border-black/20 hover:scale-[1.02] transition-all shadow-2xs"
+                    >
+                      <span className="text-[10px] font-semibold tracking-[0.04em] text-black/80">{colorGroup.name}</span>
+                      <div className="flex items-center -space-x-1 pl-1">
+                        {colorGroup.colors.map((c, idx) => (
+                          <span
+                            key={idx}
+                            className="size-2.5 rounded-full border border-white shadow-2xs shrink-0"
+                            style={{ backgroundColor: c, zIndex: 10 - idx }}
+                          />
+                        ))}
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
             </div>
-          ) : null}
+          </div>
         </div>
       </div>
 
       <SearchSidebar open={searchOpen} onOpenChange={setSearchOpen} />
       <CartSidebar open={cartOpen} onOpenChange={setCartOpen} />
       <WishlistSidebar open={wishlistOpen} onOpenChange={setWishlistOpen} />
+      <StoriesModal open={storiesOpen} onClose={() => setStoriesOpen(false)} />
+      <MobileFloatingNav
+        onOpenStories={() => setStoriesOpen(true)}
+        onOpenWishlist={() => setWishlistOpen(true)}
+      />
 
 
       <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-        <SheetContent side="left" className="w-[300px] sm:w-[350px] p-0 bg-[#F6F2EA] text-black border-r border-black/10 flex flex-col h-full z-[99999]">
+        <SheetContent side="left" showCloseButton={false} className="w-[300px] sm:w-[350px] p-0 bg-[#F6F2EA] text-black border-r border-black/10 flex flex-col h-full z-[99999]">
           <div className="flex items-center justify-between px-6 py-5 border-b border-black/5">
             <SheetTitle className="text-[12px] font-semibold uppercase tracking-[0.2em] text-black/50">
               Menu
