@@ -5,31 +5,15 @@ import Link from "next/link"
 
 function FacebookIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M14 13.5h2.5l1-4H14v-2c0-1.03 0-2 2-2h1.5V2.14c-.326-.043-1.557-.14-2.857-.14C11.928 2 10 3.657 10 6.7v2.8H7v4h3V22h4v-8.5z" />
     </svg>
   )
 }
 
 function InstagramIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}>
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
@@ -39,17 +23,8 @@ function InstagramIcon(props: React.ComponentProps<"svg">) {
 
 function YoutubeIcon(props: React.ComponentProps<"svg">) {
   return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      {...props}
-    >
-      <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-16.2 0A2 2 0 0 1 2.5 17z" />
-      <polygon points="10 15 15 12 10 9" />
+    <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+      <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
     </svg>
   )
 }
@@ -66,13 +41,13 @@ const clarteClubLinks = [
 
 export function FooterSection() {
   return (
-    <footer className="relative overflow-hidden bg-[#0F0F10] text-[#F6F2EA] pt-12 pb-8 border-t border-[#8A8072]/20">
+    <footer className="relative overflow-hidden bg-[#0F0F10] text-[#F6F2EA] pt-10 sm:pt-12 pb-8 border-t border-[#8A8072]/20">
       <div className="w-full px-6 md:px-12 2xl:px-24 mx-auto relative z-10">
-        <div className="grid grid-cols-1 gap-8 mb-8 relative z-10 md:grid-cols-12">
+        <div className="grid grid-cols-2 gap-8 mb-8 relative z-10 md:grid-cols-12">
 
           {/* Column 1: Brand Logo & Short Desc */}
-          <div className="col-span-full md:col-span-3">
-            <Link href="/" className="block w-36 md:w-44 -ml-4 -mt-8 -mb-4 hover:opacity-80 transition-opacity">
+          <div className="col-span-2 md:col-span-3">
+            <Link href="/" className="block w-32 sm:w-36 md:w-44 -ml-4 -mt-8 -mb-8 sm:-mt-10 sm:-mb-10 hover:opacity-80 transition-opacity">
               <Image
                 src="/cartellogo.png"
                 alt="Clarté Club"
@@ -81,7 +56,7 @@ export function FooterSection() {
                 className="w-full h-auto object-contain pointer-events-none brightness-0 invert"
               />
             </Link>
-            <p className="text-xs text-[#8A8072] leading-relaxed pr-4 font-light mt-1">
+            <p className="text-xs text-[#8A8072] leading-relaxed pr-4 font-light mt-0">
               Clarté Club is the destination for premium eyewear and future fashion.
               Elevating your lifestyle through vision.
             </p>
@@ -130,7 +105,7 @@ export function FooterSection() {
           </div>
 
           {/* Column 4: CONNECT WITH US */}
-          <div className="col-span-full md:col-span-3">
+          <div className="col-span-2 md:col-span-3">
             <h4 className="font-bold text-xs sm:text-sm uppercase mb-3 tracking-wider text-[#F6F2EA]">CONNECT WITH US</h4>
             <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#8A8072] leading-relaxed mb-3">
               SUBSCRIBE FOR PRIVATE DROP ANNOUNCEMENTS & CAPSULE ACCESS
@@ -166,27 +141,27 @@ export function FooterSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Facebook"
-                  className="flex size-7 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
+                  className="flex size-8 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
-                  <FacebookIcon className="size-3.5" />
+                  <FacebookIcon className="size-4" />
                 </a>
                 <a
                   href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
-                  className="flex size-7 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
+                  className="flex size-8 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
-                  <InstagramIcon className="size-3.5" />
+                  <InstagramIcon className="size-4" />
                 </a>
                 <a
                   href="https://youtube.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="YouTube"
-                  className="flex size-7 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
+                  className="flex size-8 items-center justify-center rounded-full border border-[#8A8072]/30 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
-                  <YoutubeIcon className="size-3.5" />
+                  <YoutubeIcon className="size-4" />
                 </a>
               </div>
             </div>
