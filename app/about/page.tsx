@@ -36,18 +36,18 @@ export default function AboutPage() {
     <main className="flex-1 bg-[#fcfbfa] text-[#0F0F10] font-sans min-h-screen">
       
       {/* 1. OUR STORY - Header */}
-      <section className="w-full px-6 sm:px-12 md:px-20 pt-10 sm:pt-16 pb-12 border-b border-black/10">
+      <section className="w-full px-5 sm:px-12 md:px-20 pt-8 sm:pt-16 pb-8 sm:pb-12 border-b border-black/10 text-center sm:text-left">
         <div className="mx-auto max-w-7xl">
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
-            <div>
-              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between items-center sm:items-start gap-3 sm:gap-4">
+            <div className="flex flex-col items-center sm:items-start">
+              <span className="text-[10px] sm:text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
                 Our Story
               </span>
-              <h1 className="font-heading text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold uppercase leading-none tracking-[-0.03em] text-[#0F0F10] mt-2">
+              <h1 className="font-heading text-3xl sm:text-[clamp(2.5rem,6vw,5.5rem)] font-extrabold uppercase leading-none tracking-[-0.03em] text-[#0F0F10] mt-1.5 sm:mt-2">
                 OUR STORY
               </h1>
             </div>
-            <p className="text-[12px] sm:text-[14px] font-semibold uppercase tracking-[0.25em] text-neutral-500 pb-2">
+            <p className="text-[11px] sm:text-[14px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-neutral-500 pb-1 sm:pb-2">
               BUILT WITH A CLEAR POINT OF VIEW
             </p>
           </div>
@@ -55,11 +55,11 @@ export default function AboutPage() {
       </section>
 
       {/* 1.1 Story Visual & Narrative Body */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-12 sm:py-16 border-b border-black/10">
-        <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      <section className="w-full px-5 sm:px-12 md:px-20 py-8 sm:py-16 border-b border-black/10">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 items-center">
           
           {/* Left Panel: Architectural Studio Visual */}
-          <div className="lg:col-span-5 flex flex-col justify-between space-y-3">
+          <div className="lg:col-span-5 flex flex-col justify-between space-y-3 text-center sm:text-left">
             <div className="relative aspect-[4/4.5] w-full bg-[#efefef] overflow-hidden border border-black/10 shadow-sm">
               <Image
                 src="/images/hero-left.png"
@@ -69,46 +69,46 @@ export default function AboutPage() {
                 className="object-cover filter contrast-[1.03]"
               />
             </div>
-            <p className="text-[11px] leading-relaxed text-neutral-500 font-light tracking-wide italic">
+            <p className="text-[10px] sm:text-[11px] leading-relaxed text-neutral-500 font-light tracking-wide italic">
               Presence over noise. That is the foundational philosophy behind Clarté Club.
             </p>
           </div>
 
           {/* Right Panel: Genesis Story Narrative */}
-          <div className="lg:col-span-7 bg-[#f4f4f4] border border-black/10 p-8 sm:p-12 flex flex-col justify-center space-y-6">
-            <p className="font-heading text-xl sm:text-2xl font-medium leading-relaxed text-[#0F0F10]">
-              <span className="inline-flex items-center gap-2 font-bold text-[#0F0F10] mr-1.5">
+          <div className="lg:col-span-7 bg-[#f4f4f4] border border-black/10 p-5 sm:p-8 md:p-12 flex flex-col items-center sm:items-start justify-center space-y-5 sm:space-y-6 text-center sm:text-left">
+            <p className="font-heading text-base sm:text-xl md:text-2xl font-medium leading-snug sm:leading-relaxed text-[#0F0F10]">
+              <span className="inline-flex items-center justify-center sm:justify-start gap-1.5 font-bold text-[#0F0F10] mr-1.5">
                 <Image
                   src="/logo.svg"
                   alt="Clarté Club Emblem"
                   width={24}
                   height={15}
-                  className="h-4 sm:h-5 w-auto object-contain opacity-90 inline-block align-middle -mt-0.5"
+                  className="h-3.5 sm:h-5 w-auto object-contain opacity-90 inline-block align-middle -mt-0.5"
                 />
                 <span>Clarté Club</span>
               </span>
               started with a simple idea: The things we choose to wear every day should feel distinctive, useful, and deeply personal.
             </p>
             
-            <p className="text-[14px] leading-[1.85] text-neutral-600 font-light">
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light">
               We began by questioning why modern luxury eyewear was defined by oversized logos and artificial markups. We set out to create an alternative—eyewear built with architectural restraint, premium hand-polished materials, and obsessive attention to proportions.
             </p>
 
-            <p className="text-[14px] leading-[1.85] text-neutral-600 font-light">
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light">
               We are starting with frames, but the vision goes far beyond one product category. Over time, Clarté Club is growing into a broader lifestyle label shaped by good design, thoughtful engineering, and a quieter way of doing things.
             </p>
 
-            <div className="pt-6 border-t border-black/10 grid grid-cols-3 gap-4 text-[10px] uppercase tracking-[0.2em] font-semibold text-neutral-500">
+            <div className="w-full pt-5 sm:pt-6 border-t border-black/10 grid grid-cols-3 gap-3 text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-neutral-500 text-center">
               <div>
-                <span className="block text-neutral-400 font-bold text-[9px] mb-1">Focus</span>
+                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Focus</span>
                 <span className="text-[#0F0F10]">Eyewear & Beyond</span>
               </div>
               <div>
-                <span className="block text-neutral-400 font-bold text-[9px] mb-1">Ethos</span>
+                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Ethos</span>
                 <span className="text-[#0F0F10]">Quiet Distinction</span>
               </div>
               <div>
-                <span className="block text-neutral-400 font-bold text-[9px] mb-1">Production</span>
+                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Production</span>
                 <span className="text-[#0F0F10]">Small Batch Drops</span>
               </div>
             </div>
@@ -121,7 +121,7 @@ export default function AboutPage() {
       <FounderNote />
 
       {/* Ticker Marquee Bar */}
-      <section className="relative w-full overflow-hidden bg-[#f4f4f4] text-[#0F0F10] py-4 border-b border-black/10">
+      <section className="relative w-full overflow-hidden bg-[#f4f4f4] text-[#0F0F10] py-3 sm:py-4 border-b border-black/10">
         <style dangerouslySetInnerHTML={{__html: `
           @keyframes marqueeLight {
             0% { transform: translateX(0%); }
@@ -135,7 +135,7 @@ export default function AboutPage() {
         `}} />
         
         <div className="relative w-full overflow-hidden">
-          <div className="animate-marquee-light flex gap-8 text-xs sm:text-sm md:text-base font-bold uppercase tracking-[0.25em] text-[#0F0F10]/40 whitespace-nowrap select-none">
+          <div className="animate-marquee-light flex gap-6 sm:gap-8 text-[11px] sm:text-sm md:text-base font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#0F0F10]/40 whitespace-nowrap select-none">
             {Array(4).fill([
               "DISTINCTIVE DESIGN",
               "HAND-POLISHED ACETATE",
@@ -143,7 +143,7 @@ export default function AboutPage() {
               "THE CLARTÉ GUARANTEE",
               "QUIET DISTINCTION"
             ]).flat().map((text, idx) => (
-              <span key={idx} className="flex items-center gap-6">
+              <span key={idx} className="flex items-center gap-4 sm:gap-6">
                 <span>{text}</span>
                 <span className="opacity-40">•</span>
               </span>
@@ -160,24 +160,24 @@ export default function AboutPage() {
       </section>
 
       {/* 3. OUR APPROACH Section */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#fcfbfa] border-b border-black/10">
-        <div className="mx-auto max-w-7xl space-y-12">
+      <section className="w-full px-5 sm:px-12 md:px-20 py-12 sm:py-20 bg-[#fcfbfa] border-b border-black/10">
+        <div className="mx-auto max-w-7xl space-y-8 sm:space-y-12">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-black/10 pb-6">
-            <div>
-              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between items-center sm:items-start gap-3 sm:gap-4 border-b border-black/10 pb-5 sm:pb-6 text-center sm:text-left">
+            <div className="flex flex-col items-center sm:items-start">
+              <span className="text-[10px] sm:text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
                 Our Approach
               </span>
-              <h2 className="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-2">
+              <h2 className="font-heading text-2xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-1.5 sm:mt-2">
                 OUR APPROACH
               </h2>
             </div>
-            <p className="text-[12px] sm:text-[14px] font-semibold uppercase tracking-[0.25em] text-neutral-500 pb-1">
+            <p className="text-[11px] sm:text-[14px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-neutral-500 pb-1">
               FEWER PIECES, CHOSEN WELL
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
             
             {/* Left Frame Details Grid */}
             <div className="lg:col-span-5 flex items-center gap-3">
@@ -198,15 +198,15 @@ export default function AboutPage() {
             </div>
 
             {/* Right Approach Narrative */}
-            <div className="lg:col-span-7 space-y-6">
-              <h3 className="font-heading text-2xl sm:text-3xl font-semibold uppercase text-[#0F0F10] leading-tight">
+            <div className="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+              <h3 className="font-heading text-lg sm:text-2xl md:text-3xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight">
                 We refuse to flood the market with disposable releases.
               </h3>
-              <p className="text-[14px] leading-[1.85] text-neutral-600 font-light max-w-xl">
+              <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light max-w-xl">
                 Every release starts with a distinct architectural concept and is honed over months of wear testing. We evaluate frame balance, material weight, hardware tension, and tactile finish.
               </p>
-              <div className="pt-4 border-t border-black/10 inline-block">
-                <p className="text-[12px] uppercase tracking-[0.2em] font-semibold text-[#0F0F10]">
+              <div className="pt-3 sm:pt-4 border-t border-black/10 inline-block">
+                <p className="text-[11px] sm:text-[12px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-[#0F0F10]">
                   The category may evolve. The approach will stay unyielding.
                 </p>
               </div>
@@ -221,38 +221,38 @@ export default function AboutPage() {
       <SecretDesire />
 
       {/* 4. THE DIRECTION Section */}
-      <section className="relative w-full px-6 sm:px-12 md:px-20 py-20 bg-[#fcfbfa] overflow-hidden border-b border-black/10">
-        <div className="mx-auto max-w-7xl space-y-12">
+      <section className="relative w-full px-5 sm:px-12 md:px-20 py-12 sm:py-20 bg-[#fcfbfa] overflow-hidden border-b border-black/10">
+        <div className="mx-auto max-w-7xl space-y-8 sm:space-y-12">
           
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-black/10 pb-6">
-            <div>
-              <span className="text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between items-center sm:items-start gap-3 sm:gap-4 border-b border-black/10 pb-5 sm:pb-6 text-center sm:text-left">
+            <div className="flex flex-col items-center sm:items-start">
+              <span className="text-[10px] sm:text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
                 The Direction
               </span>
-              <h2 className="font-heading text-3xl sm:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-2">
+              <h2 className="font-heading text-2xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-1.5 sm:mt-2">
                 THE DIRECTION
               </h2>
             </div>
-            <p className="text-[12px] sm:text-[14px] font-semibold uppercase tracking-[0.25em] text-neutral-500 pb-1">
+            <p className="text-[11px] sm:text-[14px] font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-neutral-500 pb-1">
               THIS IS ONLY THE BEGINNING
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
             
             {/* Left Direction Narrative Block */}
-            <div className="lg:col-span-6 space-y-6">
-              <h3 className="font-heading text-2xl sm:text-4xl font-semibold uppercase text-[#0F0F10] leading-tight">
+            <div className="lg:col-span-6 space-y-4 sm:space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+              <h3 className="font-heading text-lg sm:text-2xl md:text-4xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight">
                 Clarté Club is built slowly, intentionally, and without compromise.
               </h3>
-              <p className="text-[14px] leading-[1.85] text-neutral-600 font-light">
+              <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light">
                 Starting with eyewear as our anchor, we are expanding into curated leather goods, accessories, and subtle daily objects that embody quiet distinction.
               </p>
 
-              <div className="pt-4">
+              <div className="pt-3 sm:pt-4">
                 <Link
                   href="/collections"
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-[#0F0F10] text-[#FAF8F5] text-[11px] font-bold uppercase tracking-[0.25em] hover:bg-[#C9B07A] hover:text-[#0F0F10] transition-all duration-300 shadow-md group"
+                  className="inline-flex items-center gap-3 px-6 sm:px-8 py-3.5 sm:py-4 bg-[#0F0F10] text-[#FAF8F5] text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] hover:bg-[#C9B07A] hover:text-[#0F0F10] transition-all duration-300 shadow-md group"
                 >
                   <span>Explore the latest collection</span>
                   <span className="transition-transform duration-300 group-hover:translate-x-1">→</span>
@@ -261,8 +261,8 @@ export default function AboutPage() {
             </div>
 
             {/* Right Interactive Card Visual */}
-            <div className="lg:col-span-6 flex justify-center items-center py-6">
-              <div className="group/card relative w-full sm:w-[500px] aspect-[16/10] cursor-pointer transform origin-center -rotate-3 hover:rotate-0 hover:scale-[1.02] shadow-[0_20px_50px_rgba(0,0,0,0.12)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.2)] bg-[#FFFFFF] border border-black/10 hover:border-black/30 p-6 transition-all duration-700 ease-out">
+            <div className="lg:col-span-6 flex justify-center items-center py-4 sm:py-6">
+              <div className="group/card relative w-full sm:w-[500px] aspect-[16/10] cursor-pointer transform origin-center -rotate-3 hover:rotate-0 hover:scale-[1.02] shadow-[0_20px_50px_rgba(0,0,0,0.12)] hover:shadow-[0_30px_70px_rgba(0,0,0,0.2)] bg-[#FFFFFF] border border-black/10 hover:border-black/30 p-4 sm:p-6 transition-all duration-700 ease-out">
                 <div className="relative size-full overflow-hidden bg-[#fcfbfa] border border-black/10 flex items-center justify-center">
                   <Image
                     src="/images/products/product5-white.png"
@@ -280,16 +280,16 @@ export default function AboutPage() {
       </section>
 
       {/* 5. STANDARDS & PROMISES */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-24 bg-[#fcfbfa] border-b border-black/10">
-        <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-16">
+      <section className="w-full px-5 sm:px-12 md:px-20 py-16 sm:py-24 bg-[#fcfbfa] border-b border-black/10">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-16">
           
-          <div className="lg:col-span-4 space-y-4">
-            <span className="text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-semibold">Standards</span>
-            <h2 className="font-heading text-3xl sm:text-4xl font-semibold uppercase tracking-tight text-[#0F0F10] leading-tight">
+          <div className="lg:col-span-4 space-y-3 sm:space-y-4 text-center lg:text-left flex flex-col items-center lg:items-start">
+            <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.3em] text-neutral-500 font-semibold">Standards</span>
+            <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-semibold uppercase tracking-tight text-[#0F0F10] leading-tight">
               WHAT WE STAND BEHIND
             </h2>
-            <div className="h-[2px] w-12 bg-[#0F0F10] my-4" />
-            <p className="text-[14px] leading-[1.8] text-neutral-600 font-light">
+            <div className="h-[2px] w-12 bg-[#0F0F10] my-3 sm:my-4" />
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.8] text-neutral-600 font-light">
               We design, inspect, and guarantee every piece that leaves our studio. These are our foundational promises to everyone who supports our vision.
             </p>
           </div>
@@ -302,12 +302,12 @@ export default function AboutPage() {
       </section>
 
       {/* Closing Brand Statement Banner */}
-      <section className="w-full px-6 sm:px-12 md:px-20 py-20 bg-[#f4f4f4] text-center border-t border-black/10">
-        <div className="mx-auto max-w-4xl space-y-4">
-          <p className="font-heading text-xl sm:text-3xl font-medium uppercase tracking-wide text-[#0F0F10]">
+      <section className="w-full px-5 sm:px-12 md:px-20 py-14 sm:py-20 bg-[#f4f4f4] text-center border-t border-black/10">
+        <div className="mx-auto max-w-4xl space-y-3 sm:space-y-4">
+          <p className="font-heading text-lg sm:text-2xl md:text-3xl font-medium uppercase tracking-wide text-[#0F0F10]">
             The kind of thing that doesn't ask for attention, and quietly gets it anyway.
           </p>
-          <p className="text-[11px] uppercase tracking-[0.25em] text-[#C9B07A] font-semibold">
+          <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#C9B07A] font-semibold">
             Clarté Club — Built for Life
           </p>
         </div>
