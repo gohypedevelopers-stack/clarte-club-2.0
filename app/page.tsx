@@ -15,14 +15,13 @@ export default function Home() {
   return (
     <main className="flex-1 -mt-[var(--header-stack-height)] bg-black">
       <Hero />
-      <LaunchOfferBar />
       <TrendingSection />
       {/* <BrandPhilosophy /> */}
       <MotionBannerSection />
       <DenimCarousel />
       <EditsCarousel />
       <ComingSoonMarquee />
-      <DenimEditorialSection />
+      {/* <DenimEditorialSection /> */}
       <LookbookCarousel />
     </main>
   )
