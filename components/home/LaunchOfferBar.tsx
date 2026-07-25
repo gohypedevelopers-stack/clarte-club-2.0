@@ -32,26 +32,18 @@ export function LaunchOfferBar({ className }: { className?: string }) {
 
       <div className="relative mx-auto flex sm:grid sm:grid-cols-[1fr_auto_1fr] h-[68px] sm:h-[76px] md:h-[84px] w-full max-w-[1268px] items-center justify-between gap-2 sm:gap-3 px-3 sm:px-8">
 
-        {/* Left: Headline (Hidden on small mobile screens to prevent text overlap with countdown) */}
+        {/* Left: Headline */}
         <div className="hidden sm:flex items-center justify-self-start min-w-0">
           <span
-            className="block font-semibold uppercase leading-none whitespace-nowrap"
+            className="block font-semibold uppercase leading-none whitespace-nowrap text-[#C9B07A]"
             style={{
               fontSize: "clamp(0.85rem, 1.6vw, 1.2rem)",
               letterSpacing: "0.08em",
-              color: "#F6F2EA",
+              borderBottom: "1.5px solid rgba(201,176,122,0.55)",
+              paddingBottom: "1px",
             }}
           >
-            Launch Offer{" "}
-            <span
-              style={{
-                color: "#C9B07A",
-                borderBottom: "1.5px solid rgba(201,176,122,0.55)",
-                paddingBottom: "1px",
-              }}
-            >
-              Live Now
-            </span>
+            Live Now
           </span>
         </div>
 
