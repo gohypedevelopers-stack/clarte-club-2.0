@@ -1,46 +1,40 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
+import { LaunchOfferBar } from "@/components/home/LaunchOfferBar"
 
 export function Hero() {
   return (
-    <section className="relative -mt-[var(--header-stack-height)] h-[100svh] w-full overflow-hidden bg-black text-white">
-      {/* Background Video */}
+    <section className="relative h-screen h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-black text-white">
+      {/* Background Static Banner */}
       <div className="absolute inset-0 size-full overflow-hidden">
-        <video
-          src="/video/Parallax_CGI_Video_Prompt_Crea.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute inset-0 size-full object-cover"
+        {/* Mobile View Image - Vertical portrait image */}
+        <Image
+          src="/images/ChatGPT Image Jul 25, 2026, 11_29_15 AM.png"
+          alt="Clarté Club Eyewear Mobile"
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.85] contrast-[1.03]"
         />
-        {/* Subtle overlays for cinematic depth and text legibility */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/70 via-black/20 to-black/30" />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-t from-black/70 via-transparent to-black/20" />
+        {/* Desktop View Image */}
+        <Image
+          src="/images/ChatGPT Image Jul 25, 2026, 11_13_56 AM.png"
+          alt="Clarté Club Eyewear"
+          fill
+          priority
+          sizes="100vw"
+          className="absolute inset-0 size-full object-cover object-center hidden md:block brightness-[0.85] contrast-[1.03]"
+        />
+        {/* Cinematic dark overlays for header legibility and reduced brightness */}
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/65 via-black/20 to-black/60" />
+        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/25" />
       </div>
 
-      <div className="relative z-10 flex h-full items-end px-6 pb-16 sm:px-10 lg:px-16 lg:pb-20">
-        <div className="flex flex-col items-start gap-4 max-w-2xl">
-          <p className="text-xs uppercase tracking-[0.4em] text-white/70 font-medium">
-            New Eyewear Collection
-          </p>
-
-          <h1 className="font-heading text-3xl font-semibold uppercase leading-none tracking-[-0.045em] text-white sm:text-4xl md:text-5xl lg:text-6xl drop-shadow-md">
-            Refine Your Style
-          </h1>
-
-          <p className="mt-1 max-w-md text-sm leading-relaxed text-white/70 sm:text-base font-light">
-            Considered eyewear designed for modern character.
-          </p>
-
-          <Link
-            href="/collections"
-            className="mt-4 inline-flex items-center justify-center border border-white/85 px-6 py-3 text-xs sm:text-sm uppercase tracking-[0.14em] text-white transition-all hover:bg-white hover:text-black font-medium"
-          >
-            Explore Collection
-          </Link>
-        </div>
+      {/* Minimal Semi-Transparent Launch Offer Bar positioned at 100vh bottom */}
+      <div className="absolute bottom-0 left-0 right-0 z-20">
+        <LaunchOfferBar className="bg-[#121214]/65 backdrop-blur-md border-t border-[#C9B07A]/30" />
       </div>
 
       <span id="shop" className="sr-only">
