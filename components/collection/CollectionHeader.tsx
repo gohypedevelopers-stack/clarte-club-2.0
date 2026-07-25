@@ -106,26 +106,26 @@ export function CollectionHeader({
           </div>
         </div>
 
-        {/* Controls: Divider + Filters & Sorting */}
-        <div className="bg-[#fcfbfa] border border-black/10 py-2.5 px-4 mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        {/* Controls: Divider + Filters & Sorting Card */}
+        <div className="bg-[#fcfbfa] border border-black/10 py-3 px-3.5 sm:px-6 mt-5 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between rounded-xl sm:rounded-2xl shadow-sm w-full relative z-20">
           
           {/* Mobile view: Row 1 has Sort (left) & Type (right) */}
           {/* Desktop view: Left side has Sort, Right side has Category Tabs + Type + Clear */}
-          <div className="flex items-center justify-between lg:justify-start w-full lg:w-auto gap-6 pt-2.5 lg:pt-0 border-t border-black/5 lg:border-t-0 order-2 lg:order-1">
+          <div className="flex items-center justify-between lg:justify-start w-full lg:w-auto gap-2 sm:gap-6 pt-2.5 lg:pt-0 border-t border-black/5 lg:border-t-0 order-2 lg:order-1 min-w-0">
             {/* Sort Dropdown */}
-            <div ref={sortRef} className="relative z-40">
+            <div ref={sortRef} className="relative z-40 shrink-0">
               <button
                 type="button"
                 onClick={() => setSortOpen(!sortOpen)}
-                className="inline-flex items-center gap-1.5 transition-colors hover:text-black font-semibold cursor-pointer py-1 text-[11px] sm:text-[12px] tracking-[0.1em] uppercase"
+                className="inline-flex items-center gap-1 sm:gap-1.5 transition-colors hover:text-black font-semibold cursor-pointer py-1 text-[10px] xs:text-[11px] sm:text-[12px] tracking-[0.08em] sm:tracking-[0.1em] uppercase whitespace-nowrap"
               >
-                <span className="font-medium text-black/40">SORT BY:</span>
-                <span className="font-semibold text-black underline underline-offset-4 decoration-black/20 hover:decoration-black">{currentSortLabel}</span>
-                <ChevronDown className={cn("size-3.5 stroke-[2] transition-transform duration-200", sortOpen && "rotate-180")} />
+                <span className="font-medium text-black/40 whitespace-nowrap">SORT BY:</span>
+                <span className="font-semibold text-black underline underline-offset-4 decoration-black/20 hover:decoration-black whitespace-nowrap max-w-[110px] xs:max-w-none truncate">{currentSortLabel}</span>
+                <ChevronDown className={cn("size-3.5 stroke-[2] transition-transform duration-200 shrink-0", sortOpen && "rotate-180")} />
               </button>
 
               {sortOpen && (
-                <ul className="absolute left-0 top-full mt-2 w-[200px] border border-black bg-white shadow-xl py-1 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                <ul className="absolute left-0 top-full mt-2 w-[200px] border border-black/15 bg-white shadow-xl py-1.5 z-50 overflow-hidden rounded-xl animate-in fade-in slide-in-from-top-2 duration-200">
                   {sortOptions.map((opt) => (
                     <li key={opt.value}>
                       <button
@@ -148,7 +148,7 @@ export function CollectionHeader({
             </div>
 
             {/* Mobile-only Type Filter & Clear Button (on the right corner) */}
-            <div className="flex items-center gap-3 lg:hidden">
+            <div className="flex items-center gap-2 sm:gap-3 lg:hidden shrink-0">
               <AnimatePresence>
                 {hasActiveFilters && (
                   <motion.button
@@ -157,9 +157,9 @@ export function CollectionHeader({
                     exit={{ opacity: 0, scale: 0.9 }}
                     type="button"
                     onClick={handleClearFilters}
-                    className="inline-flex items-center gap-1.5 transition-colors text-black/45 hover:text-black font-semibold cursor-pointer py-1 text-[11px] tracking-[0.1em] uppercase"
+                    className="inline-flex items-center gap-1 transition-colors text-black/45 hover:text-black font-semibold cursor-pointer py-1 text-[10px] xs:text-[11px] tracking-[0.08em] uppercase whitespace-nowrap"
                   >
-                    <X className="size-3.5 stroke-[2]" />
+                    <X className="size-3 stroke-[2]" />
                     <span>Clear</span>
                   </motion.button>
                 )}
@@ -169,17 +169,17 @@ export function CollectionHeader({
                 <button
                   type="button"
                   onClick={() => setTypeOpen(!typeOpen)}
-                  className="inline-flex items-center gap-1.5 transition-colors hover:text-black font-semibold cursor-pointer py-1 text-[11px] tracking-[0.1em] uppercase"
+                  className="inline-flex items-center gap-1 sm:gap-1.5 transition-colors hover:text-black font-semibold cursor-pointer py-1 text-[10px] xs:text-[11px] tracking-[0.08em] uppercase whitespace-nowrap"
                 >
-                  <span className="font-medium text-black/40">TYPE:</span>
-                  <span className="font-semibold text-black underline underline-offset-4 decoration-black/20 hover:decoration-black">
+                  <span className="font-medium text-black/40 whitespace-nowrap">TYPE:</span>
+                  <span className="font-semibold text-black underline underline-offset-4 decoration-black/20 hover:decoration-black whitespace-nowrap">
                     {types.find(t => t.value === selectedType)?.label.replace("Type: ", "") || "All"}
                   </span>
-                  <ChevronDown className={cn("size-3.5 stroke-[2] transition-transform duration-200", typeOpen && "rotate-180")} />
+                  <ChevronDown className={cn("size-3.5 stroke-[2] transition-transform duration-200 shrink-0", typeOpen && "rotate-180")} />
                 </button>
 
                 {typeOpen && (
-                  <ul className="absolute right-0 top-full mt-2 w-[160px] border border-black bg-white shadow-xl py-1 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                  <ul className="absolute right-0 top-full mt-2 w-[160px] border border-black/15 bg-white shadow-xl py-1.5 z-50 overflow-hidden rounded-xl animate-in fade-in slide-in-from-top-2 duration-200">
                     {types.map((opt) => (
                       <li key={opt.label}>
                         <button
@@ -242,7 +242,7 @@ export function CollectionHeader({
                   type="button"
                   onClick={() => setTypeOpen(!typeOpen)}
                   className={cn(
-                    "h-10 border border-black/15 bg-[#F6F2EA] pl-4 pr-10 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all hover:border-black cursor-pointer outline-none flex items-center justify-between gap-3 min-w-[140px] relative rounded-none",
+                    "h-10 border border-black/15 bg-[#F6F2EA] pl-4 pr-10 text-[11px] font-semibold uppercase tracking-[0.12em] transition-all hover:border-black cursor-pointer outline-none flex items-center justify-between gap-3 min-w-[140px] relative rounded-lg",
                     (typeOpen || selectedType) && "border-black bg-white"
                   )}
                 >
@@ -254,7 +254,7 @@ export function CollectionHeader({
                 </button>
 
                 {typeOpen && (
-                  <ul className="absolute right-0 top-full mt-2 w-[160px] border border-black bg-white shadow-xl py-1 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                  <ul className="absolute right-0 top-full mt-2 w-[160px] border border-black/15 bg-white shadow-xl py-1.5 z-50 overflow-hidden rounded-xl animate-in fade-in slide-in-from-top-2 duration-200">
                     {types.map((opt) => (
                       <li key={opt.label}>
                         <button
@@ -284,7 +284,7 @@ export function CollectionHeader({
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     onClick={handleClearFilters}
-                    className="inline-flex items-center gap-1.5 h-10 border border-black/15 bg-white hover:border-black px-4 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-200 cursor-pointer text-black"
+                    className="inline-flex items-center gap-1.5 h-10 border border-black/15 bg-white hover:border-black px-4 text-[11px] font-semibold uppercase tracking-[0.12em] transition-colors duration-200 cursor-pointer text-black rounded-lg"
                   >
                     <X className="size-3.5 stroke-[2.2]" />
                     <span>Clear</span>
