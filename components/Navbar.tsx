@@ -5,7 +5,7 @@ import { createPortal } from "react-dom"
 import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Heart, Search, ShoppingBag, UserRound, Menu, X, MapPin, Bookmark, Compass } from "lucide-react"
+import { Heart, Search, ShoppingBag, UserRound, Menu, X, MapPin, Bookmark, Compass, BookOpen } from "lucide-react"
 import { StoriesModal } from "@/components/home/StoriesModal"
 import {
   useEffect,
@@ -259,13 +259,13 @@ function MobileFloatingNav({
           <Compass className="size-[18px] stroke-[1.75]" />
         </Link>
 
-        {/* Account / About */}
+        {/* Our Story / About */}
         <Link
           href="/about"
-          aria-label="Account"
+          aria-label="Our Story"
           className="text-black hover:opacity-60 transition-opacity flex items-center justify-center"
         >
-          <UserRound className="size-[18px] stroke-[1.75]" />
+          <BookOpen className="size-[18px] stroke-[1.75]" />
         </Link>
 
         {/* Wishlist */}
