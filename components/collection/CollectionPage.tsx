@@ -1,14 +1,54 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import { CollectionGrid } from "@/components/collection/CollectionGrid"
 import { CollectionBenefitsBar } from "@/components/collection/CollectionBenefitsBar"
 import { CollectionHeader } from "@/components/collection/CollectionHeader"
 
-export function CollectionPage() {
+function CollectionContent() {
+  const searchParams = useSearchParams()
+
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedType, setSelectedType] = useState<string | null>(null)
+  const [selectedShape, setSelectedShape] = useState<string | null>(null)
+  const [selectedMaterial, setSelectedMaterial] = useState<string | null>(null)
+  const [selectedColor, setSelectedColor] = useState<string | null>(null)
   const [sortBy, setSortBy] = useState<string>("bestseller")
+
+  useEffect(() => {
+    const categoryParam = searchParams.get("category")
+    const typeParam = searchParams.get("type")
+    const shapeParam = searchParams.get("shape")
+    const materialParam = searchParams.get("material")
+    const colorParam = searchParams.get("color")
+    const filterParam = searchParams.get("filter")
+
+    if (categoryParam) {
+      setSelectedCategory(categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1))
+    } else {
+      setSelectedCategory(null)
+    }
+
+    if (typeParam) {
+      if (typeParam.toLowerCase().includes("sunglass")) setSelectedType("Sunglasses")
+      else if (typeParam.toLowerCase().includes("opt")) setSelectedType("Optical")
+      else setSelectedType(typeParam)
+    } else {
+      setSelectedType(null)
+    }
+
+    if (shapeParam) setSelectedShape(shapeParam.toLowerCase())
+    else setSelectedShape(null)
+
+    if (materialParam) setSelectedMaterial(materialParam.toLowerCase())
+    else setSelectedMaterial(null)
+
+    if (colorParam) setSelectedColor(colorParam.toLowerCase())
+    else setSelectedColor(null)
+
+    if (filterParam === "bestseller") setSortBy("bestseller")
+  }, [searchParams])
 
   return (
     <main className="flex-1 bg-white text-black">
@@ -26,6 +66,9 @@ export function CollectionPage() {
           <CollectionGrid 
             selectedCategory={selectedCategory}
             selectedType={selectedType}
+            selectedShape={selectedShape}
+            selectedMaterial={selectedMaterial}
+            selectedColor={selectedColor}
             sortBy={sortBy}
           />
         </div>
@@ -33,5 +76,13 @@ export function CollectionPage() {
         <CollectionBenefitsBar />
       </section>
     </main>
+  )
+}
+
+export function CollectionPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-white" />}>
+      <CollectionContent />
+    </Suspense>
   )
 }
