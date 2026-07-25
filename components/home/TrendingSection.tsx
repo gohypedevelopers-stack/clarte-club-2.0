@@ -3,7 +3,7 @@
 import { useState, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Check, ChevronLeft, ChevronRight, Heart, ShoppingBag } from "lucide-react"
+import { ArrowLeft, ArrowRight, Bookmark, Check, ChevronLeft, ChevronRight, Heart, Plus, ShoppingBag } from "lucide-react"
 
 import { ProductQuickViewModal } from "@/components/product/ProductQuickViewModal"
 import {
@@ -30,7 +30,7 @@ export function ProductCardView({
 
   // Touch Swipe Gesture State for Homepage Cards
   const touchStartX = useRef<number | null>(null)
-  const touchEndX = useRef<number | null>(null)
+  const touchStartY = useRef<number | null>(null)
 
   const activeImage = gallery[activeImageIndex] ?? product.image
   const hasGalleryControls = gallery.length > 1
@@ -46,26 +46,29 @@ export function ProductCardView({
   }
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.targetTouches[0].clientX
+    touchStartX.current = e.touches[0].clientX
+    touchStartY.current = e.touches[0].clientY
   }
 
-  const handleTouchMove = (e: React.TouchEvent) => {
-    touchEndX.current = e.targetTouches[0].clientX
-  }
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return
+    const touchEndX = e.changedTouches[0].clientX
+    const touchEndY = e.changedTouches[0].clientY
 
-  const handleTouchEnd = () => {
-    if (!touchStartX.current || !touchEndX.current) return
-    const distance = touchStartX.current - touchEndX.current
-    const minSwipeDistance = 30
+    const deltaX = touchStartX.current - touchEndX
+    const deltaY = Math.abs(touchStartY.current - touchEndY)
 
-    if (distance > minSwipeDistance) {
-      handleNextImage()
-    } else if (distance < -minSwipeDistance) {
-      handlePreviousImage()
+    // Trigger image slide if horizontal swipe is predominant (> 20px)
+    if (Math.abs(deltaX) > deltaY && Math.abs(deltaX) > 20) {
+      if (deltaX > 0) {
+        handleNextImage()
+      } else {
+        handlePreviousImage()
+      }
     }
 
     touchStartX.current = null
-    touchEndX.current = null
+    touchStartY.current = null
   }
 
   const toggleWishlist = (e: React.MouseEvent) => {
@@ -91,11 +94,10 @@ export function ProductCardView({
 
   return (
     <article className="group relative flex flex-col w-full cursor-pointer">
-      {/* ── 1. Image Container (Rounded Corners + Overlays) ── */}
+      {/* ── 1. Image Container (Taller Portrait Height aspect-[1/1.45] + rounded-[14px] Corners + Touch Pan-Y) ── */}
       <div
-        className="relative aspect-[3/4] w-full overflow-hidden rounded-2xl bg-neutral-100 select-none shadow-sm"
+        className="relative aspect-[1/1.45] w-full overflow-hidden rounded-[14px] bg-neutral-100 select-none shadow-xs touch-pan-y"
         onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
         <Link href="/products" className="absolute inset-0 cursor-pointer z-0">
@@ -119,56 +121,25 @@ export function ProductCardView({
           </span>
         ) : null}
 
-        {/* Top Right Wishlist Icon Button (High Contrast White Badge as in Image 2) */}
+        {/* Top Right Wishlist Heart Icon Button */}
         <button
           type="button"
           aria-label="Add to wishlist"
           onClick={toggleWishlist}
-          className={`absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-lg shadow-md border transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
+          className={`absolute right-3 top-3 z-10 flex size-8 items-center justify-center rounded-lg shadow-sm border transition-all duration-200 hover:scale-110 active:scale-95 cursor-pointer ${
             isWishlisted
-              ? "bg-[#0F0F10] text-[#C9B07A] border-[#C9B07A]"
-              : "bg-white/95 text-neutral-800 border-black/10 hover:bg-white hover:text-black"
+              ? "bg-black text-[#C9B07A] border-[#C9B07A]"
+              : "bg-white/90 text-neutral-800 border-black/10 hover:bg-white hover:text-black"
           }`}
         >
           <Heart
-            className="size-4 transition-colors duration-200"
-            style={{
-              fill: isWishlisted ? "#C9B07A" : "none",
-              strokeWidth: 2,
-            }}
+            className={`size-4 transition-colors duration-200 ${
+              isWishlisted ? "fill-[#C9B07A] text-[#C9B07A]" : "fill-white/80 text-black stroke-[1.8]"
+            }`}
           />
         </button>
 
-        {/* Left & Right Gallery Arrows on Hover (as in second image) */}
-        {hasGalleryControls ? (
-          <>
-            <button
-              type="button"
-              aria-label="Previous product image"
-              onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-                handlePreviousImage()
-              }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 flex size-9 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white hover:text-black hover:scale-105 active:scale-95 cursor-pointer shadow-md"
-            >
-              <ArrowLeft className="size-4" strokeWidth={2.2} />
-            </button>
 
-            <button
-              type="button"
-              aria-label="Next product image"
-              onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-                handleNextImage()
-              }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 flex size-9 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-white hover:text-black hover:scale-105 active:scale-95 cursor-pointer shadow-md"
-            >
-              <ArrowRight className="size-4" strokeWidth={2.2} />
-            </button>
-          </>
-        ) : null}
 
         {/* Carousel Pagination Dots (. . .) */}
         {hasGalleryControls ? (
@@ -210,20 +181,20 @@ export function ProductCardView({
         </button>
       </div>
 
-      {/* ── 2. Content Details Below Image (Title + Price on left, Plus (+) button on right) ── */}
-      <div className="mt-3 flex items-center justify-between gap-2 px-1">
+      {/* ── 2. Content Details Below Image ── */}
+      <div className="mt-2.5 flex items-center justify-between gap-2 px-0.5">
         <div className="min-w-0 flex-1">
           <Link href="/products" className="block group/title">
-            <h3 className="text-xs sm:text-sm font-semibold text-black truncate transition-colors group-hover/title:text-[#C9B07A]">
+            <h3 className="text-xs sm:text-[13px] font-semibold text-black truncate transition-colors group-hover/title:text-[#C9B07A]">
               {product.name ?? "Signature Frame"}
             </h3>
           </Link>
-          <p className="mt-0.5 text-xs text-neutral-600 font-medium">
+          <p className="mt-0.5 text-[11px] text-neutral-600 font-medium">
             {product.price ? product.price.replace("₹", "RS.") : "RS. 4,500"}
           </p>
         </div>
 
-        {/* Standalone Cart Icon button */}
+        {/* Shopping Bag Cart Button */}
         <button
           type="button"
           aria-label="Add to cart"
@@ -234,9 +205,9 @@ export function ProductCardView({
           title="Add to Cart"
         >
           {added ? (
-            <Check className="size-5 animate-in zoom-in-50 duration-200 text-emerald-600" />
+            <Check className="size-4 animate-in zoom-in-50 duration-200 text-emerald-600" />
           ) : (
-            <ShoppingBag className="size-5 stroke-[1.8]" />
+            <ShoppingBag className="size-4 stroke-[1.8] text-black/80 hover:text-black" />
           )}
         </button>
       </div>
