@@ -53,13 +53,16 @@ const denimSlides: DenimSlide[] = [
 
 function DenimSlideCard({ slide }: { slide: DenimSlide }) {
   return (
-    <article className="relative h-[500px] w-full overflow-hidden bg-[#F6F2EA] sm:h-[580px] md:h-[640px] lg:h-[700px]">
+    <Link
+      href={`/collections?category=${slide.categorySlug}`}
+      className="group relative block h-[500px] w-full overflow-hidden bg-[#F6F2EA] sm:h-[580px] md:h-[640px] lg:h-[700px]"
+    >
       <Image
         src={slide.image}
         alt={slide.alt}
         fill
         sizes="(max-width: 640px) 92vw, (max-width: 1024px) 64vw, 627px"
-        className="object-cover object-center transition-transform duration-700 hover:scale-[1.02]"
+        className="object-cover object-center transition-transform duration-700 group-hover:scale-[1.02]"
         priority={false}
       />
 
@@ -70,32 +73,14 @@ function DenimSlideCard({ slide }: { slide: DenimSlide }) {
       />
 
       <div className="absolute inset-x-6 bottom-14 z-10 text-white space-y-1">
-        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-[#C9B07A]">
-          Signature Collection
-        </p>
         <h3
           className="font-semibold uppercase tracking-[0.1em]"
           style={{ fontSize: "clamp(1.1rem, 1.6vw, 1.75rem)" }}
         >
           {slide.title}
         </h3>
-        <p className="text-[12px] font-light text-white/80 tracking-wide max-w-md pb-2">
-          {slide.subtitle}
-        </p>
-
-        <Link
-          href={`/collections?category=${slide.categorySlug}`}
-          className="group relative mt-3 inline-flex h-9 items-center justify-center overflow-hidden border border-white/80 px-5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] text-white no-underline transition-colors duration-300 hover:text-black"
-        >
-          {/* Slide fill background on hover */}
-          <span
-            aria-hidden
-            className="absolute inset-0 -translate-x-full bg-white transition-transform duration-300 ease-out group-hover:translate-x-0"
-          />
-          <span className="relative z-10">Explore {slide.title.replace(" COLLECTION", "")}</span>
-        </Link>
       </div>
-    </article>
+    </Link>
   )
 }
 
