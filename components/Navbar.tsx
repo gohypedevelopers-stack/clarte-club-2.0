@@ -193,15 +193,19 @@ function StoryRingButton({
       
       {/* Inner Icon Container */}
       <div className={cn(
-        "relative z-10 flex size-full items-center justify-center rounded-full transition-colors",
+        "relative z-10 flex size-full items-center justify-center rounded-full transition-colors p-1",
         tone === "light" ? "bg-black text-white" : "bg-white text-black"
       )}>
-        <svg viewBox="0 0 24 24" fill="currentColor" className="size-3.5 sm:size-4">
-          <rect x="4" y="5" width="7" height="6" rx="2" opacity="0.9" />
-          <rect x="13" y="5" width="7" height="6" rx="2" opacity="0.9" />
-          <rect x="4" y="13" width="7" height="6" rx="2" opacity="0.9" />
-          <rect x="13" y="13" width="7" height="6" rx="2" opacity="0.9" />
-        </svg>
+        <Image
+          src="/logo.svg"
+          alt="Clarté Stories"
+          width={28}
+          height={18}
+          className={cn(
+            "h-3 sm:h-3.5 w-auto object-contain transition-transform duration-300 group-hover:scale-110",
+            tone === "light" ? "brightness-0 invert" : ""
+          )}
+        />
       </div>
     </button>
   )
@@ -668,16 +672,9 @@ export function Navbar({
                 href={item.href}
                 active={activeMenu === item.key}
                 selected={selectedNav === item.key}
-                ariaHaspopup={item.key === "collections" ? "menu" : undefined}
-                ariaExpanded={item.key === "collections" ? activeMenu === item.key : undefined}
-                onClick={(e) => {
-                  if (item.key === "collections") {
-                    e.preventDefault()
-                    setActiveMenu((current) => (current === "collections" ? null : "collections"))
-                  } else {
-                    setSelectedNav(item.key)
-                    setActiveMenu(null)
-                  }
+                onClick={() => {
+                  setSelectedNav(item.key)
+                  setActiveMenu(null)
                 }}
               >
                 {item.label}
