@@ -1,5 +1,13 @@
+import {
+  cartCreate,
+  cartLinesAdd,
+  cartLinesUpdate,
+  cartLinesRemove,
+} from "./shopify"
+
 export type CartItem = {
   id: string
+  merchandiseId?: string
   image: string
   alt: string
   title: string
@@ -9,13 +17,23 @@ export type CartItem = {
 }
 
 const CART_KEY = "clarte_cart_items"
+const SHOPIFY_CART_ID_KEY = "clarte_shopify_cart_id"
+const SHOPIFY_CHECKOUT_URL_KEY = "clarte_shopify_checkout_url"
+
+export function getShopifyCartId(): string | null {
+  if (typeof window === "undefined") return null
+  return localStorage.getItem(SHOPIFY_CART_ID_KEY)
+}
+
+export function getShopifyCheckoutUrl(): string | null {
+  if (typeof window === "undefined") return null
+  return localStorage.getItem(SHOPIFY_CHECKOUT_URL_KEY)
+}
 
 export function getCartItems(): CartItem[] {
   if (typeof window === "undefined") return []
   const stored = localStorage.getItem(CART_KEY)
   if (!stored) {
-    // If the cart doesn't exist yet, we can prepopulate it with the two initial items
-    // to match the original designs until they clear/modify it.
     const initialItems: CartItem[] = [
       {
         id: "cart-item-1",
@@ -52,18 +70,53 @@ export function saveCartItems(items: CartItem[]) {
   window.dispatchEvent(new CustomEvent("cart-updated"))
 }
 
+export async function syncShopifyCart(item: CartItem) {
+  if (!item.merchandiseId) return
+  try {
+    const cartId = getShopifyCartId()
+    if (!cartId) {
+      const cart = await cartCreate([
+        {
+          merchandiseId: item.merchandiseId,
+          quantity: item.quantity,
+        },
+      ])
+      if (cart?.id) {
+        localStorage.setItem(SHOPIFY_CART_ID_KEY, cart.id)
+        if (cart.checkoutUrl) {
+          localStorage.setItem(SHOPIFY_CHECKOUT_URL_KEY, cart.checkoutUrl)
+        }
+      }
+    } else {
+      await cartLinesAdd(cartId, [
+        {
+          merchandiseId: item.merchandiseId,
+          quantity: item.quantity,
+        },
+      ])
+    }
+  } catch (error) {
+    console.warn("Failed to sync cart with Shopify API:", error)
+  }
+}
+
 export function addToCart(item: Omit<CartItem, "quantity">) {
   const items = getCartItems()
   const existing = items.find((i) => i.id === item.id && i.size === item.size)
+  let updatedItem: CartItem
   if (existing) {
     existing.quantity += 1
+    updatedItem = existing
   } else {
-    items.push({ ...item, quantity: 1 })
+    updatedItem = { ...item, quantity: 1 }
+    items.push(updatedItem)
   }
   saveCartItems(items)
-  
-  // Dispatch custom event with open: true to open the cart sidebar
-  window.dispatchEvent(new CustomEvent("cart-updated", { detail: { open: true, addedItem: item } }))
+  syncShopifyCart(updatedItem)
+
+  window.dispatchEvent(
+    new CustomEvent("cart-updated", { detail: { open: true, addedItem: item } })
+  )
 }
 
 export function updateCartQuantity(id: string, size: string, quantity: number) {
