@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowLeft, ArrowRight, Bookmark, Check, ChevronLeft, ChevronRight, Heart, Plus, ShoppingBag } from "lucide-react"
@@ -22,7 +22,13 @@ export function ProductCardView({
   product: ProductCard
   expanded?: boolean
 }) {
-  const gallery = product.gallery?.length ? product.gallery : [product.image]
+  const defaultGallery = [
+    product.image || "/images/products/product1.png",
+    "/images/products/product2.png",
+    "/images/products/product3.png",
+    "/images/products/product4.png",
+  ]
+  const gallery = product.gallery && product.gallery.length > 1 ? product.gallery : defaultGallery
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [quickViewOpen, setQuickViewOpen] = useState(false)
   const [isWishlisted, setIsWishlisted] = useState(false)
@@ -33,7 +39,7 @@ export function ProductCardView({
   const touchStartY = useRef<number | null>(null)
 
   const activeImage = gallery[activeImageIndex] ?? product.image
-  const hasGalleryControls = gallery.length > 1
+  const hasGalleryControls = true
 
   const handlePreviousImage = () => {
     setActiveImageIndex(
@@ -92,6 +98,8 @@ export function ProductCardView({
     setTimeout(() => setAdded(false), 1500)
   }
 
+  const productHref = product.href || (product.handle ? `/product/${product.handle}` : (product.id ? `/product/${product.id}` : "/products"))
+
   return (
     <article className="group relative flex flex-col w-full cursor-pointer">
       {/* ── 1. Image Container (Taller Portrait Height aspect-[1/1.45] + rounded-[14px] Corners + Touch Pan-Y) ── */}
@@ -100,13 +108,13 @@ export function ProductCardView({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
       >
-        <Link href="/products" className="absolute inset-0 cursor-pointer z-0">
+        <Link href={productHref} className="absolute inset-0 cursor-pointer z-0">
           <Image
             key={`${product.id}-${activeImageIndex}`}
             src={activeImage}
             alt={product.alt}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-cover object-center transition-transform duration-500 ease-out group-hover:scale-105"
           />
         </Link>
@@ -150,9 +158,9 @@ export function ProductCardView({
                 e.preventDefault()
                 handlePreviousImage()
               }}
-              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 hidden sm:flex size-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md opacity-0 -translate-x-2.5 pointer-events-none transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto hover:bg-white hover:text-black hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+              className="absolute left-3 top-1/2 -translate-y-1/2 z-20 hidden sm:flex size-9 items-center justify-center rounded-full bg-white/75 text-black backdrop-blur-md opacity-0 -translate-x-3 pointer-events-none transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto hover:bg-white hover:scale-110 active:scale-95 cursor-pointer shadow-sm border border-black/5"
             >
-              <ArrowLeft className="size-4" strokeWidth={2.2} />
+              <ArrowLeft className="size-4 stroke-[1.8]" />
             </button>
 
             <button
@@ -163,9 +171,9 @@ export function ProductCardView({
                 e.preventDefault()
                 handleNextImage()
               }}
-              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 hidden sm:flex size-9 items-center justify-center rounded-full bg-black/40 text-white backdrop-blur-md opacity-0 translate-x-2.5 pointer-events-none transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto hover:bg-white hover:text-black hover:scale-105 active:scale-95 cursor-pointer shadow-md"
+              className="absolute right-3 top-1/2 -translate-y-1/2 z-20 hidden sm:flex size-9 items-center justify-center rounded-full bg-white/75 text-black backdrop-blur-md opacity-0 translate-x-3 pointer-events-none transition-all duration-300 ease-out group-hover:opacity-100 group-hover:translate-x-0 group-hover:pointer-events-auto hover:bg-white hover:scale-110 active:scale-95 cursor-pointer shadow-sm border border-black/5"
             >
-              <ArrowRight className="size-4" strokeWidth={2.2} />
+              <ArrowRight className="size-4 stroke-[1.8]" />
             </button>
           </>
         ) : null}
@@ -204,7 +212,7 @@ export function ProductCardView({
             e.preventDefault()
             setQuickViewOpen(true)
           }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full bg-black text-white text-[10px] font-semibold uppercase tracking-wider opacity-0 transition-all duration-300 group-hover:opacity-100 hover:bg-neutral-800 shadow-xl cursor-pointer"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-full bg-white/80 text-black backdrop-blur-md border border-black/10 text-[10px] font-semibold uppercase tracking-wider opacity-0 transition-all duration-300 ease-out group-hover:opacity-100 hover:bg-white hover:scale-105 active:scale-95 shadow-md cursor-pointer"
         >
           Quick View
         </button>
@@ -213,7 +221,7 @@ export function ProductCardView({
       {/* ── 2. Content Details Below Image ── */}
       <div className="mt-2.5 flex items-center justify-between gap-2 px-0.5">
         <div className="min-w-0 flex-1">
-          <Link href="/products" className="block group/title">
+          <Link href={productHref} className="block group/title">
             <h3 className="text-xs sm:text-[13px] font-semibold text-black truncate transition-colors group-hover/title:text-[#C9B07A]">
               {product.name ?? "Signature Frame"}
             </h3>
@@ -254,6 +262,22 @@ export function ProductCardView({
 }
 
 export function TrendingSection() {
+  const [products, setProducts] = useState<ProductCard[]>(trendingProducts)
+
+  useEffect(() => {
+    let isMounted = true
+    import("@/lib/shopify-adapter").then(({ getShopifyProducts }) => {
+      getShopifyProducts(8).then((liveProducts) => {
+        if (isMounted && liveProducts && liveProducts.length > 0) {
+          setProducts(liveProducts)
+        }
+      })
+    })
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   return (
     <section id="new-drops" className="w-full bg-white px-4 pt-14 pb-4 text-black sm:px-6 lg:px-8 md:pt-16 md:pb-4">
       <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-end sm:justify-between text-center sm:text-left items-center sm:items-start">
@@ -268,7 +292,7 @@ export function TrendingSection() {
       </div>
 
       <div className="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {trendingProducts.map((product) => (
+        {products.map((product) => (
           <ProductCardView key={product.id} product={product} />
         ))}
       </div>
