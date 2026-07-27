@@ -1,7 +1,9 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { ProductCardView } from "@/components/home/TrendingSection"
 import { collectionProducts } from "@/components/collection/collectionData"
+import type { ProductCard } from "@/components/product/productData"
 import { motion, AnimatePresence } from "motion/react"
 
 export function CollectionGrid({
@@ -19,10 +21,30 @@ export function CollectionGrid({
   selectedColor?: string | null
   sortBy: string
 }) {
+  const [products, setProducts] = useState<ProductCard[]>(collectionProducts)
+
+  useEffect(() => {
+    let isMounted = true
+    import("@/lib/shopify-adapter").then(({ getShopifyProducts, getShopifyCollectionProducts }) => {
+      const fetcher = selectedCategory
+        ? getShopifyCollectionProducts(selectedCategory.toLowerCase())
+        : getShopifyProducts(50)
+
+      fetcher.then((liveProducts) => {
+        if (isMounted && liveProducts && liveProducts.length > 0) {
+          setProducts(liveProducts)
+        }
+      })
+    })
+    return () => {
+      isMounted = false
+    }
+  }, [selectedCategory])
+
   // Filter products based on selected states
-  const filteredProducts = collectionProducts.filter((product) => {
-    const matchesCategory = selectedCategory === null || product.category === selectedCategory
-    const matchesType = selectedType === null || product.type === selectedType
+  const filteredProducts = products.filter((product) => {
+    const matchesCategory = selectedCategory === null || !product.category || product.category === selectedCategory
+    const matchesType = selectedType === null || !product.type || product.type === selectedType
     const matchesShape = !selectedShape || (product.shape && product.shape.toLowerCase().includes(selectedShape))
     const matchesMaterial = !selectedMaterial || (product.material && product.material.toLowerCase().includes(selectedMaterial))
     const matchesColor = !selectedColor || (product.colorGroup && product.colorGroup.toLowerCase().includes(selectedColor))
