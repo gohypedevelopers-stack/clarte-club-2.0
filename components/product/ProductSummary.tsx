@@ -97,6 +97,7 @@ export function ProductSummary({
   const [averageRating, setAverageRating] = useState(4.8)
   const [cartState, setCartState] = useState<"idle" | "adding" | "added">("idle")
   const [isWishlisted, setIsWishlisted] = useState(false)
+  const [isDescExpanded, setIsDescExpanded] = useState(false)
   const [activeAccordion, setActiveAccordion] = useState<"care" | "shipping" | null>(null)
   
   // Coupon and cross-sell states
@@ -217,18 +218,27 @@ export function ProductSummary({
             Description:
           </p>
           <p className="max-w-[36rem] font-sans text-[13px] sm:text-[15px] font-normal leading-[1.7] text-black/68">
-            {product.description}{" "}
+            {isDescExpanded || product.description.length <= 130
+              ? product.description
+              : `${product.description.slice(0, 130)}... `}
             <button
+              type="button"
               onClick={(e) => {
                 e.preventDefault()
+                setIsDescExpanded((prev) => !prev)
                 const element = document.getElementById("details")
                 if (element) {
-                  element.scrollIntoView({ behavior: "smooth" })
+                  if ((window as any).lenis) {
+                    ;(window as any).lenis.scrollTo(element, { offset: -100 })
+                  } else {
+                    const top = element.getBoundingClientRect().top + window.scrollY - 100
+                    window.scrollTo({ top, behavior: "smooth" })
+                  }
                 }
               }}
-              className="font-semibold text-black underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer inline-block"
+              className="font-semibold text-black underline underline-offset-4 transition-opacity hover:opacity-70 cursor-pointer inline-block ml-1"
             >
-              See More...
+              {isDescExpanded ? "See Less" : "See More..."}
             </button>
           </p>
         </section>
@@ -450,9 +460,16 @@ export function ProductSummary({
           <h2 className="text-[16px] sm:text-[18px] md:text-[22px] font-medium uppercase">
             Product Details
           </h2>
-          <p className="mt-3 max-w-[36rem] font-sans text-[16px] font-normal leading-[1.72] text-black/68">
-            {product.detailsBody}
-          </p>
+          {typeof product.detailsBody === "string" && product.detailsBody.includes("<") ? (
+            <div
+              className="mt-3 max-w-[36rem] font-sans text-[15px] sm:text-[16px] font-normal leading-[1.72] text-black/75 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1.5 [&_li]:text-[14px] sm:[&_li]:text-[15px] [&_em]:italic [&_strong]:font-semibold"
+              dangerouslySetInnerHTML={{ __html: product.detailsBody }}
+            />
+          ) : (
+            <p className="mt-3 max-w-[36rem] font-sans text-[16px] font-normal leading-[1.72] text-black/68">
+              {product.detailsBody}
+            </p>
+          )}
         </section>
 
         <div className="space-y-4 border-t border-black/15 pt-3">
