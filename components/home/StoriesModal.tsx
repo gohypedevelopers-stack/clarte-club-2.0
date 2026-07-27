@@ -270,11 +270,22 @@ export function StoriesModal({
                 {/* Gradient Shadow Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/50 pointer-events-none" />
 
-                {/* 1. Top Overlays Inside Card (Category) */}
+                {/* 1. Top Overlays Inside Card (Logo + Category) */}
                 <div className="relative z-30 flex items-center justify-between p-5 sm:p-6">
-                  <span className="font-heading text-xs font-bold uppercase tracking-widest text-white/90 drop-shadow-md bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
-                    {currentStory.category}
-                  </span>
+                  <div className="flex items-center gap-2.5">
+                    <div className="flex size-7 items-center justify-center rounded-full bg-black/40 backdrop-blur-md p-1 border border-white/20">
+                      <Image
+                        src="/logo.svg"
+                        alt="Clarté Club"
+                        width={20}
+                        height={14}
+                        className="h-3.5 w-auto object-contain brightness-0 invert"
+                      />
+                    </div>
+                    <span className="font-heading text-[11px] font-bold uppercase tracking-widest text-white/90 drop-shadow-md bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
+                      {currentStory.category}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Tap Navigation Click Overlays */}
