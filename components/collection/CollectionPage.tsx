@@ -51,8 +51,8 @@ function CollectionContent() {
   }, [searchParams])
 
   return (
-    <main className="flex-1 bg-white text-black">
-      <section className="w-full bg-white px-4 pt-8 pb-16 text-black sm:px-6 lg:px-8 md:pt-10">
+    <main className="flex-1 bg-[#fcfbfa] text-[#0F0F10]">
+      <section className="w-full bg-[#fcfbfa] px-4 pt-8 pb-16 text-[#0F0F10] sm:px-6 lg:px-8 md:pt-10">
         <CollectionHeader 
           selectedCategory={selectedCategory}
           setSelectedCategory={setSelectedCategory}

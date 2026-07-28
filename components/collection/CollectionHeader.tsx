@@ -97,7 +97,7 @@ export function CollectionHeader({
             </Link>
           </div>
           <div className="max-w-[700px] space-y-3 flex flex-col items-center">
-            <h1 className="font-heading text-[22px] xs:text-[26px] sm:text-[32px] md:text-[clamp(2rem,3.2vw,3.6rem)] font-normal uppercase leading-none tracking-tight text-black whitespace-nowrap">
+            <h1 className="font-heading text-[22px] xs:text-[26px] sm:text-[32px] md:text-[clamp(2.2rem,4vw,4.2rem)] font-extrabold uppercase leading-none tracking-tight text-black whitespace-nowrap">
               Eyewear Collection
             </h1>
             <p className="text-[12px] sm:text-[13px] leading-relaxed text-black/60 font-medium tracking-[0.03em] max-w-[800px] md:max-w-none md:whitespace-nowrap text-center uppercase">

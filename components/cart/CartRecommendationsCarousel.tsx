@@ -19,7 +19,7 @@ type CartRecommendationsCarouselProps = {
 
 function RecommendationCard({ image, alt }: CartRecommendation) {
   return (
-    <article className="relative aspect-[3/4] overflow-hidden bg-[#111]">
+    <article className="relative aspect-[3/4] overflow-hidden bg-[#efefef] rounded border border-black/10">
       <Image
         src={image}
         alt={alt}
@@ -28,7 +28,7 @@ function RecommendationCard({ image, alt }: CartRecommendation) {
         className="object-cover object-center"
       />
 
-      <span className="absolute left-1.5 top-1.5 bg-black/85 px-1.5 py-0.5 text-[8px] font-semibold tracking-[0.12em] text-white">
+      <span className="absolute left-1.5 top-1.5 bg-[#0F0F10] px-1.5 py-0.5 text-[7.5px] font-semibold tracking-[0.12em] text-white rounded-[2px]">
         NEW ARRIVAL
       </span>
     </article>
@@ -37,12 +37,13 @@ function RecommendationCard({ image, alt }: CartRecommendation) {
 
 export function CartRecommendationsCarousel({
   items,
-}: CartRecommendationsCarouselProps) {
+  dark = true,
+}: CartRecommendationsCarouselProps & { dark?: boolean }) {
   const slides = [...items, ...items]
 
   return (
     <section>
-      <h3 className="text-[10px] font-semibold uppercase leading-none tracking-[0.16em] text-white/40">
+      <h3 className={`text-[10px] font-semibold uppercase leading-none tracking-[0.16em] ${dark ? "text-white/40" : "text-neutral-500"}`}>
         You May Also Like
       </h3>
 

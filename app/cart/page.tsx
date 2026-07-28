@@ -48,10 +48,10 @@ export default function CartPage() {
   return (
     <main className="min-h-screen bg-[#fcfbfa] text-[#0F0F10] font-sans">
       {/* 1. Header Section */}
-      <section className="w-full px-5 sm:px-12 md:px-20 pt-6 sm:pt-10 pb-8 border-b border-black/10 bg-[#f4f4f4]/60">
-        <div className="mx-auto max-w-7xl">
+      <section className="w-full px-5 sm:px-12 md:px-20 pt-6 sm:pt-10 pb-8 border-b border-black/10 bg-[#fcfbfa]">
+        <div className="mx-auto max-w-7xl relative">
           {/* Top Left Continue Shopping Button */}
-          <div className="mb-4">
+          <div className="mb-4 sm:mb-0 sm:absolute sm:left-0 sm:top-1.5">
             <Link
               href="/collections"
               className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-600 hover:text-black transition-colors group"
@@ -61,21 +61,21 @@ export default function CartPage() {
             </Link>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between items-start gap-4">
-            <div>
-              <div className="flex items-center gap-2 text-[10px] sm:text-[11px] uppercase font-semibold tracking-[0.25em] text-neutral-500 mb-2">
-                <Link href="/" className="hover:text-black transition-colors">
-                  Homepage
-                </Link>
-                <span>/</span>
-                <span className="text-[#0F0F10]">Shopping Cart</span>
-              </div>
-              <h1 className="font-heading text-3xl sm:text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold uppercase leading-none tracking-[-0.03em] text-[#0F0F10]">
-                YOUR SHOPPING CART
-              </h1>
+          {/* Centered Heading Content (Collection Page Style) */}
+          <div className="space-y-3 text-center flex flex-col items-center justify-center pt-1 sm:pt-0">
+            <div className="flex items-center justify-center gap-2 text-[10px] sm:text-[11px] uppercase font-semibold tracking-[0.25em] text-neutral-500">
+              <Link href="/" className="hover:text-black transition-colors">
+                Homepage
+              </Link>
+              <span>/</span>
+              <span className="text-[#0F0F10]">Shopping Cart</span>
             </div>
 
-            <div className="flex items-center gap-3 pb-1">
+            <h1 className="font-heading text-3xl sm:text-[clamp(2.2rem,5vw,4.2rem)] font-extrabold uppercase leading-none tracking-[-0.03em] text-[#0F0F10] text-center">
+              YOUR SHOPPING CART
+            </h1>
+
+            <div className="flex items-center justify-center gap-3 pt-1">
               <span className="inline-flex items-center gap-2 rounded-full border border-black/15 bg-white px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#0F0F10] shadow-sm">
                 <ShoppingBag className="size-3.5 text-[#C9B07A]" />
                 <span>{totalItemCount} {totalItemCount === 1 ? "ITEM" : "ITEMS"}</span>

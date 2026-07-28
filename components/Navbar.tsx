@@ -215,9 +215,11 @@ function StoryRingButton({
 function MobileFloatingNav({
   onOpenStories,
   onOpenWishlist,
+  hidden = false,
 }: {
   onOpenStories: () => void
   onOpenWishlist: () => void
+  hidden?: boolean
 }) {
   const [mounted, setMounted] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
@@ -242,7 +244,7 @@ function MobileFloatingNav({
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
-  if (!mounted) return null
+  if (!mounted || hidden) return null
 
   return createPortal(
     <div
@@ -958,6 +960,7 @@ export function Navbar({
       <MobileFloatingNav
         onOpenStories={() => setStoriesOpen(true)}
         onOpenWishlist={() => setWishlistOpen(true)}
+        hidden={searchOpen || cartOpen || wishlistOpen || storiesOpen || mobileMenuOpen || authModalOpen}
       />
 
 
