@@ -1436,35 +1436,66 @@ export async function customerCreate({ email, password, firstName, lastName }: a
   const q = `#graphql
   mutation customerCreate($input: CustomerCreateInput!) {
     customerCreate(input:$input) {
-      customer { id }
+      customer { id email firstName lastName }
+      customerUserErrors { code field message }
       userErrors { field message }
     }
   }`;
-  return graphql(q, { input: { email, password, firstName, lastName } });
+  const res = await graphql(q, { input: { email, password, firstName, lastName } });
+  const errors = res?.customerCreate?.customerUserErrors || res?.customerCreate?.userErrors;
+  if (errors && errors.length > 0) {
+    throw new Error(errors[0].message || "Failed to create account.");
+  }
+  return res?.customerCreate?.customer ?? null;
 }
 
-export async function customerAccessTokenCreate({ email, password }: any) {
+export async function customerAccessTokenCreate(emailOrInput: any, password?: string) {
+  const input = typeof emailOrInput === "string" ? { email: emailOrInput, password } : emailOrInput;
   const q = `#graphql
   mutation($input:CustomerAccessTokenCreateInput!){
     customerAccessTokenCreate(input:$input){
       customerAccessToken { accessToken expiresAt }
+      customerUserErrors { code field message }
       userErrors { field message }
     }
   }`;
-  return graphql(q, { input: { email, password } });
+  const res = await graphql(q, { input });
+  const errors = res?.customerAccessTokenCreate?.customerUserErrors || res?.customerAccessTokenCreate?.userErrors;
+  if (errors && errors.length > 0) {
+    throw new Error(errors[0].message || "Invalid email or password.");
+  }
+  return res?.customerAccessTokenCreate?.customerAccessToken ?? null;
 }
 
-export async function customerQuery(accessToken: string) {
+export async function getCustomer(customerAccessToken: string) {
   const q = `#graphql
-  query($token:String!){
-    customer(customerAccessToken:$token){
+  query getCustomer($token: String!){
+    customer(customerAccessToken: $token){
       id
       firstName
       lastName
       email
+      phone
+      orders(first: 10) {
+        edges {
+          node {
+            id
+            name
+            orderNumber
+            processedAt
+            financialStatus
+            fulfillmentStatus
+            totalPrice {
+              amount
+              currencyCode
+            }
+          }
+        }
+      }
     }
   }`;
-  return graphql(q, { token: accessToken });
+  const res = await graphql(q, { token: customerAccessToken });
+  return res?.customer ?? null;
 }
 
 export async function customerAccessTokenDelete(accessToken: string) {
@@ -1476,7 +1507,11 @@ export async function customerAccessTokenDelete(accessToken: string) {
       userErrors { field message }
     }
   }`;
-  return graphql(q, { accessToken });
+  try {
+    return await graphql(q, { accessToken });
+  } catch (err) {
+    console.warn("Error deleting customer access token:", err);
+  }
 }
 
 /* ================= HELPERS FOR DYNAMIC SECTIONS ================= */
@@ -1795,3 +1830,4 @@ export async function fetchRecommendedProducts(productOrId: any, limit = 8) {
 
   return dedupeAndTrim(products);
 }
+

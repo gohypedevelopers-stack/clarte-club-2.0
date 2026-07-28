@@ -21,6 +21,7 @@ import { cn } from "@/lib/utils"
 import { CartSidebar } from "@/components/cart/CartSidebar"
 import { SearchSidebar } from "@/components/home/SearchSidebar"
 import { WishlistSidebar } from "@/components/wishlist/WishlistSidebar"
+import { AuthModal, getStoredCustomerToken } from "@/components/auth/AuthModal"
 import { getCartItems } from "@/lib/cart"
 import {
   Sheet,
@@ -441,6 +442,8 @@ export function Navbar({
   const [cartOpen, setCartOpen] = useState(false)
   const [wishlistOpen, setWishlistOpen] = useState(false)
   const [storiesOpen, setStoriesOpen] = useState(false)
+  const [authModalOpen, setAuthModalOpen] = useState(false)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [selectedNav, setSelectedNav] = useState<NavKey | null>(defaultNavKey)
   const [activeMenu, setActiveMenu] = useState<ActiveMenu | null>(null)
@@ -464,6 +467,15 @@ export function Navbar({
       price: string
     } | null
   }>({ visible: false, item: null })
+
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsLoggedIn(Boolean(getStoredCustomerToken()))
+    }
+    checkAuth()
+    window.addEventListener("auth-state-changed", checkAuth)
+    return () => window.removeEventListener("auth-state-changed", checkAuth)
+  }, [])
 
   useEffect(() => {
     const updateCount = () => {
@@ -719,8 +731,20 @@ export function Navbar({
             </IconButton>
 
             {/* Account Icon */}
-            <IconButton label="Account" tone={hasOpenMenu ? "dark" : tone}>
-              <UserRound className="size-[18px] stroke-[1.7]" />
+            <IconButton
+              label="Account"
+              tone={hasOpenMenu ? "dark" : tone}
+              onClick={() => {
+                const shopifyDomain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN || "shapar-ay.myshopify.com"
+                window.location.href = `https://${shopifyDomain}/account/login`
+              }}
+            >
+              <div className="relative">
+                <UserRound className="size-[18px] stroke-[1.7]" />
+                {isLoggedIn && (
+                  <span className="absolute -right-0.5 -top-0.5 size-2 rounded-full bg-[#C9B07A]" />
+                )}
+              </div>
             </IconButton>
 
             {/* Wishlist / Bookmark Icon */}
@@ -1000,14 +1024,23 @@ export function Navbar({
           {/* Mobile Menu Footer */}
           <div className="px-6 pt-6 pb-10 border-t border-black/5 bg-[#ebe8e1] space-y-4">
             <div className="flex items-center justify-center gap-14">
-              <Link
-                href="/account"
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-black/70 hover:text-black transition-colors"
+              <button
+                type="button"
+                onClick={() => {
+                  setMobileMenuOpen(false)
+                  const shopifyDomain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN || "shapar-ay.myshopify.com"
+                  window.location.href = `https://${shopifyDomain}/account/login`
+                }}
+                className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-black/70 hover:text-black transition-colors cursor-pointer"
               >
-                <UserRound className="size-[15px] stroke-[1.5]" />
-                Account
-              </Link>
+                <div className="relative">
+                  <UserRound className="size-[15px] stroke-[1.5]" />
+                  {isLoggedIn && (
+                    <span className="absolute -right-0.5 -top-0.5 size-1.5 rounded-full bg-[#C9B07A]" />
+                  )}
+                </div>
+                <span>{isLoggedIn ? "My Account" : "Account"}</span>
+              </button>
               <button
                 onClick={() => {
                   setMobileMenuOpen(false)
@@ -1076,6 +1109,7 @@ export function Navbar({
           </motion.div>
         )}
       </AnimatePresence>
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
     </>
   )
 }

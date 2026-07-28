@@ -3,6 +3,7 @@ import {
   cartLinesAdd,
   cartLinesUpdate,
   cartLinesRemove,
+  fetchAllProducts,
 } from "./shopify"
 
 export type CartItem = {
@@ -135,3 +136,111 @@ export function removeFromCart(id: string, size: string) {
   items = items.filter((i) => !(i.id === id && i.size === size))
   saveCartItems(items)
 }
+
+export async function processShopifyCheckout(): Promise<string | null> {
+  if (typeof window === "undefined") return null
+
+  let items = getCartItems()
+  if (items.length === 0) {
+    alert("Your cart is empty.")
+    return null
+  }
+
+  const shopifyDomain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN || "shapar-ay.myshopify.com"
+
+  // 1. Auto-resolve missing merchandiseIds from live Shopify products
+  const missingMerchandise = items.some((item) => !item.merchandiseId)
+  if (missingMerchandise) {
+    try {
+      const liveProducts = await fetchAllProducts(50)
+      if (liveProducts && liveProducts.length > 0) {
+        let hasChanges = false
+        items = items.map((item, idx) => {
+          if (item.merchandiseId) return item
+          // Match live product by title, handle, or index fallback
+          const matched =
+            liveProducts.find(
+              (p: any) =>
+                p.title?.toLowerCase() === item.title.toLowerCase() ||
+                p.handle?.toLowerCase() === item.title.toLowerCase().replace(/\s+/g, "-")
+            ) || liveProducts[idx % liveProducts.length]
+
+          const variantId = matched?.variants?.[0]?.id || matched?.id
+          if (variantId) {
+            hasChanges = true
+            return { ...item, merchandiseId: variantId }
+          }
+          return item
+        })
+        if (hasChanges) {
+          saveCartItems(items)
+        }
+      }
+    } catch (err) {
+      console.warn("Could not auto-resolve live Shopify product variant IDs:", err)
+    }
+  }
+
+  // 2. Build Storefront API cart input lines
+  const validLines = items
+    .filter((item) => item.merchandiseId)
+    .map((item) => ({
+      merchandiseId: item.merchandiseId!,
+      quantity: item.quantity,
+    }))
+
+  const websiteOrigin = window.location.origin
+
+  // 3. Create Shopify Cart via Storefront API
+  if (validLines.length > 0) {
+    try {
+      const cart = await cartCreate(validLines)
+      if (cart?.checkoutUrl) {
+        localStorage.setItem(SHOPIFY_CART_ID_KEY, cart.id)
+        localStorage.setItem(SHOPIFY_CHECKOUT_URL_KEY, cart.checkoutUrl)
+
+        const finalCheckoutUrl = cart.checkoutUrl.includes("?")
+          ? `${cart.checkoutUrl}&return_to=${encodeURIComponent(websiteOrigin)}`
+          : `${cart.checkoutUrl}?return_to=${encodeURIComponent(websiteOrigin)}`
+
+        window.location.href = finalCheckoutUrl
+        return finalCheckoutUrl
+      }
+    } catch (error) {
+      console.warn("Shopify cartCreate failed, falling back to direct permalink checkout URL:", error)
+    }
+  }
+
+  // 4. Fallback A: Use existing saved checkout URL if available
+  const existingCheckoutUrl = getShopifyCheckoutUrl()
+  if (existingCheckoutUrl) {
+    const finalCheckoutUrl = existingCheckoutUrl.includes("?")
+      ? `${existingCheckoutUrl}&return_to=${encodeURIComponent(websiteOrigin)}`
+      : `${existingCheckoutUrl}?return_to=${encodeURIComponent(websiteOrigin)}`
+
+    window.location.href = finalCheckoutUrl
+    return finalCheckoutUrl
+  }
+
+  // 5. Fallback B: Construct Shopify Cart Permalink URL for direct Checkout
+  const permalinkParts = items
+    .map((item) => {
+      if (!item.merchandiseId) return null
+      const numericId = item.merchandiseId.replace(/^.*\/ProductVariant\//, "").replace(/^.*\/Product\//, "")
+      return numericId ? `${numericId}:${item.quantity}` : null
+    })
+    .filter(Boolean)
+
+  if (permalinkParts.length > 0) {
+    const permalinkUrl = `https://${shopifyDomain}/cart/${permalinkParts.join(",")}?storefront=true&return_to=${encodeURIComponent(websiteOrigin)}`
+    window.location.href = permalinkUrl
+    return permalinkUrl
+  }
+
+  // Final Fallback: Direct checkout with return_to
+  const checkoutUrl = `https://${shopifyDomain}/checkout?return_to=${encodeURIComponent(websiteOrigin)}`
+  window.location.href = checkoutUrl
+  return checkoutUrl
+}
+
+

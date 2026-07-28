@@ -17,6 +17,7 @@ export type DeliveryPerk = {
 
 export type ProductCard = {
   id: string
+  merchandiseId?: string
   handle?: string
   href?: string
   image: string
@@ -36,6 +37,8 @@ export type ProductCard = {
 }
 
 export type ProductDetail = {
+  id?: string
+  merchandiseId?: string
   slug: string
   editLabel: string
   title: string

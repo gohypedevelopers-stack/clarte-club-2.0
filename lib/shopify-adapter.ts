@@ -57,8 +57,11 @@ export function shopifyProductToCard(node: any, index = 0): ProductCard {
   const handle = node.handle || card?.handle || ""
   const href = handle ? `/products/${handle}` : "/products"
 
+  const variantId = node?.variants?.[0]?.id || node?.variants?.nodes?.[0]?.id || ""
+
   return {
     id: node.id || handle || card?.id || "product-1",
+    merchandiseId: variantId,
     handle,
     href,
     name: node.title || card?.title || "Signature Frame",
@@ -100,7 +103,11 @@ export function shopifyProductToDetail(node: any): ProductDetail {
 
   const sizeValues = extractOptionValues(node, "size")
 
+  const firstVariantId = node?.variants?.[0]?.id || node?.variants?.nodes?.[0]?.id || ""
+
   return {
+    id: node?.id || "product-detail",
+    merchandiseId: firstVariantId,
     slug: node?.handle || "product",
     editLabel: node?.vendor?.toUpperCase() || "CLARTE CLUB",
     title: node?.title?.toUpperCase() || "SIGNATURE FRAME",

@@ -16,7 +16,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 
-import { getCartItems, updateCartQuantity, removeFromCart, type CartItem } from "@/lib/cart"
+import { getCartItems, updateCartQuantity, removeFromCart, processShopifyCheckout, type CartItem } from "@/lib/cart"
 
 const promoStripText = "Additional Discount on Pre-paid | Free Return and Exchange"
 
@@ -128,6 +128,19 @@ type CartSidebarProps = {
 
 export function CartSidebar({ open, onOpenChange }: CartSidebarProps) {
   const [cartItems, setCartItems] = useState<CartItem[]>([])
+  const [isCheckingOut, setIsCheckingOut] = useState(false)
+
+  const handleCheckout = async () => {
+    if (isCheckingOut) return
+    setIsCheckingOut(true)
+    try {
+      await processShopifyCheckout()
+    } catch (err) {
+      console.error("Checkout error:", err)
+    } finally {
+      setIsCheckingOut(false)
+    }
+  }
 
   useEffect(() => {
     setCartItems(getCartItems())
@@ -222,13 +235,16 @@ export function CartSidebar({ open, onOpenChange }: CartSidebarProps) {
               <div className="mt-5 pb-2">
                 <button
                   type="button"
-                  className="flex h-11 w-full items-center justify-center bg-[#C9B07A] text-[13px] font-semibold uppercase tracking-[0.18em] text-black transition-colors hover:bg-[#b0965d] active:bg-[#977f4c] cursor-pointer"
+                  onClick={handleCheckout}
+                  disabled={isCheckingOut || cartItems.length === 0}
+                  className="flex h-11 w-full items-center justify-center bg-[#C9B07A] text-[13px] font-semibold uppercase tracking-[0.18em] text-black transition-colors hover:bg-[#b0965d] active:bg-[#977f4c] cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Checkout
+                  {isCheckingOut ? "Redirecting to Checkout..." : "Checkout"}
                 </button>
 
                 <Link
                   href="/cart"
+                  onClick={() => onOpenChange(false)}
                   className="mt-3 block text-center text-[10px] font-medium uppercase tracking-[0.16em] text-white/70 hover:text-white underline underline-offset-4 transition-colors"
                 >
                   View Shopping Cart
