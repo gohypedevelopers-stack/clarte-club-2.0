@@ -11,7 +11,7 @@ export default function FounderNote() {
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 border-b border-black/10 pb-5 sm:pb-6 mb-8 sm:mb-12 text-center sm:text-left">
           <div className="flex flex-col items-center sm:items-start">
             <span className="text-[10px] sm:text-[11px] uppercase font-semibold tracking-[0.3em] text-neutral-500">
-              Founder's Note
+              A Note From Us
             </span>
             <h2 className="font-heading text-2xl sm:text-4xl md:text-5xl font-extrabold uppercase tracking-tight text-[#0F0F10] mt-1.5 sm:mt-2">
               BEHIND CLARTÉ CLUB
@@ -25,12 +25,12 @@ export default function FounderNote() {
         {/* Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
           
-          {/* Left Column: Founder Portrait Visual */}
+          {/* Left Column: Visual Studio */}
           <div className="lg:col-span-5 relative">
             <div className="relative aspect-[3/4] w-full bg-[#efefef] overflow-hidden border border-black/10 shadow-sm">
               <Image
                 src="/images/hero-right.png"
-                alt="Founder of Clarté Club"
+                alt="Clarté Club Studio"
                 fill
                 className="object-cover filter grayscale contrast-[1.05]"
               />
@@ -40,10 +40,10 @@ export default function FounderNote() {
                   Design Studio & Atelier
                 </p>
                 <p className="font-heading text-base sm:text-lg font-bold uppercase tracking-wide">
-                  Nawaz Gazi
+                  Clarté Club
                 </p>
                 <p className="text-[10px] sm:text-[11px] opacity-80 uppercase tracking-widest">
-                  Founder & Creative Director
+                  Atelier & Studio
                 </p>
               </div>
             </div>
@@ -53,36 +53,26 @@ export default function FounderNote() {
           <div className="lg:col-span-7 space-y-5 sm:space-y-6 bg-[#f4f4f4] border border-black/10 p-5 sm:p-8 md:p-12 text-left flex flex-col items-start justify-center">
             
             <div className="inline-block px-3 py-1 bg-[#e0e0e0] text-[#0F0F10] text-[10px] uppercase font-bold tracking-[0.25em]">
-              A Note From The Founder
+              A Note From Us
             </div>
 
-            <h3 className="font-heading text-lg sm:text-2xl md:text-3xl lg:text-4xl font-semibold uppercase text-[#0F0F10] leading-snug sm:leading-tight text-left">
-              "We didn't start Clarté Club to build another fast-fashion brand. We started it to create things that last."
+            <h3 className="font-heading text-base sm:text-xl md:text-2xl font-medium uppercase text-[#0F0F10] leading-snug sm:leading-relaxed text-left tracking-wide">
+              "Clarté Club began with a simple belief. The things we choose to live with should feel considered, useful and worth keeping."
             </h3>
 
-            <div className="space-y-3.5 sm:space-y-4 text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-700 font-light text-left">
+            <div className="space-y-4 text-[14px] sm:text-[15px] leading-relaxed sm:leading-[1.8] text-neutral-800 font-normal text-left">
               <p>
-                Every day, we are bombarded by loud logos, endless sales events, and products designed to be replaced in a few months. I felt there was a missing space for people who appreciate quiet distinction—pieces that look effortless, feel substantial, and hold real integrity.
+                We didn't set out to build another trend-driven brand. We set out to build something we would be proud to put our name behind.
               </p>
               <p>
-                Eyewear is the first thing people notice on your face. It frames your expression and carries your personal identity. That’s why we started with frames. We refine every curve, test the weight balance on your bridge, and select materials that age gracefully over years of wear.
+                We're starting with eyewear, built the way we intend to build everything that follows.
               </p>
               <p>
-                We operate under simple principles: one honest price without artificial inflation, zero restocks so every drop retains its uniqueness, and a relentless commitment to quality. If a frame isn't good enough for us to wear every single day, it doesn't leave our studio.
+                Thank you for being part of the journey from the very beginning.
               </p>
             </div>
 
-            {/* Quote Signature Block */}
-            <div className="w-full pt-5 sm:pt-6 border-t border-black/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 text-left">
-              <div>
-                <p className="font-heading font-bold text-sm sm:text-base uppercase text-[#0F0F10]">
-                  Nawaz Gazi
-                </p>
-                <p className="text-[10px] sm:text-[11px] uppercase tracking-[0.2em] text-[#C9B07A] font-semibold">
-                  Founder, Clarté Club
-                </p>
-              </div>
-            </div>
+
 
           </div>
 

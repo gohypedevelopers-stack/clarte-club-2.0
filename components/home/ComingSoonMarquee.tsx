@@ -1,36 +1,24 @@
 "use client"
 
-import { cn } from "@/lib/utils"
-
-const marqueeText =
-  "CAPS — COMING SOON • LEATHER CARRYALLS — COMING SOON • PREMIUM CASE COLLECTION — COMING SOON • ACETATE WRIST STRAPS — COMING SOON • GLASSES CARE KITS — COMING SOON • "
-
-function MarqueeStrip() {
-  return (
-    <div className="flex shrink-0 items-center gap-16 pr-16 whitespace-nowrap">
-      {Array.from({ length: 4 }).map((_, repeatIndex) => (
-        <span key={`repeat-${repeatIndex}`} className="whitespace-nowrap font-marquee text-[10.08px] font-normal uppercase tracking-[0.25em] text-[#F6F2EA]">
-          {marqueeText}
-        </span>
-      ))}
-    </div>
-  )
-}
+import Image from "next/image"
+import Link from "next/link"
 
 export function ComingSoonMarquee() {
   return (
-    <section className="w-full overflow-hidden bg-[#161618] py-4 text-white border-y border-white/5">
-      <h2 className="sr-only">Future release announcements</h2>
-
-      <div
-        className={cn(
-          "flex w-max items-center animate-[marquee_30s_linear_infinite] motion-reduce:animate-none",
-          "[will-change:transform]"
-        )}
-      >
-        <MarqueeStrip />
-        <MarqueeStrip />
-      </div>
-    </section>
+    <Link
+      href="/collections"
+      aria-label="The Club Is Expanding - Discover Collections"
+      className="w-full relative block overflow-hidden bg-black text-white aspect-[2.2/1] sm:aspect-[2.5/1] md:aspect-[2.8/1] border-y border-white/10 group cursor-pointer"
+    >
+      {/* Architectural Banner Image optimized for mobile and desktop */}
+      <Image
+        src="/images/club-expanding.png"
+        alt="The Club Is Expanding - New Categories. Same Clarté."
+        fill
+        priority
+        sizes="100vw"
+        className="object-contain sm:object-cover object-center filter brightness-100 contrast-[1.02] transition-transform duration-1000 group-hover:scale-[1.01]"
+      />
+    </Link>
   )
 }

@@ -87,29 +87,33 @@ export default function AboutPage() {
                 />
                 <span>Clarté Club</span>
               </span>
-              started with a simple idea: The things we choose to wear every day should feel distinctive, useful, and deeply personal.
+              started with a simple idea. The things we choose to wear every day should feel distinctive, useful and worth keeping.
             </p>
             
             <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light text-left">
-              We began by questioning why modern luxury eyewear was defined by oversized logos and artificial markups. We set out to create an alternative—eyewear built with architectural restraint, premium hand-polished materials, and obsessive attention to proportions.
+              We started by asking a simple question. Why does so much of modern fashion rely on louder logos, faster trends and more products every season? We wanted to take a different path.
             </p>
 
             <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light text-left">
-              We are starting with frames, but the vision goes far beyond one product category. Over time, Clarté Club is growing into a broader lifestyle label shaped by good design, thoughtful engineering, and a quieter way of doing things.
+              We are starting with eyewear because it is one of the most personal things you wear. It becomes part of how people see you. It should feel right every time you put it on.
+            </p>
+
+            <p className="text-[13px] sm:text-[14px] leading-relaxed sm:leading-[1.85] text-neutral-600 font-light text-left">
+              But Clarté Club was never meant to stop there. Over time, we will introduce more pieces that belong to the same world. Different categories, guided by the same approach and the same standard.
             </p>
 
             <div className="w-full pt-5 sm:pt-6 border-t border-black/10 grid grid-cols-3 gap-3 text-[9px] sm:text-[10px] uppercase tracking-[0.15em] sm:tracking-[0.2em] font-semibold text-neutral-500 text-center">
               <div>
-                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Focus</span>
-                <span className="text-[#0F0F10]">Eyewear & Beyond</span>
+                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Always</span>
+                <span className="text-[#0F0F10]">Thoughtfully made</span>
               </div>
               <div>
-                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Ethos</span>
-                <span className="text-[#0F0F10]">Quiet Distinction</span>
+                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Starting with</span>
+                <span className="text-[#0F0F10]">Eyewear</span>
               </div>
               <div>
-                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Production</span>
-                <span className="text-[#0F0F10]">Small Batch Drops</span>
+                <span className="block text-neutral-400 font-bold text-[8px] sm:text-[9px] mb-0.5 sm:mb-1">Building toward</span>
+                <span className="text-[#0F0F10]">A lifestyle brand</span>
               </div>
             </div>
           </div>
