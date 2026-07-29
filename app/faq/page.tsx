@@ -71,7 +71,7 @@ export default function FAQPage() {
           <p className="text-[11px] font-medium uppercase tracking-[0.4em] text-neutral-500">
             Support &amp; Information
           </p>
-          <h1 className="font-heading text-[38px] md:text-[54px] font-normal uppercase leading-[1.05] tracking-tight text-[#0F0F10]">
+          <h1 className="font-heading text-xl sm:text-2xl md:text-[30px] font-normal uppercase leading-[1.25] tracking-tight text-[#0F0F10] max-w-2xl mx-auto">
             Shipping, returns, and the questions people actually ask.
           </h1>
         </div>
