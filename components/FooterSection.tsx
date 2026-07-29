@@ -31,12 +31,12 @@ function YoutubeIcon(props: React.ComponentProps<"svg">) {
 
 const clarteClubLinks = [
   { label: "OUR STORY", href: "/about" },
-  { label: "HELP", href: "/#help" },
-  { label: "CHAT WITH US", href: "/#chat" },
-  { label: "RETURNS & EXCHANGE", href: "/#returns" },
-  { label: "PRIVACY POLICY", href: "/#privacy" },
-  { label: "REFUND POLICY", href: "/#refund" },
-  { label: "TERMS OF SERVICE", href: "/#terms" },
+  { label: "SHIPPING POLICY", href: "/shipping" },
+  { label: "EASY EXCHANGE", href: "/returns" },
+  { label: "PRIVACY POLICY", href: "/privacy" },
+  { label: "TERMS & CONDITIONS", href: "/terms" },
+  { label: "CONTACT US", href: "/contact" },
+  { label: "FAQ", href: "/faq" },
 ] as const
 
 export function FooterSection() {
@@ -91,14 +91,21 @@ export function FooterSection() {
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">PHONE ASSISTANCE</p>
                 <p className="text-xs font-semibold text-[#F6F2EA] hover:text-[#C9B07A] transition-colors mt-0.5">
-                  <a href="tel:+91000000000">+91 00000 00000</a>
+                  [Phone Number]
+                </p>
+              </div>
+
+              <div>
+                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">INSTAGRAM DM</p>
+                <p className="text-xs font-semibold text-[#F6F2EA] hover:text-[#C9B07A] transition-colors mt-0.5">
+                  <a href="https://instagram.com/clarteclub.official" target="_blank" rel="noopener noreferrer">@clarteclub.official</a>
                 </p>
               </div>
 
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">SUPPORT HOURS</p>
                 <p className="text-xs font-semibold text-[#F6F2EA] mt-0.5">
-                  Mon-Sat : 9AM - 8PM IST
+                  [Mon–Sat, 10am–7pm IST]
                 </p>
               </div>
             </div>
@@ -145,7 +152,7 @@ export function FooterSection() {
                   <FacebookIcon className="size-4" />
                 </a>
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/clarteclub.official"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Instagram"
