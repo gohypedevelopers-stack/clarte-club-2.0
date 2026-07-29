@@ -22,7 +22,7 @@ const defaultStories: StoryItem[] = [
     id: "story-1",
     category: "NEW DROP",
     title: "Heritage Oval",
-    subtitle: "Handcrafted acetate frames with tinted anti-glare lenses.",
+    subtitle: "Signature bio-acetate frames with tinted anti-glare lenses.",
     image: "/images/products/product1.png",
     link: "/collections?type=sunglasses",
     ctaText: "Shop Now",
