@@ -7,12 +7,12 @@ const benefits = [
   {
     icon: ShoppingCart,
     title: "FREE SHIPPING",
-    description: "On orders over $250 CAD",
+    description: "On orders over ₹2,900",
   },
   {
     icon: CornerUpLeft,
-    title: "FREE RETURNS",
-    description: "On full priced items only",
+    title: "EASY EXCHANGE",
+    description: "7-day exchange policy",
   },
   {
     icon: Lock,
