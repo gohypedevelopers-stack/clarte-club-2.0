@@ -26,8 +26,8 @@ export default function CraftsmanshipSection() {
     {
       icon: Gem,
       number: "04",
-      title: "72-Hour Hand Polish",
-      desc: "Every frame undergoes a multi-stage tumbling process in teakwood chips followed by meticulous hand-buffing by master craftsmen for a silky glass finish."
+      title: "Multi-Stage Precision Polish",
+      desc: "Every frame undergoes a multi-stage tumbling process in teakwood chips followed by meticulous precision buffing for a silky glass finish."
     }
   ]
 
