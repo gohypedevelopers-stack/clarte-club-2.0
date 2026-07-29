@@ -57,7 +57,7 @@ export default function FAQPage() {
   }
 
   return (
-    <main className="flex-1 bg-black text-white font-sans min-h-screen pt-[var(--header-stack-height)] pb-24">
+    <main className="flex-1 bg-[#fcfbfa] text-[#0F0F10] font-sans min-h-screen pb-24">
       
       {/* Inject JSON-LD Schema */}
       <script
@@ -66,12 +66,12 @@ export default function FAQPage() {
       />
 
       {/* Hero Section */}
-      <section className="relative w-full border-b border-white/10 py-24 px-4 sm:px-6 lg:px-8">
+      <section className="relative w-full border-b border-black/10 py-10 sm:py-14 px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center space-y-4">
-          <p className="text-[11px] font-medium uppercase tracking-[0.4em] text-white/40">
-            Support & Information
+          <p className="text-[11px] font-medium uppercase tracking-[0.4em] text-neutral-500">
+            Support &amp; Information
           </p>
-          <h1 className="font-heading text-[38px] md:text-[54px] font-normal uppercase leading-[1.05] tracking-tight text-white">
+          <h1 className="font-heading text-[38px] md:text-[54px] font-normal uppercase leading-[1.05] tracking-tight text-[#0F0F10]">
             Shipping, returns, and the questions people actually ask.
           </h1>
         </div>
@@ -79,21 +79,21 @@ export default function FAQPage() {
 
       {/* Shipping & Returns Overview */}
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="grid gap-12 md:grid-cols-2 border-b border-white/10 pb-16">
+        <div className="grid gap-12 md:grid-cols-2 border-b border-black/10 pb-16">
           <div className="space-y-4">
-            <h2 className="font-heading text-lg font-normal uppercase tracking-wider text-white/90">
+            <h2 className="font-heading text-lg font-normal uppercase tracking-wider text-[#0F0F10]">
               Shipping
             </h2>
-            <p className="text-[14px] leading-[1.7] text-white/60 font-light">
-              Free shipping across India. Orders are usually confirmed within a day. You'll hear from us at every step: confirmed, shipped, out for delivery, delivered.
+            <p className="text-[14px] leading-[1.7] text-neutral-600 font-light">
+              Free shipping across India. Orders are usually confirmed within a day. You&apos;ll hear from us at every step: confirmed, shipped, out for delivery, delivered.
             </p>
           </div>
           <div className="space-y-4">
-            <h2 className="font-heading text-lg font-normal uppercase tracking-wider text-white/90">
+            <h2 className="font-heading text-lg font-normal uppercase tracking-wider text-[#0F0F10]">
               Returns
             </h2>
-            <p className="text-[14px] leading-[1.7] text-white/60 font-light">
-              Not the right fit? Send it back within our return window and we'll sort a refund or exchange without a fuss. Original condition, tags on, that's the only ask.
+            <p className="text-[14px] leading-[1.7] text-neutral-600 font-light">
+              Not the right fit? Send it back within our return window and we&apos;ll sort a refund or exchange without a fuss. Original condition, tags on, that&apos;s the only ask.
             </p>
           </div>
         </div>
@@ -101,7 +101,7 @@ export default function FAQPage() {
 
       {/* FAQ Accordion Section */}
       <section className="mx-auto max-w-3xl px-4 py-8 sm:px-6">
-        <h2 className="font-heading text-xl font-normal uppercase tracking-wider text-center text-white/90 mb-12">
+        <h2 className="font-heading text-xl font-normal uppercase tracking-wider text-center text-[#0F0F10] mb-12">
           Frequently Asked Questions
         </h2>
         
@@ -109,16 +109,16 @@ export default function FAQPage() {
           {faqs.map((faq, index) => (
             <details
               key={index}
-              className="group border-b border-white/10 pb-4 [&_summary::-webkit-details-marker]:hidden"
+              className="group border-b border-black/10 pb-4 [&_summary::-webkit-details-marker]:hidden"
             >
-              <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-white/90 transition-colors duration-200 hover:text-white py-3">
+              <summary className="flex cursor-pointer items-center justify-between gap-1.5 text-[#0F0F10] transition-colors duration-200 hover:text-[#C9B07A] py-3">
                 <h3 className="text-[15px] font-normal tracking-wide uppercase font-sans">
                   {faq.question}
                 </h3>
                 <span className="shrink-0 transition duration-300 group-open:-rotate-180">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="size-5 text-white/40 group-hover:text-white transition-colors"
+                    className="size-5 text-neutral-400 group-hover:text-[#C9B07A] transition-colors"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -132,7 +132,7 @@ export default function FAQPage() {
                   </svg>
                 </span>
               </summary>
-              <p className="mt-3 text-[14px] leading-[1.8] text-white/60 font-light pr-6 transition-all duration-300">
+              <p className="mt-3 text-[14px] leading-[1.8] text-neutral-600 font-light pr-6 transition-all duration-300">
                 {faq.answer}
               </p>
             </details>
