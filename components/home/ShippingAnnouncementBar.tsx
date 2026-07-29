@@ -9,7 +9,7 @@ export function ShippingAnnouncementBar() {
           Free Shipping on Orders above Rs 2,900 | Launch Offer 30% off
         </p>
         <p className="hidden lg:block justify-self-end whitespace-nowrap text-right">
-          Easy Exchange and Returns
+          Easy Exchange Across India
         </p>
       </div>
     </section>
