@@ -301,97 +301,7 @@ export function ProductSummary({
           </div>
         </section>
 
-        {/* COMPLETE THE LOOK */}
-        <section className="space-y-3 pt-4 border-t border-black/15">
-          <div className="flex items-center justify-between">
-            <h3 className="text-[13px] font-semibold uppercase tracking-wider text-black">
-              Complete The Look
-            </h3>
-            <button className="text-[11px] uppercase text-black/45 hover:underline tracking-wider">
-              View All
-            </button>
-          </div>
 
-          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-none w-full min-w-0">
-            {/* Fit Item 1 */}
-            <div 
-              onClick={() => toggleFitItem("case")}
-              className={cn(
-                "flex items-center justify-between gap-3 shrink-0 w-[240px] border p-3 bg-white transition-all cursor-pointer select-none",
-                addedFitItems.case ? "border-black shadow-sm" : "border-black/10 hover:border-black/30"
-              )}
-            >
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="relative h-10 w-7 shrink-0 bg-[#efefef] overflow-hidden">
-                  <Image 
-                    src="/images/products/product7.png" 
-                    alt="Premium Leather Case" 
-                    fill 
-                    sizes="28px"
-                    className="object-cover object-center" 
-                  />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-black leading-tight truncate">
-                    Premium Leather Case
-                  </h4>
-                  <p className="text-[9px] text-black/50 mt-0.5 font-sans">₹1,500</p>
-                </div>
-              </div>
-              <button 
-                type="button"
-                onClick={(e) => { e.stopPropagation(); toggleFitItem("case") }}
-                className={cn(
-                  "flex size-6 shrink-0 items-center justify-center border rounded-full transition-all cursor-pointer text-[12px] font-bold",
-                  addedFitItems.case 
-                    ? "border-[#5b8c38] bg-[#5b8c38] text-white" 
-                    : "border-black/20 hover:border-black text-black"
-                )}
-              >
-                {addedFitItems.case ? <Check className="size-3" strokeWidth={3} /> : "+"}
-              </button>
-            </div>
-
-            {/* Fit Item 2 */}
-            <div 
-              onClick={() => toggleFitItem("frame")}
-              className={cn(
-                "flex items-center justify-between gap-3 shrink-0 w-[240px] border p-3 bg-white transition-all cursor-pointer select-none",
-                addedFitItems.frame ? "border-black shadow-sm" : "border-black/10 hover:border-black/30"
-              )}
-            >
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="relative h-10 w-7 shrink-0 bg-[#efefef] overflow-hidden">
-                  <Image 
-                    src="/images/products/product1.png" 
-                    alt="Signature Frame" 
-                    fill 
-                    sizes="28px"
-                    className="object-cover object-center" 
-                  />
-                </div>
-                <div className="min-w-0">
-                  <h4 className="text-[11px] font-bold uppercase tracking-wider text-black leading-tight truncate">
-                    Signature Frame
-                  </h4>
-                  <p className="text-[9px] text-black/50 mt-0.5 font-sans">₹4,500</p>
-                </div>
-              </div>
-              <button 
-                type="button"
-                onClick={(e) => { e.stopPropagation(); toggleFitItem("frame") }}
-                className={cn(
-                  "flex size-6 shrink-0 items-center justify-center border rounded-full transition-all cursor-pointer text-[12px] font-bold",
-                  addedFitItems.frame 
-                    ? "border-[#5b8c38] bg-[#5b8c38] text-white" 
-                    : "border-black/20 hover:border-black text-black"
-                )}
-              >
-                {addedFitItems.frame ? <Check className="size-3" strokeWidth={3} /> : "+"}
-              </button>
-            </div>
-          </div>
-        </section>
 
         {/* PRIMARY CTA */}
         <div className="space-y-4 pt-4 border-t border-black/15">
@@ -525,7 +435,7 @@ export function ProductSummary({
           <div className="grid grid-cols-3 divide-x divide-black/10">
             {[
               { icon: Truck,        label: 'Free Shipping', sub: 'On orders above ₹999'  },
-              { icon: RefreshCcw,   label: 'Easy Returns',  sub: '14-day return policy'  },
+              { icon: RefreshCcw,   label: 'Easy Exchange', sub: '7-day exchange policy' },
               { icon: ShieldCheck,  label: 'Secure Pay',    sub: '100% safe checkout'    },
             ].map((badge) => {
               const Icon = badge.icon
