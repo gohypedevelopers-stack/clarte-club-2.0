@@ -20,7 +20,7 @@ export default function AboutPage() {
     },
     {
       title: "Made to Last & Endure",
-      desc: "Built from hand-cured acetate and custom hardware designed for rigorous daily use, not disposable photo props."
+      desc: "Built from cured bio-acetate and custom hardware designed for rigorous daily use, not disposable photo props."
     },
     {
       title: "Zero Restocks Policy",
@@ -142,7 +142,7 @@ export default function AboutPage() {
           <div className="animate-marquee-light flex gap-6 sm:gap-8 text-[11px] sm:text-sm md:text-base font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-[#0F0F10]/40 whitespace-nowrap select-none">
             {Array(4).fill([
               "DISTINCTIVE DESIGN",
-              "HAND-POLISHED ACETATE",
+              "PRECISION-POLISHED ACETATE",
               "LIMITED BATCH DROPS",
               "THE CLARTÉ GUARANTEE",
               "QUIET DISTINCTION"
