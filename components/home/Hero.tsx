@@ -1,22 +1,19 @@
-"use client"
-
-import Link from "next/link"
 import Image from "next/image"
-import { LaunchOfferBar } from "@/components/home/LaunchOfferBar"
+import { Sunglasses3DCanvas } from "@/components/home/Sunglasses3DCanvas"
 
 export function Hero() {
   return (
-    <section className="relative h-screen h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-black text-white">
-      {/* Background Static Banner */}
-      <div className="absolute inset-0 size-full overflow-hidden">
-        {/* Mobile View Image - Vertical portrait image */}
+    <section className="relative h-screen h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-black text-white flex flex-col justify-between">
+      {/* Background Editorial Image */}
+      <div className="absolute inset-0 size-full overflow-hidden pointer-events-none">
+        {/* Mobile View Image */}
         <Image
           src="/images/ChatGPT Image Jul 25, 2026, 11_29_15 AM.png"
           alt="Clarté Club Eyewear Mobile"
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.85] contrast-[1.03]"
+          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.75] contrast-[1.05]"
         />
         {/* Desktop View Image */}
         <Image
@@ -25,16 +22,18 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 size-full object-cover object-center hidden md:block brightness-[0.85] contrast-[1.03]"
+          className="absolute inset-0 size-full object-cover object-center hidden md:block brightness-[0.75] contrast-[1.05]"
         />
-        {/* Cinematic dark overlays for header legibility and reduced brightness */}
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-b from-black/65 via-black/20 to-black/60" />
-        <div className="pointer-events-none absolute inset-0 z-[1] bg-black/25" />
+        {/* Cinematic Vignette & Gradient Overlays */}
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/70 via-black/30 to-black/80" />
+        <div className="absolute inset-0 z-[1] bg-black/30" />
       </div>
 
-      {/* Minimal Semi-Transparent Launch Offer Bar positioned at 100vh bottom */}
-      <div className="absolute bottom-0 left-0 right-0 z-20">
-        <LaunchOfferBar className="bg-[#121214]/65 backdrop-blur-md border-t border-[#C9B07A]/30" />
+      {/* Center Interactive 3D Model Container */}
+      <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center pt-8 md:pt-12">
+        <div className="w-full max-w-4xl h-[70vh] md:h-[78vh] relative">
+          <Sunglasses3DCanvas modelPath="/video/blender1.glb" className="w-full h-full" />
+        </div>
       </div>
 
       <span id="shop" className="sr-only">
