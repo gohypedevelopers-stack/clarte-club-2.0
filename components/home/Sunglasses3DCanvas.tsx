@@ -168,7 +168,8 @@ export function Sunglasses3DCanvas({
         )
 
         if (mainDimension > 0) {
-          const targetSize = 1.25
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768
+          const targetSize = isMobile ? 0.8 : 1.25
           pivotGroup.scale.setScalar(targetSize / mainDimension)
         }
 
