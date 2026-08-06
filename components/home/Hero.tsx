@@ -8,12 +8,12 @@ export function Hero() {
       <div className="absolute inset-0 size-full overflow-hidden pointer-events-none">
         {/* Mobile View Image */}
         <Image
-          src="/images/image.png"
+          src="/images/hero-mobile.png"
           alt="Clarté Club Eyewear Mobile"
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 size-full object-cover object-[82%_center] block md:hidden brightness-[0.95] contrast-[1.02]"
+          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.95] contrast-[1.02]"
         />
         {/* Desktop View Image */}
         <Image
