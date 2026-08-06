@@ -13,7 +13,7 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.75] contrast-[1.05]"
+          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.95] contrast-[1.02]"
         />
         {/* Desktop View Image */}
         <Image
@@ -22,11 +22,11 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 size-full object-cover object-center hidden md:block brightness-[0.75] contrast-[1.05]"
+          className="absolute inset-0 size-full object-cover object-center hidden md:block brightness-[0.95] contrast-[1.02]"
         />
         {/* Cinematic Vignette & Gradient Overlays */}
-        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/70 via-black/30 to-black/80" />
-        <div className="absolute inset-0 z-[1] bg-black/30" />
+        <div className="absolute inset-0 z-[1] bg-gradient-to-b from-black/45 via-black/10 to-black/45" />
+        <div className="absolute inset-0 z-[1] bg-black/10" />
       </div>
 
       {/* Center Interactive 3D Model Container */}
