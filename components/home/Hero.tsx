@@ -31,7 +31,7 @@ export function Hero() {
 
       {/* Center Interactive 3D Model Container */}
       <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center pt-8 md:pt-12">
-        <div className="w-full max-w-4xl h-[52vh] md:h-[78vh] relative">
+        <div className="w-full max-w-4xl h-[70vh] md:h-[78vh] relative">
           <Sunglasses3DCanvas modelPath="/video/blender1.glb" className="w-full h-full" />
         </div>
       </div>
