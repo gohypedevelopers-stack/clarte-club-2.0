@@ -110,17 +110,6 @@ export function Sunglasses3DCanvas({
     const modelGroup = new THREE.Group()
     scene.add(modelGroup)
 
-    let loadedPivotGroup: THREE.Group | null = null
-    let loadedDimension = 1
-
-    const updateModelScale = () => {
-      if (!loadedPivotGroup || loadedDimension <= 0) return
-      const width = container.clientWidth || (typeof window !== "undefined" ? window.innerWidth : 1024)
-      const isMobile = width < 768
-      const targetSize = isMobile ? 0.48 : 1.25
-      loadedPivotGroup.scale.setScalar(targetSize / loadedDimension)
-    }
-
     // 7. Load GLTF Model
     const loader = new GLTFLoader()
 
@@ -178,9 +167,11 @@ export function Sunglasses3DCanvas({
           displaySize.z
         )
 
-        loadedPivotGroup = pivotGroup
-        loadedDimension = mainDimension
-        updateModelScale()
+        if (mainDimension > 0) {
+          const isMobile = typeof window !== "undefined" && window.innerWidth < 768
+          const targetSize = isMobile ? 0.8 : 1.25
+          pivotGroup.scale.setScalar(targetSize / mainDimension)
+        }
 
         // Material improvements
         rawObject.traverse((child) => {
@@ -240,7 +231,6 @@ export function Sunglasses3DCanvas({
       camera.updateProjectionMatrix()
 
       renderer.setSize(width, height)
-      updateModelScale()
     }
 
     const resizeObserver = new ResizeObserver(() => {
