@@ -8,16 +8,16 @@ export function Hero() {
       <div className="absolute inset-0 size-full overflow-hidden pointer-events-none">
         {/* Mobile View Image */}
         <Image
-          src="/images/ChatGPT Image Jul 25, 2026, 11_29_15 AM.png"
+          src="/images/image.png"
           alt="Clarté Club Eyewear Mobile"
           fill
           priority
           sizes="100vw"
-          className="absolute inset-0 size-full object-cover object-center block md:hidden brightness-[0.95] contrast-[1.02]"
+          className="absolute inset-0 size-full object-cover object-[82%_center] block md:hidden brightness-[0.95] contrast-[1.02]"
         />
         {/* Desktop View Image */}
         <Image
-          src="/images/ChatGPT Image Jul 25, 2026, 11_13_56 AM.png"
+          src="/images/ChatGPT Image Aug 6, 2026, 02_25_39 PM.png"
           alt="Clarté Club Eyewear"
           fill
           priority
@@ -31,7 +31,7 @@ export function Hero() {
 
       {/* Center Interactive 3D Model Container */}
       <div className="relative z-10 w-full flex-1 flex flex-col items-center justify-center pt-8 md:pt-12">
-        <div className="w-full max-w-4xl h-[70vh] md:h-[78vh] relative">
+        <div className="w-full max-w-4xl h-[52vh] md:h-[78vh] relative">
           <Sunglasses3DCanvas modelPath="/video/blender1.glb" className="w-full h-full" />
         </div>
       </div>
