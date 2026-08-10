@@ -269,7 +269,7 @@
   z-index: 9999;
 }
 
-.navbar-shell.is-scrolled {
+.navbar-shell.is-scrolled.is-light-surface {
   background-color: var(--brand-cream);
   color: var(--brand-black);
   border-color: rgba(15, 15, 16, 0.08);
