@@ -170,6 +170,8 @@ const sharedChairPose = {
 }
 
 export const featuredProduct: ProductDetail = {
+  id: "gid://shopify/Product/7683302916155",
+  merchandiseId: "gid://shopify/ProductVariant/43698982060091",
   slug: "heritage-oval",
   editLabel: "HERITAGE COLLECTIVE",
   title: "HERITAGE OVAL",

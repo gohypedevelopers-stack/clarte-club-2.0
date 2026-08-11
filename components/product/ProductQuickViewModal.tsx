@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
 import type { ProductDetail } from "@/components/product/productData"
+import { addToCart, buyNow } from "@/lib/cart"
 
 type ProductQuickViewModalProps = {
   open: boolean
@@ -104,6 +105,64 @@ export function ProductQuickViewModal({
   const [selectedSize, setSelectedSize] = useState(
     product.sizes[1] ?? product.sizes[0] ?? ""
   )
+  const [cartState, setCartState] = useState<"idle" | "adding" | "added">("idle")
+  const [isBuying, setIsBuying] = useState(false)
+
+  const handleAddToCart = () => {
+    setCartState("adding")
+    addToCart({
+      id: product.slug,
+      merchandiseId: product.merchandiseId,
+      image: product.gallery[0]?.src || "/images/products/product1.png",
+      alt: product.gallery[0]?.alt || product.title,
+      title: product.title,
+      size: selectedSize || "XS",
+      price: product.price,
+    })
+    setTimeout(() => {
+      setCartState("added")
+      setTimeout(() => {
+        setCartState("idle")
+      }, 1500)
+    }, 850)
+  }
+
+  const handleBuyNow = async () => {
+    if (isBuying) return
+    setIsBuying(true)
+
+    const timer = setTimeout(() => {
+      setIsBuying(false)
+    }, 3000)
+
+    try {
+      await buyNow({
+        id: product.slug,
+        merchandiseId: product.merchandiseId,
+        image: product.gallery[0]?.src || "/images/products/product1.png",
+        alt: product.gallery[0]?.alt || product.title,
+        title: product.title,
+        size: selectedSize || "XS",
+        price: product.price,
+      })
+    } catch (err) {
+      console.error("Buy Now error:", err)
+      clearTimeout(timer)
+      setIsBuying(false)
+    }
+  }
+
+  useEffect(() => {
+    const resetBuying = () => setIsBuying(false)
+    window.addEventListener("pageshow", resetBuying)
+    window.addEventListener("focus", resetBuying)
+    return () => {
+      window.removeEventListener("pageshow", resetBuying)
+      window.removeEventListener("focus", resetBuying)
+    }
+  }, [])
+
+
 
   useEffect(() => {
     if (!open) {
@@ -261,32 +320,56 @@ export function ProductQuickViewModal({
                 </Link>
               </p>
 
-              <div className="flex items-center gap-3 pt-2">
+              <div className="space-y-2.5 pt-2">
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    disabled={cartState !== "idle" || isBuying}
+                    className={cn(
+                      "flex h-11 flex-1 items-center justify-center border border-black text-[13px] sm:text-[14px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
+                      cartState === "idle" && "bg-white text-black hover:bg-black hover:text-white",
+                      cartState === "adding" && "bg-black/10 text-black/40 border-black/10 cursor-not-allowed",
+                      cartState === "added" && "bg-[#5b8c38] text-white border-[#5b8c38]"
+                    )}
+                  >
+                    {cartState === "idle" && "Add To Cart"}
+                    {cartState === "adding" && "Adding..."}
+                    {cartState === "added" && "Added To Bag ✓"}
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Add to wishlist"
+                    onClick={() => setIsWishlisted(!isWishlisted)}
+                    className={cn(
+                      "flex h-11 w-11 shrink-0 items-center justify-center border transition-all duration-200 cursor-pointer",
+                      isWishlisted
+                        ? "border-black bg-black text-white"
+                        : "border-black/20 bg-white text-black hover:border-black"
+                    )}
+                  >
+                    <Heart
+                      className="size-4.5 transition-transform duration-200 active:scale-125"
+                      style={{
+                        fill: isWishlisted ? "currentColor" : "none",
+                        strokeWidth: 1.8,
+                      }}
+                    />
+                  </button>
+                </div>
+
                 <button
                   type="button"
-                  className="flex h-12 flex-1 items-center justify-center bg-black text-[14px] sm:text-[16px] font-medium uppercase tracking-[0.14em] text-white transition-opacity hover:opacity-90 cursor-pointer"
-                >
-                  Add To Cart
-                </button>
-                <button
-                  type="button"
-                  aria-label="Add to wishlist"
-                  onClick={() => setIsWishlisted(!isWishlisted)}
+                  onClick={handleBuyNow}
+                  disabled={isBuying}
                   className={cn(
-                    "flex h-12 w-12 shrink-0 items-center justify-center border transition-all duration-200 cursor-pointer",
-                    isWishlisted
-                      ? "border-black bg-black text-white"
-                      : "border-black/20 bg-white text-black hover:border-black"
+                    "flex h-11 w-full items-center justify-center border border-black bg-black text-[13px] sm:text-[14px] font-semibold uppercase tracking-[0.14em] text-white transition-opacity duration-200 ease-out hover:bg-black/85 cursor-pointer shadow-sm active:scale-[0.99]",
+                    isBuying && "opacity-50 pointer-events-none"
                   )}
                 >
-                  <Heart
-                    className="size-5 transition-transform duration-200 active:scale-125"
-                    style={{
-                      fill: isWishlisted ? "currentColor" : "none",
-                      strokeWidth: 1.8,
-                    }}
-                  />
+                  Buy Now
                 </button>
+
               </div>
 
               <div className="pt-1 text-center">

@@ -233,8 +233,8 @@ export function FrameSequenceHero() {
           start: "top top",
           // Dynamically calculate compact 250vh scroll distance for fast responsive animation
           end: () => `+=${window.innerHeight * 2.5}`,
-          // Sync closely with scroll (0.5s scrub provides a smooth deceleration catch-up without feeling delayed/laggy)
-          scrub: 0.5,
+          // Sync closely with scroll (0.15s scrub provides instant response without floaty drift on scroll stop)
+          scrub: 0.15,
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,

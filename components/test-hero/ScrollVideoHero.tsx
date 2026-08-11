@@ -11,8 +11,6 @@ const MOBILE_TOTAL_FRAMES = 156
 const MOBILE_PREFIX = "/video frame/mobile/frame_"
 const MOBILE_SUFFIX = ".webp"
 
-const AUTOPLAY_SPEED = 0.4 // Natural continuous video playback speed (~24fps at 60Hz)
-
 function formatDesktopFrameIndex(index: number): string {
   return String(index + 1).padStart(4, "0")
 }
@@ -58,6 +56,7 @@ export function ScrollVideoHero() {
       if (isMobile && Math.abs(latest - lastScrollTargetRef.current) > 0.3) {
         setShowScrollCue(false)
       }
+      lastScrollTargetRef.current = latest
     })
 
     return () => {
@@ -169,7 +168,7 @@ export function ScrollVideoHero() {
     }
   }, [isMobile])
 
-  // Canvas drawing & Seamless Continuous Velocity Loop (Instant Zero-Wait Hydration)
+  // Canvas drawing & Seamless Coasting Physics (Zero-Reflow 60fps Canvas Render)
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -177,6 +176,22 @@ export function ScrollVideoHero() {
     if (!ctx) return
 
     let animationFrameId: number
+
+    // Cached layout dimensions to prevent DOM reflow thrashing inside RAF
+    let cachedWidth = 0
+    let cachedHeight = 0
+    let dpr = 1
+
+    const resizeCanvas = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      cachedWidth = canvas.clientWidth
+      cachedHeight = canvas.clientHeight
+      canvas.width = cachedWidth * dpr
+      canvas.height = cachedHeight * dpr
+    }
+
+    resizeCanvas()
+    window.addEventListener("resize", resizeCanvas)
 
     // Helper to find closest available loaded frame if targeted frame is still downloading
     const getBestAvailableImage = (targetIndex: number, images: HTMLImageElement[]): HTMLImageElement | null => {
@@ -202,61 +217,49 @@ export function ScrollVideoHero() {
       const activeFramesCount = isMobile ? MOBILE_TOTAL_FRAMES : DESKTOP_TOTAL_FRAMES
       const activeImages = isMobile ? mobileImagesRef.current : desktopImagesRef.current
 
-      // Calculate delta scroll target per RAF frame
       const target = targetFrameRef.current
-      const scrollDiff = target - lastScrollTargetRef.current
-      lastScrollTargetRef.current = target
+      const diff = target - currentFrameRef.current
 
-      // Decay scroll velocity smoothly into continuous auto-play speed
-      scrollVelocityRef.current = scrollVelocityRef.current * 0.6 + scrollDiff * 0.4
-
-      // Always advance frame smoothly: scroll velocity + continuous autoplay
-      currentFrameRef.current += scrollVelocityRef.current + AUTOPLAY_SPEED
-
-      // Seamless wrap-around looping
-      if (currentFrameRef.current >= activeFramesCount) {
-        currentFrameRef.current = currentFrameRef.current % activeFramesCount
-      } else if (currentFrameRef.current < 0) {
-        currentFrameRef.current = (currentFrameRef.current % activeFramesCount + activeFramesCount) % activeFramesCount
+      // Fast responsive lerp tracking with instant crisp snap when near target to eliminate floaty drift on scroll stop
+      if (Math.abs(diff) < 0.01) {
+        currentFrameRef.current = target
+      } else {
+        currentFrameRef.current += diff * 0.35
       }
 
-      const frameIndex = Math.min(
-        activeFramesCount - 1,
-        Math.max(0, Math.floor(currentFrameRef.current))
-      )
+      // Clamp current frame position within valid bounds [0, activeFramesCount - 1]
+      const rawCurrent = Math.max(0, Math.min(activeFramesCount - 1, currentFrameRef.current))
+      currentFrameRef.current = rawCurrent
 
+      // Use exact rounded frame index for clean single-frame rendering (eliminates ghosting / double-image outlines)
+      const frameIndex = Math.round(rawCurrent)
       const img = getBestAvailableImage(frameIndex, activeImages)
-      if (img && img.complete && img.naturalWidth > 0) {
-        const dpr = Math.min(window.devicePixelRatio || 1, 2)
-        const width = canvas.clientWidth
-        const height = canvas.clientHeight
 
-        if (canvas.width !== width * dpr || canvas.height !== height * dpr) {
-          canvas.width = width * dpr
-          canvas.height = height * dpr
-        }
-
+      if (img && img.complete && img.naturalWidth > 0 && cachedWidth > 0 && cachedHeight > 0) {
         ctx.save()
         ctx.scale(dpr, dpr)
-        ctx.clearRect(0, 0, width, height)
+        ctx.clearRect(0, 0, cachedWidth, cachedHeight)
 
         const imgRatio = img.naturalWidth / img.naturalHeight
-        const canvasRatio = width / height
+        const canvasRatio = cachedWidth / cachedHeight
 
-        let drawWidth = width
-        let drawHeight = height
+        let drawWidth = cachedWidth
+        let drawHeight = cachedHeight
         let offsetX = 0
         let offsetY = 0
 
         if (canvasRatio > imgRatio) {
-          drawHeight = width / imgRatio
-          offsetY = (height - drawHeight) / 2
+          drawHeight = cachedWidth / imgRatio
+          offsetY = (cachedHeight - drawHeight) / 2
         } else {
-          drawWidth = height * imgRatio
-          offsetX = (width - drawWidth) / 2
+          drawWidth = cachedHeight * imgRatio
+          offsetX = (cachedWidth - drawWidth) / 2
         }
 
+        // Draw crisp single frame at 100% opacity with zero ghosting or blur
+        ctx.globalAlpha = 1.0
         ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight)
+
         ctx.restore()
       }
 
@@ -266,6 +269,7 @@ export function ScrollVideoHero() {
     render()
 
     return () => {
+      window.removeEventListener("resize", resizeCanvas)
       cancelAnimationFrame(animationFrameId)
     }
   }, [isMobile])

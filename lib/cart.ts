@@ -101,7 +101,10 @@ export async function syncShopifyCart(item: CartItem) {
   }
 }
 
-export function addToCart(item: Omit<CartItem, "quantity">) {
+export function addToCart(
+  item: Omit<CartItem, "quantity">,
+  options: { openCart?: boolean } = { openCart: true }
+) {
   const items = getCartItems()
   const existing = items.find((i) => i.id === item.id && i.size === item.size)
   let updatedItem: CartItem
@@ -115,9 +118,20 @@ export function addToCart(item: Omit<CartItem, "quantity">) {
   saveCartItems(items)
   syncShopifyCart(updatedItem)
 
-  window.dispatchEvent(
-    new CustomEvent("cart-updated", { detail: { open: true, addedItem: item } })
-  )
+  if (options.openCart !== false) {
+    window.dispatchEvent(
+      new CustomEvent("cart-updated", { detail: { open: true, addedItem: item } })
+    )
+  } else {
+    window.dispatchEvent(
+      new CustomEvent("cart-updated", { detail: { open: false } })
+    )
+  }
+}
+
+export async function buyNow(item: Omit<CartItem, "quantity">): Promise<string | null> {
+  addToCart(item, { openCart: false })
+  return await processShopifyCheckout()
 }
 
 export function updateCartQuantity(id: string, size: string, quantity: number) {
@@ -148,7 +162,7 @@ export async function processShopifyCheckout(): Promise<string | null> {
 
   const shopifyDomain = process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN || "shapar-ay.myshopify.com"
 
-  // 1. Auto-resolve missing merchandiseIds from live Shopify products
+  // 1. Auto-resolve missing merchandiseIds from live Shopify products if needed
   const missingMerchandise = items.some((item) => !item.merchandiseId)
   if (missingMerchandise) {
     try {
@@ -157,7 +171,6 @@ export async function processShopifyCheckout(): Promise<string | null> {
         let hasChanges = false
         items = items.map((item, idx) => {
           if (item.merchandiseId) return item
-          // Match live product by title, handle, or index fallback
           const matched =
             liveProducts.find(
               (p: any) =>
@@ -181,48 +194,7 @@ export async function processShopifyCheckout(): Promise<string | null> {
     }
   }
 
-  // 2. Build Storefront API cart input lines
-  const validLines = items
-    .filter((item) => item.merchandiseId)
-    .map((item) => ({
-      merchandiseId: item.merchandiseId!,
-      quantity: item.quantity,
-    }))
-
-  const websiteOrigin = window.location.origin
-
-  // 3. Create Shopify Cart via Storefront API
-  if (validLines.length > 0) {
-    try {
-      const cart = await cartCreate(validLines)
-      if (cart?.checkoutUrl) {
-        localStorage.setItem(SHOPIFY_CART_ID_KEY, cart.id)
-        localStorage.setItem(SHOPIFY_CHECKOUT_URL_KEY, cart.checkoutUrl)
-
-        const finalCheckoutUrl = cart.checkoutUrl.includes("?")
-          ? `${cart.checkoutUrl}&return_to=${encodeURIComponent(websiteOrigin)}`
-          : `${cart.checkoutUrl}?return_to=${encodeURIComponent(websiteOrigin)}`
-
-        window.location.href = finalCheckoutUrl
-        return finalCheckoutUrl
-      }
-    } catch (error) {
-      console.warn("Shopify cartCreate failed, falling back to direct permalink checkout URL:", error)
-    }
-  }
-
-  // 4. Fallback A: Use existing saved checkout URL if available
-  const existingCheckoutUrl = getShopifyCheckoutUrl()
-  if (existingCheckoutUrl) {
-    const finalCheckoutUrl = existingCheckoutUrl.includes("?")
-      ? `${existingCheckoutUrl}&return_to=${encodeURIComponent(websiteOrigin)}`
-      : `${existingCheckoutUrl}?return_to=${encodeURIComponent(websiteOrigin)}`
-
-    window.location.href = finalCheckoutUrl
-    return finalCheckoutUrl
-  }
-
-  // 5. Fallback B: Construct Shopify Cart Permalink URL for direct Checkout
+  // 2. Direct Shopify Cart Permalink (Fastest & 100% reliable direct Checkout redirect)
   const permalinkParts = items
     .map((item) => {
       if (!item.merchandiseId) return null
@@ -232,15 +204,47 @@ export async function processShopifyCheckout(): Promise<string | null> {
     .filter(Boolean)
 
   if (permalinkParts.length > 0) {
-    const permalinkUrl = `https://${shopifyDomain}/cart/${permalinkParts.join(",")}?storefront=true&return_to=${encodeURIComponent(websiteOrigin)}`
+    const permalinkUrl = `https://${shopifyDomain}/cart/${permalinkParts.join(",")}`
     window.location.href = permalinkUrl
     return permalinkUrl
   }
 
-  // Final Fallback: Direct checkout with return_to
-  const checkoutUrl = `https://${shopifyDomain}/checkout?return_to=${encodeURIComponent(websiteOrigin)}`
+  // 3. Fallback: Create Shopify Cart via Storefront API
+  const validLines = items
+    .filter((item) => item.merchandiseId)
+    .map((item) => ({
+      merchandiseId: item.merchandiseId!,
+      quantity: item.quantity,
+    }))
+
+  if (validLines.length > 0) {
+    try {
+      const cart = await cartCreate(validLines)
+      if (cart?.checkoutUrl) {
+        localStorage.setItem(SHOPIFY_CART_ID_KEY, cart.id)
+        localStorage.setItem(SHOPIFY_CHECKOUT_URL_KEY, cart.checkoutUrl)
+
+        window.location.href = cart.checkoutUrl
+        return cart.checkoutUrl
+      }
+    } catch (error) {
+      console.warn("Shopify cartCreate failed:", error)
+    }
+  }
+
+  // 4. Fallback A: Saved checkout URL
+  const existingCheckoutUrl = getShopifyCheckoutUrl()
+  if (existingCheckoutUrl) {
+    window.location.href = existingCheckoutUrl
+    return existingCheckoutUrl
+  }
+
+  // Final Fallback: Direct checkout
+  const checkoutUrl = `https://${shopifyDomain}/checkout`
   window.location.href = checkoutUrl
   return checkoutUrl
 }
+
+
 
 

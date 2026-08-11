@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/carousel"
 import { cn } from "@/lib/utils"
 import type { ProductDetail } from "@/components/product/productData"
-import { addToCart } from "@/lib/cart"
+import { addToCart, buyNow } from "@/lib/cart"
 
 const deliveryIcons = {
   truck: Truck,
@@ -96,6 +96,7 @@ export function ProductSummary({
   const [reviewsCount, setReviewsCount] = useState(5)
   const [averageRating, setAverageRating] = useState(4.8)
   const [cartState, setCartState] = useState<"idle" | "adding" | "added">("idle")
+  const [isBuying, setIsBuying] = useState(false)
   const [isWishlisted, setIsWishlisted] = useState(false)
   const [isDescExpanded, setIsDescExpanded] = useState(false)
   const [activeAccordion, setActiveAccordion] = useState<"care" | "shipping" | null>(null)
@@ -130,6 +131,7 @@ export function ProductSummary({
     setCartState("adding")
     addToCart({
       id: product.slug,
+      merchandiseId: product.merchandiseId,
       image: product.gallery[0]?.src || "/images/products/product1.png",
       alt: product.gallery[0]?.alt || product.title,
       title: product.title,
@@ -143,6 +145,43 @@ export function ProductSummary({
       }, 1500)
     }, 850)
   }
+
+  const handleBuyNow = async () => {
+    if (isBuying) return
+    setIsBuying(true)
+
+    const timer = setTimeout(() => {
+      setIsBuying(false)
+    }, 3000)
+
+    try {
+      await buyNow({
+        id: product.slug,
+        merchandiseId: product.merchandiseId,
+        image: product.gallery[0]?.src || "/images/products/product1.png",
+        alt: product.gallery[0]?.alt || product.title,
+        title: product.title,
+        size: selectedSize,
+        price: product.price,
+      })
+    } catch (err) {
+      console.error("Buy Now error:", err)
+      clearTimeout(timer)
+      setIsBuying(false)
+    }
+  }
+
+  useEffect(() => {
+    const resetBuying = () => setIsBuying(false)
+    window.addEventListener("pageshow", resetBuying)
+    window.addEventListener("focus", resetBuying)
+    return () => {
+      window.removeEventListener("pageshow", resetBuying)
+      window.removeEventListener("focus", resetBuying)
+    }
+  }, [])
+
+
 
   const handleApplyCoupon = (code: string) => {
     if (appliedCoupon === code) {
@@ -304,14 +343,14 @@ export function ProductSummary({
 
 
         {/* PRIMARY CTA */}
-        <div className="space-y-4 pt-4 border-t border-black/15">
+        <div className="space-y-3 pt-4 border-t border-black/15">
           <div className="flex items-center gap-3">
             <button
               type="button"
               onClick={handleAddToCart}
-              disabled={cartState !== "idle"}
+              disabled={cartState !== "idle" || isBuying}
               className={cn(
-                "flex h-12 flex-1 items-center justify-center border border-black text-[15px] sm:text-[17px] md:text-[19px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
+                "flex h-12 flex-1 items-center justify-center border border-black text-[14px] sm:text-[16px] md:text-[17px] font-medium uppercase tracking-[0.14em] transition-all duration-200 ease-out cursor-pointer",
                 cartState === "idle" && "bg-white text-black hover:bg-black hover:text-white",
                 cartState === "adding" && "bg-black/10 text-black/40 border-black/10 cursor-not-allowed",
                 cartState === "added" && "bg-[#5b8c38] text-white border-[#5b8c38]"
@@ -341,6 +380,19 @@ export function ProductSummary({
               />
             </button>
           </div>
+
+          <button
+            type="button"
+            onClick={handleBuyNow}
+            disabled={isBuying}
+            className={cn(
+              "flex h-12 w-full items-center justify-center border border-black bg-black text-[14px] sm:text-[16px] md:text-[17px] font-semibold uppercase tracking-[0.14em] text-white transition-opacity duration-200 ease-out hover:bg-black/85 cursor-pointer shadow-sm active:scale-[0.99]",
+              isBuying && "opacity-50 pointer-events-none"
+            )}
+          >
+            Buy Now
+          </button>
+
 
           {/* COMMUNITY PROOF */}
           <div className="flex items-center justify-center gap-3 py-1 text-center">
