@@ -238,6 +238,8 @@ export function ScrollVideoHero() {
       if (img && img.complete && img.naturalWidth > 0 && cachedWidth > 0 && cachedHeight > 0) {
         ctx.save()
         ctx.scale(dpr, dpr)
+        ctx.imageSmoothingEnabled = true
+        ctx.imageSmoothingQuality = "high"
         ctx.clearRect(0, 0, cachedWidth, cachedHeight)
 
         const imgRatio = img.naturalWidth / img.naturalHeight
@@ -284,7 +286,7 @@ export function ScrollVideoHero() {
         {/* High Performance Pure Video Canvas (Instant Hydration, Zero Loading Screen) */}
         <canvas
           ref={canvasRef}
-          className="absolute inset-0 size-full object-cover z-0 pointer-events-none"
+          className="absolute inset-0 size-full z-0 pointer-events-none"
         />
 
         {/* Subtle Vignette Gradient for Depth */}

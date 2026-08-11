@@ -98,6 +98,9 @@ export function FrameSequenceHero() {
     function drawCover(image: HTMLImageElement) {
       if (!cachedWidth || !cachedHeight) return;
 
+      if ("filter" in context!) {
+        context!.filter = "none";
+      }
       context!.clearRect(0, 0, cachedWidth, cachedHeight);
 
       const imageRatio = image.naturalWidth / image.naturalHeight;
@@ -146,6 +149,9 @@ export function FrameSequenceHero() {
           context!.filter = "blur(20px) brightness(0.5) saturate(0.8)";
         }
         context!.drawImage(image, coverX - 10, coverY - 10, coverWidth + 20, coverHeight + 20);
+        if ("filter" in context!) {
+          context!.filter = "none";
+        }
         context!.restore();
 
         // Draw clean contain as foreground
