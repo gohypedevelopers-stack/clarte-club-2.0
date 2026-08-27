@@ -8,8 +8,8 @@ const DESKTOP_TOTAL_FRAMES = 240
 const DESKTOP_PREFIX = "/video frame/video_frames_webp_1280x720/frame_"
 const DESKTOP_SUFFIX = ".webp"
 
-const MOBILE_TOTAL_FRAMES = 156
-const MOBILE_PREFIX = "/video frame/mobile/frame_"
+const MOBILE_TOTAL_FRAMES = 240
+const MOBILE_PREFIX = "/video frame/mobile/mobile_view_webp_frames_720x1280/frame_"
 const MOBILE_SUFFIX = ".webp"
 
 function formatDesktopFrameIndex(index: number): string {
@@ -271,16 +271,28 @@ export function ScrollVideoHero() {
         let offsetX = 0
         let offsetY = 0
 
-        if (canvasRatio > imgRatio) {
-          // Canvas is wider than image. Scale by width to fill.
-          drawHeight = cachedWidth / imgRatio
-          // Anchor to top (0) instead of center (/2) so the head isn't cropped off
-          offsetY = 0
+        if (isMobile) {
+          // Mobile: Contain (show full image width so nothing is cropped)
+          if (canvasRatio > imgRatio) {
+            drawWidth = cachedHeight * imgRatio
+            drawHeight = cachedHeight
+            offsetX = (cachedWidth - drawWidth) / 2
+            offsetY = 0
+          } else {
+            drawWidth = cachedWidth
+            drawHeight = cachedWidth / imgRatio
+            offsetX = 0
+            offsetY = (cachedHeight - drawHeight) / 2
+          }
         } else {
-          // Canvas is taller than image. Scale by height to fill.
-          drawWidth = cachedHeight * imgRatio
-          // Center horizontally
-          offsetX = (cachedWidth - drawWidth) / 2
+          // Desktop: Cover (fill screen)
+          if (canvasRatio > imgRatio) {
+            drawHeight = cachedWidth / imgRatio
+            offsetY = 0
+          } else {
+            drawWidth = cachedHeight * imgRatio
+            offsetX = (cachedWidth - drawWidth) / 2
+          }
         }
 
         // Round coordinates to prevent subpixel anti-aliasing blur
@@ -289,8 +301,26 @@ export function ScrollVideoHero() {
         const rDrawWidth = Math.round(drawWidth)
         const rDrawHeight = Math.round(drawHeight)
 
-        // Draw crisp single frame at 100% opacity with zero ghosting or blur
         ctx.globalAlpha = 1.0
+
+        // For mobile, dynamically stretch the edge pixels of the video to fill the empty space.
+        // This creates a seamless 100vh background that perfectly matches the video's studio floor/ceiling!
+        if (isMobile) {
+          if (rOffsetY > 0) {
+            // Stretch top edge pixel upwards
+            ctx.drawImage(img, 0, 0, img.naturalWidth, 1, 0, 0, cachedWidth, rOffsetY)
+            // Stretch bottom edge pixel downwards
+            ctx.drawImage(img, 0, img.naturalHeight - 1, img.naturalWidth, 1, 0, rOffsetY + rDrawHeight - 1, cachedWidth, cachedHeight - (rOffsetY + rDrawHeight) + 2)
+          }
+          if (rOffsetX > 0) {
+            // Stretch left edge pixel
+            ctx.drawImage(img, 0, 0, 1, img.naturalHeight, 0, 0, rOffsetX, cachedHeight)
+            // Stretch right edge pixel
+            ctx.drawImage(img, img.naturalWidth - 1, 0, 1, img.naturalHeight, rOffsetX + rDrawWidth - 1, 0, cachedWidth - (rOffsetX + rDrawWidth) + 2, cachedHeight)
+          }
+        }
+
+        // Draw crisp single frame main image
         ctx.drawImage(img, rOffsetX, rOffsetY, rDrawWidth, rDrawHeight)
 
         ctx.restore()
