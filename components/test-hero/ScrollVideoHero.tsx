@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useEffect, useRef, useState } from "react"
+import Link from "next/link"
 import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion"
 
 const DESKTOP_TOTAL_FRAMES = 240
@@ -26,6 +27,7 @@ export function ScrollVideoHero() {
   // Screen size detection
   const [isMobile, setIsMobile] = useState<boolean>(false)
   const [showScrollCue, setShowScrollCue] = useState(true)
+  const [showCTA, setShowCTA] = useState(false)
 
   // Preloading & Frame Cache
   const desktopImagesRef = useRef<HTMLImageElement[]>([])
@@ -56,6 +58,10 @@ export function ScrollVideoHero() {
       if (isMobile && Math.abs(latest - lastScrollTargetRef.current) > 0.3) {
         setShowScrollCue(false)
       }
+
+      // Show CTA when reaching the end of the video sequence
+      setShowCTA(latest > activeTotalFrames - 15)
+
       lastScrollTargetRef.current = latest
     })
 
@@ -182,6 +188,11 @@ export function ScrollVideoHero() {
     let cachedHeight = 0
     let dpr = 1
 
+    // Track last drawn state to short-circuit identical frames (massive GPU save)
+    let lastDrawnImg: HTMLImageElement | null = null
+    let lastDrawnWidth = 0
+    let lastDrawnHeight = 0
+
     const resizeCanvas = () => {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       cachedWidth = canvas.clientWidth
@@ -221,7 +232,7 @@ export function ScrollVideoHero() {
       const diff = target - currentFrameRef.current
 
       // Fast responsive lerp tracking with instant crisp snap when near target to eliminate floaty drift on scroll stop
-      if (Math.abs(diff) < 0.01) {
+      if (Math.abs(diff) < 0.5) {
         currentFrameRef.current = target
       } else {
         currentFrameRef.current += diff * 0.08 // Lowered from 0.35 for much smoother dampening (fixes glitching)
@@ -234,6 +245,16 @@ export function ScrollVideoHero() {
       // Use exact rounded frame index for clean single-frame rendering (eliminates ghosting / double-image outlines)
       const frameIndex = Math.round(rawCurrent)
       const img = getBestAvailableImage(frameIndex, activeImages)
+
+      // Short-circuit: do not burn CPU/GPU if the exact same frame is already on the canvas
+      if (
+        img === lastDrawnImg &&
+        cachedWidth === lastDrawnWidth &&
+        cachedHeight === lastDrawnHeight
+      ) {
+        animationFrameId = requestAnimationFrame(render)
+        return
+      }
 
       if (img && img.complete && img.naturalWidth > 0 && cachedWidth > 0 && cachedHeight > 0) {
         ctx.save()
@@ -273,6 +294,10 @@ export function ScrollVideoHero() {
         ctx.drawImage(img, rOffsetX, rOffsetY, rDrawWidth, rDrawHeight)
 
         ctx.restore()
+
+        lastDrawnImg = img
+        lastDrawnWidth = cachedWidth
+        lastDrawnHeight = cachedHeight
       }
 
       animationFrameId = requestAnimationFrame(render)
@@ -286,7 +311,7 @@ export function ScrollVideoHero() {
     }
   }, [isMobile])
 
-  const isCueVisible = !isMobile || showScrollCue
+  const isCueVisible = (!isMobile || showScrollCue) && !showCTA
 
   return (
     <div ref={containerRef} className="relative w-full h-[300vh] bg-black">
@@ -304,7 +329,7 @@ export function ScrollVideoHero() {
 
         {/* Minimal Subtle Bottom Scroll Cue */}
         <div className="relative z-10 size-full flex flex-col justify-end px-6 pb-24 md:pb-12 pointer-events-none">
-          <div className="flex items-center justify-center w-full text-white font-mono text-[10px] drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] min-h-[40px]">
+          <div className="flex items-center justify-center w-full text-white font-mono text-[10px] drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] min-h-[40px] relative">
             <AnimatePresence>
               {isCueVisible && (
                 <motion.div
@@ -312,12 +337,34 @@ export function ScrollVideoHero() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="flex flex-col items-center gap-1.5"
+                  className="flex flex-col items-center gap-1.5 absolute"
                 >
                   <span className="text-[10px] tracking-[0.3em] font-medium uppercase text-white/90">SCROLL</span>
                   <svg className="w-4 h-4 text-white animate-bounce opacity-90" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
                   </svg>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+              {showCTA && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                  className="absolute pointer-events-auto"
+                >
+                  <Link 
+                    href="/collections" 
+                    className="group relative flex items-center justify-center gap-2 overflow-hidden rounded-full bg-white/10 px-8 py-4 text-white backdrop-blur-md transition-all hover:bg-white/20 border border-white/20 hover:border-white/40 shadow-2xl"
+                  >
+                    <span className="text-[0.75rem] font-medium tracking-[0.2em] uppercase relative z-10">Explore Collections</span>
+                    <svg className="w-4 h-4 transition-transform group-hover:translate-x-1 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                  </Link>
                 </motion.div>
               )}
             </AnimatePresence>
