@@ -46,7 +46,7 @@ export default function RootLayout({
         <SmoothScroll />
         <div className="relative flex flex-1 flex-col overflow-x-clip">
           <SiteHeader />
-          <div className="flex flex-1 flex-col pt-[var(--header-stack-height)]">
+          <div className="flex flex-1 flex-col">
             {children}
           </div>
           <SiteFooter />
