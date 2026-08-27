@@ -3,7 +3,7 @@ import { ShippingAnnouncementBar } from "@/components/home/ShippingAnnouncementB
 
 export function SiteHeader() {
   return (
-    <div className="absolute inset-x-0 top-0 z-50">
+    <div className="sticky top-[calc(-1*var(--announcement-height))] z-50 flex flex-col w-full">
       <ShippingAnnouncementBar />
       <Navbar />
     </div>
