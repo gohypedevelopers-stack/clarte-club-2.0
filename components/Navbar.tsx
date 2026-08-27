@@ -618,7 +618,7 @@ export function Navbar({
       const nextIsScrolled = window.scrollY > announcementHeightRef.current
 
       const heroHeight = typeof window !== "undefined" ? window.innerHeight : 800
-      const heroThreshold = isTestHero ? heroHeight * 1.85 : announcementHeightRef.current
+      const heroThreshold = isTestHero ? heroHeight * 2.85 : announcementHeightRef.current
       const nextIsPastHero = window.scrollY > heroThreshold
 
       setIsScrolled((current) =>

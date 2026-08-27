@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react"
 import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion"
 
 const DESKTOP_TOTAL_FRAMES = 240
-const DESKTOP_PREFIX = "/video frame/frame_"
+const DESKTOP_PREFIX = "/video frame/video_frames_webp_1280x720/frame_"
 const DESKTOP_SUFFIX = ".webp"
 
 const MOBILE_TOTAL_FRAMES = 156
@@ -224,7 +224,7 @@ export function ScrollVideoHero() {
       if (Math.abs(diff) < 0.01) {
         currentFrameRef.current = target
       } else {
-        currentFrameRef.current += diff * 0.35
+        currentFrameRef.current += diff * 0.08 // Lowered from 0.35 for much smoother dampening (fixes glitching)
       }
 
       // Clamp current frame position within valid bounds [0, activeFramesCount - 1]
@@ -251,16 +251,26 @@ export function ScrollVideoHero() {
         let offsetY = 0
 
         if (canvasRatio > imgRatio) {
+          // Canvas is wider than image. Scale by width to fill.
           drawHeight = cachedWidth / imgRatio
-          offsetY = (cachedHeight - drawHeight) / 2
+          // Anchor to top (0) instead of center (/2) so the head isn't cropped off
+          offsetY = 0
         } else {
+          // Canvas is taller than image. Scale by height to fill.
           drawWidth = cachedHeight * imgRatio
+          // Center horizontally
           offsetX = (cachedWidth - drawWidth) / 2
         }
 
+        // Round coordinates to prevent subpixel anti-aliasing blur
+        const rOffsetX = Math.round(offsetX)
+        const rOffsetY = Math.round(offsetY)
+        const rDrawWidth = Math.round(drawWidth)
+        const rDrawHeight = Math.round(drawHeight)
+
         // Draw crisp single frame at 100% opacity with zero ghosting or blur
         ctx.globalAlpha = 1.0
-        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight)
+        ctx.drawImage(img, rOffsetX, rOffsetY, rDrawWidth, rDrawHeight)
 
         ctx.restore()
       }
