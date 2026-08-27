@@ -672,8 +672,7 @@ export function Navbar({
       ref={headerRef}
       className={cn(
         "main-navbar navbar-shell border-b transition-colors duration-500 ease-in-out",
-        isScrolled ? "translate-y-0" : "translate-y-[var(--announcement-height)]",
-        "h-[64px] lg:h-[80px]",
+        "h-[64px] lg:h-[80px] w-full",
         hasOpenMenu
           ? "bg-white text-black border-black/5 shadow-none"
           : isLightSurface
