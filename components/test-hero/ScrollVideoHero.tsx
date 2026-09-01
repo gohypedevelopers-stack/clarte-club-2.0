@@ -4,12 +4,12 @@ import React, { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useScroll, useTransform, motion, AnimatePresence } from "framer-motion"
 
-const DESKTOP_TOTAL_FRAMES = 240
+const DESKTOP_TOTAL_FRAMES = 201
 const DESKTOP_PREFIX = "/video frame/video_frames_webp_1280x720/frame_"
 const DESKTOP_SUFFIX = ".webp"
 
-const MOBILE_TOTAL_FRAMES = 240
-const MOBILE_PREFIX = "/video frame/mobile/mobile_view_webp_frames_720x1280/frame_"
+const MOBILE_TOTAL_FRAMES = 216
+const MOBILE_PREFIX = "/video frame/mobile/mobile_view_webp_frames_720x1280/Mobile_display_clarte_webp_frames/Mobile_display_clarte_webp_frames/output/mobile_display_clarte_frames_webp/frame_"
 const MOBILE_SUFFIX = ".webp"
 
 function formatDesktopFrameIndex(index: number): string {
