@@ -30,18 +30,18 @@ function YoutubeIcon(props: React.ComponentProps<"svg">) {
 }
 
 const clarteClubLinks = [
-  { label: "OUR STORY", href: "/about" },
-  { label: "SHIPPING POLICY", href: "/shipping" },
-  { label: "EASY EXCHANGE", href: "/returns" },
-  { label: "PRIVACY POLICY", href: "/privacy" },
-  { label: "TERMS & CONDITIONS", href: "/terms" },
-  { label: "CONTACT US", href: "/contact" },
-  { label: "FAQ", href: "/faq" },
+  { label: "Our Story", href: "/about" },
+  { label: "Shipping Policy", href: "/shipping" },
+  { label: "Easy Exchange", href: "/returns" },
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms & Conditions", href: "/terms" },
+  { label: "Contact Us", href: "/contact" },
+  { label: "FAQ's", href: "/faq" },
 ] as const
 
 export function FooterSection() {
   return (
-    <footer className="relative overflow-hidden bg-[#0F0F10] text-[#F6F2EA] pt-10 sm:pt-12 pb-8 border-t border-[#8A8072]/20">
+    <footer className="relative overflow-hidden font-marquee bg-[#0F0F10] text-[#F6F2EA] pt-10 sm:pt-12 pb-8 border-t border-[#8A8072]/20">
       <div className="w-full px-6 md:px-12 2xl:px-24 mx-auto relative z-10">
         <div className="grid grid-cols-2 gap-8 mb-8 relative z-10 md:grid-cols-12">
 
@@ -65,7 +65,7 @@ export function FooterSection() {
           {/* Column 2: CLARTÉ CLUB */}
           <div className="col-span-1 md:col-span-3">
             <h4 className="font-bold text-xs sm:text-sm uppercase mb-4 tracking-wider text-[#F6F2EA]">CLARTÉ CLUB</h4>
-            <ul className="space-y-2.5 text-xs text-[#E2DDD3] uppercase tracking-wider">
+            <ul className="space-y-2.5 text-xs text-[#E2DDD3] tracking-wider">
               {clarteClubLinks.map((link) => (
                 <li key={link.label}>
                   <Link href={link.href} className="hover:text-[#C9B07A] transition-colors">
@@ -95,12 +95,6 @@ export function FooterSection() {
                 </p>
               </div>
 
-              <div>
-                <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">INSTAGRAM DM</p>
-                <p className="text-xs font-semibold text-[#F6F2EA] hover:text-[#C9B07A] transition-colors mt-0.5">
-                  <a href="https://instagram.com/clarteclub.official" target="_blank" rel="noopener noreferrer">@clarteclub.official</a>
-                </p>
-              </div>
 
               <div>
                 <p className="text-[9px] font-semibold uppercase tracking-wider text-[#B8B0A2]">SUPPORT HOURS</p>
@@ -114,7 +108,7 @@ export function FooterSection() {
           {/* Column 4: Newsletter & Social */}
           <div className="col-span-2 md:col-span-3">
             <p className="text-[10px] sm:text-[11px] uppercase tracking-wider text-[#E2DDD3] leading-relaxed mb-3">
-              SUBSCRIBE FOR PRIVATE DROP ANNOUNCEMENTS & CAPSULE ACCESS
+              SUBSCRIBE FOR PRIVATE DROP ANNOUNCEMENTS
             </p>
 
             <form className="flex flex-col space-y-2" onSubmit={(e) => e.preventDefault()}>
@@ -159,15 +153,6 @@ export function FooterSection() {
                   className="flex size-8 items-center justify-center rounded-full border border-[#E2DDD3]/40 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
                 >
                   <InstagramIcon className="size-4" />
-                </a>
-                <a
-                  href="https://youtube.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="YouTube"
-                  className="flex size-8 items-center justify-center rounded-full border border-[#E2DDD3]/40 text-[#F6F2EA] hover:border-[#C9B07A] hover:text-[#C9B07A] transition-all"
-                >
-                  <YoutubeIcon className="size-4" />
                 </a>
               </div>
             </div>
