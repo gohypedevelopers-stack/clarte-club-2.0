@@ -174,11 +174,10 @@ export default function ContactPage() {
             <div className="space-y-6 text-xs sm:text-sm font-light">
               <div className="grid grid-cols-12 items-baseline gap-4">
                 <span className="col-span-4 text-xs font-semibold uppercase tracking-wider text-neutral-500">
-                  Entity &amp; GST
+                  Entity
                 </span>
                 <div className="col-span-8 space-y-1">
                   <p className="text-[#0F0F10] font-semibold">[Legal Entity Name]</p>
-                  <p className="text-[#0F0F10] font-mono">[GSTIN Number]</p>
                   <p className="text-[#C9B07A] font-mono underline">
                     <a href="mailto:contact@clarte.club">Grievance: contact@clarte.club</a>
                   </p>
