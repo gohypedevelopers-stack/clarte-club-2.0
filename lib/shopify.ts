@@ -46,7 +46,8 @@ export async function graphql<T = any>(
   let json: any;
 
   try {
-    res = await fetch(endpoint, {
+    const isServer = typeof window === 'undefined';
+    const fetchOptions: RequestInit & { next?: { revalidate: number } } = {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -54,8 +55,12 @@ export async function graphql<T = any>(
       },
       body: JSON.stringify({ query, variables }),
       signal: controller?.signal,
-      next: { revalidate: 60 }, // Cache revalidation for Next.js
-    });
+    };
+    if (isServer) {
+      fetchOptions.next = { revalidate: 60 };
+    }
+
+    res = await fetch(endpoint, fetchOptions);
   } catch (e: any) {
     if (controller?.signal?.aborted) {
       const timeoutError = new Error(

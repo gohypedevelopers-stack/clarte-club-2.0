@@ -5,11 +5,12 @@ import { getServerTimestamp } from "@/lib/server-time"
 
 import { cn } from "@/lib/utils"
 
-// Fixed future target deadline (eliminates SSR/client timestamp mismatch)
-const launchDeadline = Date.parse("2026-07-29T00:00:00Z")
+// Target deadline set into the future (with dynamic fallback so it never stays stuck at 00:00:00:00)
+const FIXED_DEADLINE = Date.parse("2026-09-15T23:59:59Z")
 
 export function LaunchOfferBar({ className }: { className?: string }) {
   const initialNow = getServerTimestamp()
+  const launchDeadline = FIXED_DEADLINE > initialNow ? FIXED_DEADLINE : initialNow + (6 * 86400 + 14 * 3600 + 45 * 60) * 1000
 
   return (
     <section

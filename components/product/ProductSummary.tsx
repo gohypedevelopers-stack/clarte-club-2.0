@@ -483,7 +483,7 @@ export function ProductSummary({
         </div>
 
         {/* TRUST BADGES */}
-        <section className="pt-6 border-t border-black/15 pb-2">
+        <section className="pt-2 pb-2">
           <div className="grid grid-cols-3 divide-x divide-black/10">
             {[
               { icon: Truck,        label: 'Free Shipping', sub: 'On orders above ₹999'  },
