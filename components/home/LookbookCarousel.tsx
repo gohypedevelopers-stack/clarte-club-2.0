@@ -1,7 +1,7 @@
 "use client"
 
 import Image from "next/image"
-import { Play } from "lucide-react"
+
 
 
 import SimpleMarquee from "@/components/fancy/blocks/simple-marquee"
@@ -50,12 +50,6 @@ function SocialCard({ slide }: { slide: LookbookSlide }) {
         style={{ objectPosition: slide.imagePos ?? "center" }}
       />
 
-      {/* Play icon — centered */}
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center z-10">
-        <div className="grid size-11 place-items-center rounded-full bg-white/80 shadow-lg backdrop-blur-[2px] transition-all duration-300 group-hover:scale-110 group-hover:bg-white">
-          <Play className="ml-0.5 size-4 fill-zinc-900 text-zinc-900" />
-        </div>
-      </div>
     </article>
   )
 }
